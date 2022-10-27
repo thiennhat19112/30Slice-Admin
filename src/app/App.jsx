@@ -1,17 +1,26 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../components/layout/header';
 import Sidebar from '../components/layout/sidebar';
+import Footer from '../components/layout/footer';
+import Spin from '../components/layout/spin';
 
 function App() {
+  if(false) {
+    
+  }
+
+
   return (
     <>
       <Header />
-      <div className="flex overflow-hidden">
+      <main className="main-content">
         <Sidebar />
-        <div className="content">
+        <div className="contents">
           <Outlet />
         </div>
-      </div>
+        <Footer />
+      </main>
+      <Spin />
     </>
   );
 }
