@@ -4,7 +4,7 @@ const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
 
 const login = (username, password) => {
   return axios
-    .post(API_URL + 'users/login', {
+    .post(API_URL + 'user/login', {
       username,
       password,
     })
