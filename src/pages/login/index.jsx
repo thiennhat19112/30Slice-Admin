@@ -67,14 +67,14 @@ const Login = () => {
                   </div>
                   {/* End: .signUP-overlay  */}
                   <div className="signUP-admin-left__content">
-                    <div className="text-capitalize mb-md-30 mb-15 d-flex align-items-center justify-content-md-start justify-content-center">
+                    <div className="mb-md-30 mb-15 d-flex align-items-center justify-content-md-start justify-content-center">
                       <a
                         className="wh-36 bg-primary text-white radius-md mr-10 content-center"
                         href="index.html"
                       >
-                        a
+                        A
                       </a>
-                      <span className="text-dark">admin</span>
+                      <span className="text-dark">Admin</span>
                     </div>
                     <h1>Trang Quản Trị Hệ Thống 30Slice</h1>
                   </div>
@@ -164,7 +164,7 @@ const Login = () => {
                                 <div className="button-group d-flex pt-1 justify-content-md-start justify-content-center">
                                   <button
                                     type="submit"
-                                    className="btn btn-primary btn-default btn-squared mr-15 text-capitalize lh-normal px-50 py-15 signIn-createBtn "
+                                    className="btn btn-primary btn-default btn-squared mr-15 lh-normal px-50 py-15 signIn-createBtn "
                                   >
                                     {loading && (
                                       <span className="spinner-border spinner-border-sm"></span>
@@ -175,40 +175,40 @@ const Login = () => {
                                 <p className="social-connector text-center mb-sm-25 mb-15  mt-sm-30 mt-20">
                                   <span>Hoặc</span>
                                 </p>
-                                <div className="button-group d-flex align-items-center justify-content-md-start justify-content-center">
-                                  <ul className="signUp-socialBtn">
-                                    <li>
-                                      <button className="btn text-dark px-30">
-                                        <img
-                                          className="svg"
-                                          src="/assets/img/svg/google.svg"
-                                          alt="img"
-                                        />
-                                        {'  '}
-                                        Đăng nhập bằng Google
-                                      </button>
-                                    </li>
-                                    <li>
-                                      <button className=" radius-md wh-48 content-center">
-                                        <img
-                                          className="svg"
-                                          src="/assets/img/svg/facebook.svg"
-                                          alt="img"
-                                        />
-                                      </button>
-                                    </li>
-                                    <li>
-                                      <button className="radius-md wh-48 content-center">
-                                        <img
-                                          className="svg"
-                                          src="/assets/img/svg/twitter.svg"
-                                          alt="img"
-                                        />
-                                      </button>
-                                    </li>
-                                  </ul>
-                                </div>
                               </form>
+                              <div className="button-group d-flex align-items-center justify-content-md-start justify-content-center">
+                                <ul className="signUp-socialBtn">
+                                  <li>
+                                    <button className="btn text-dark px-30">
+                                      <img
+                                        className="svg"
+                                        src="/assets/img/svg/google.svg"
+                                        alt="img"
+                                      />
+                                      {'  '}
+                                      Đăng nhập bằng Google
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button className=" radius-md wh-48 content-center">
+                                      <img
+                                        className="svg"
+                                        src="/assets/img/svg/facebook.svg"
+                                        alt="img"
+                                      />
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button className="radius-md wh-48 content-center">
+                                      <img
+                                        className="svg"
+                                        src="/assets/img/svg/twitter.svg"
+                                        alt="img"
+                                      />
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
                             </div>
                           </div>
                           {/* End: .card-body */}
