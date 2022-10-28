@@ -1,11 +1,21 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { lazy } from 'react';
+// import { lazy } from 'react';
 
-const App = lazy(() => import('../app/App'));
-const Login = lazy(() => import('../pages/login'));
-const Error = lazy(() => import('../pages/error'));
-const Dashboard = lazy(() => import('../pages/dashboard'));
-const Counter = lazy(() => import('../pages/counter'));
+// const ProtectedRoute = lazy(() => import('./protectedRoute'));
+// const PrivateRoute = lazy(() => import('./privateRoute'));
+
+// const App = lazy(() => import('../app/App'));
+// const Login = lazy(() => import('../pages/login'));
+// const Error = lazy(() => import('../pages/error'));
+// const Dashboard = lazy(() => import('../pages/dashboard'));
+
+import ProtectedRoute from './protectedRoute';
+import PrivateRoute from './privateRoute';
+
+import App from '../app/App';
+import Login from '../pages/login';
+import Error from '../pages/error';
+import Dashboard from '../pages/dashboard';
 
 const routes = createBrowserRouter([
   {
@@ -15,7 +25,11 @@ const routes = createBrowserRouter([
       {
         path: '',
         exact: true,
-        element: <App />,
+        element: (
+          <PrivateRoute>
+            <App />
+          </PrivateRoute>
+        ),
         children: [
           {
             path: '',
@@ -37,12 +51,11 @@ const routes = createBrowserRouter([
       {
         path: 'login',
         exact: true,
-        element: <Login />,
-      },
-      {
-        path: 'counter',
-        exact: true,
-        element: <Counter />,
+        element: (
+          <ProtectedRoute>
+            <Login />
+          </ProtectedRoute>
+        ),
       },
     ],
     errorElement: <Error />,

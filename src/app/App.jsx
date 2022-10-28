@@ -5,11 +5,6 @@ import Footer from '../components/layout/footer';
 import Spin from '../components/layout/spin';
 
 function App() {
-  if(false) {
-    
-  }
-
-
   return (
     <>
       <Header />

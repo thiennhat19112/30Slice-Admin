@@ -5,7 +5,7 @@ const Input = ({
   register,
   required = 'Trường này không được để trống',
   pattern,
-  error = 'Không đúng định dạng',
+  error,
 }) => {
   return (
     <>

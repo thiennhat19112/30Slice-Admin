@@ -1,19 +1,50 @@
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+
 import { useForm } from 'react-hook-form';
-import Cookies from 'js-cookie';
+
 import Input from '../../components/sharedComponents/input';
+import { usernameValidator } from '../../components/sharedComponents/validatorrPatterns';
+import { passwordValidator } from '../../components/sharedComponents/validatorrPatterns';
+
+import { selectMessage } from '../../app/slices/message';
+
+import { login } from '../../app/slices/auth';
+import { clearMessage } from '../../app/slices/message';
 
 const Login = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [loading, setLoading] = useState(false);
+
+  const message = useSelector(selectMessage);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  useEffect(() => {
+    dispatch(clearMessage());
+  }, [dispatch]);
 
-  console.log(import.meta.env.REACT_APP_API_ENDPOINT);
-  Cookies.set('token', 'fefeffeeeeeeeeeeeeeeeedd');
-  console.log(Cookies.get('token'));
+  const onSubmit = (user) => {
+    const { username, password } = user;
+    setLoading(true);
+    dispatch(login({ username, password }))
+      .unwrap()
+      .then(() => {
+        navigate('/');
+        // window.location.reload();
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <>
       <main className="main-content">
@@ -60,7 +91,7 @@ const Login = () => {
                 {/* End: .signUP-admin-left  */}
               </div>
               {/* End: .col-xl-4  */}
-              <div className="col-xl-8 col-lg-7 col-md-7 col-sm-8">
+              <div className="col-xl-8 col-lg-7 col-md-7 col-sm-8 login-container">
                 <div className="signUp-admin-right signIn-admin-right  p-md-40 p-10">
                   <div className="signUp-topbar d-flex align-items-center justify-content-md-end justify-content-center mt-md-0 mb-md-0 mt-20 mb-1">
                     <p className="mb-0">
@@ -90,12 +121,7 @@ const Login = () => {
                                     label="Tên người dùng"
                                     id="username"
                                     required="Trường này không được để trống"
-                                    pattern={{
-                                      value:
-                                        /^(?=.{5,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$/g,
-                                      message:
-                                        'Vui lòng nhập đúng định dạng tên người dùng',
-                                    }}
+                                    pattern={usernameValidator}
                                     error={errors.username}
                                   />
                                 </div>
@@ -106,12 +132,7 @@ const Login = () => {
                                     label="Mật khẩu"
                                     id="password"
                                     required="Trường này không được để trống"
-                                    pattern={{
-                                      value:
-                                        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/g,
-                                      message:
-                                        'Mật khẩu tối thiểu 8 kí tự. Bao gồm chữ in hoa, in thường và số!',
-                                    }}
+                                    pattern={passwordValidator}
                                     error={errors.password}
                                   />
                                 </div>
@@ -130,11 +151,24 @@ const Login = () => {
                                   </div>
                                   <a href="forget-password.html"></a>
                                 </div>
+                                {message && (
+                                  <div className="form-group">
+                                    <div
+                                      className="alert alert-danger"
+                                      role="alert"
+                                    >
+                                      {message}
+                                    </div>
+                                  </div>
+                                )}
                                 <div className="button-group d-flex pt-1 justify-content-md-start justify-content-center">
                                   <button
                                     type="submit"
                                     className="btn btn-primary btn-default btn-squared mr-15 text-capitalize lh-normal px-50 py-15 signIn-createBtn "
                                   >
+                                    {loading && (
+                                      <span className="spinner-border spinner-border-sm"></span>
+                                    )}
                                     Đăng nhập
                                   </button>
                                 </div>
