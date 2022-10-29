@@ -46,6 +46,9 @@ import routes from './routes/routes';
 
 import './main.css';
 
+// import '/assets/theme_assets/sass/style.scss';
+// import '/assets/vendor_assets/css/bootstrap/bootstrap.scss';
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <RouterProvider router={routes} />

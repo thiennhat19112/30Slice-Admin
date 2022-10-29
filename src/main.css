@@ -11,3 +11,7 @@
 label {
   text-transform: none !important;
 }
+
+a {
+  cursor: pointer;
+}

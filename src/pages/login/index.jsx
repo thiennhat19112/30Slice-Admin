@@ -176,7 +176,7 @@ const Login = () => {
                                   <span>Hoặc</span>
                                 </p>
                               </form>
-                              <div className="button-group d-flex align-items-center justify-content-md-start justify-content-center">
+                              <div className="button-group d-flex align-items-center justify-content-md-start justify-content-center ">
                                 <ul className="signUp-socialBtn">
                                   <li>
                                     <button className="btn text-dark px-30">
@@ -186,10 +186,16 @@ const Login = () => {
                                         alt="img"
                                       />
                                       {'  '}
-                                      Đăng nhập bằng Google
+                                      <span
+                                        style={{
+                                          marginLeft: 10,
+                                        }}
+                                      >
+                                        Đăng nhập bằng Google
+                                      </span>
                                     </button>
                                   </li>
-                                  <li>
+                                  {/* <li>
                                     <button className=" radius-md wh-48 content-center">
                                       <img
                                         className="svg"
@@ -206,7 +212,7 @@ const Login = () => {
                                         alt="img"
                                       />
                                     </button>
-                                  </li>
+                                  </li> */}
                                 </ul>
                               </div>
                             </div>

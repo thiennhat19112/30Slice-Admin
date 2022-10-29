@@ -1,4 +1,31 @@
+import { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate, useNavigate } from 'react-router-dom';
+
+import { logout } from '../../../app/slices/auth';
+import EventBus from '../../../app/common/EventBus';
+// import { selectUser } from '../../../app/slices/auth';
+
 const Header = () => {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  const logOut = useCallback(() => {
+    dispatch(logout());
+    navigate('/login');
+  }, [dispatch]);
+
+  useEffect(() => {
+    EventBus.on('logout', () => {
+      logOut();
+    });
+
+    return () => {
+      EventBus.remove('logout');
+    };
+  }, [logOut]);
+
   return (
     <>
       <div className="mobile-search">
@@ -20,7 +47,11 @@ const Header = () => {
             </a>
             <a className="navbar-brand" href="#">
               <img className="dark" src="/assets/img/logo_dark.png" alt="svg" />
-              <img className="light" src="/assets/img/logo_white.png" alt="img" />
+              <img
+                className="light"
+                src="/assets/img/logo_white.png"
+                alt="img"
+              />
             </a>
             <form action="/" className="search-form">
               <span data-feather="search" />
@@ -1309,7 +1340,11 @@ const Header = () => {
               <li className="nav-flag-select">
                 <div className="dropdown-custom">
                   <a href="#" className="nav-item-toggle">
-                    <img src="/assets/img/flag.png" alt="" className="rounded-circle" />
+                    <img
+                      src="/assets/img/flag.png"
+                      alt=""
+                      className="rounded-circle"
+                    />
                   </a>
                   <div className="dropdown-wrapper dropdown-wrapper--small">
                     <a href="">
@@ -1347,8 +1382,8 @@ const Header = () => {
                         />
                       </div>
                       <div>
-                        <h6>Abdullah Bin Talha</h6>
-                        <span>UI Designer</span>
+                        <h6>{user.username.toUpperCase()}</h6>
+                        <span>{user.role.toUpperCase()}</span>
                       </div>
                     </div>
                     <div className="nav-author__options">
@@ -1379,8 +1414,8 @@ const Header = () => {
                           </a>
                         </li>
                       </ul>
-                      <a href="" className="nav-author__signout">
-                        <span data-feather="log-out" /> Sign Out
+                      <a onClick={logOut} className="nav-author__signout">
+                        <span data-feather="log-out" /> Đăng xuất
                       </a>
                     </div>
                   </div>

@@ -4,9 +4,7 @@ import { selectUser } from '../app/slices/auth';
 
 function PrivateRoute({ children }) {
   const isLoggedIn = useSelector(selectUser);
-  return isLoggedIn
-    ? children
-    : window.alert('Vui lòng đăng nhập!') || <Navigate to="/login" />;
+  return isLoggedIn ? children : <Navigate to="/login" />;
 }
 
 export default PrivateRoute;
