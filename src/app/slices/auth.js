@@ -36,6 +36,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: {
+    [login.pending]: (state, action) => {
+      state.isLoggedIn = false;
+      state.user = null;
+    },
     [login.fulfilled]: (state, action) => {
       state.isLoggedIn = true;
       state.user = action.payload.user;

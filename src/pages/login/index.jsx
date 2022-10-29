@@ -5,8 +5,8 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import Input from '../../components/sharedComponents/input';
-import { usernameValidator } from '../../components/sharedComponents/validatorrPatterns';
-import { passwordValidator } from '../../components/sharedComponents/validatorrPatterns';
+import { usernameValidator } from '../../components/sharedComponents/validatorPatterns';
+import { passwordValidator } from '../../components/sharedComponents/validatorPatterns';
 
 import { selectMessage } from '../../app/slices/message';
 
@@ -37,7 +37,7 @@ const Login = () => {
     dispatch(login({ username, password }))
       .unwrap()
       .then(() => {
-        navigate('/');
+        // navigate('/');
         // window.location.reload();
       })
       .catch(() => {
