@@ -1,19 +1,15 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
 
 import { logout } from '../../../app/slices/auth';
 import EventBus from '../../../app/common/EventBus';
-// import { selectUser } from '../../../app/slices/auth';
 
 const Header = () => {
-  let navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
   const logOut = useCallback(() => {
     dispatch(logout());
-    navigate('/login');
   }, [dispatch]);
 
   useEffect(() => {
