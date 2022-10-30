@@ -17,7 +17,7 @@ const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
 // };
 
 const login = async (username, password) => {
-  const response = await axios.post(API_URL + '/login', {
+  const response = await axios.post(API_URL + 'admin/login', {
     username,
     password,
   });

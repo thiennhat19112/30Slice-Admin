@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 import { logout } from '../../../app/slices/auth';
 import EventBus from '../../../app/common/EventBus';
 
@@ -222,7 +222,7 @@ const Header = () => {
                       <li className="has-subMenu-left">
                         <a href="#" className="">
                           <span data-feather="user" className="nav-icon" />
-                          <span className="menu-text">Profile</span>
+                          <span className="menu-text">â</span>
                         </a>
                         <ul className="subMenu">
                           <li>
@@ -1385,9 +1385,9 @@ const Header = () => {
                     <div className="nav-author__options">
                       <ul>
                         <li>
-                          <a href="">
-                            <span data-feather="user" /> Profile
-                          </a>
+                          <Link to="/profile">
+                            <span data-feather="user" /> Thông tin tài khoản
+                          </Link>
                         </li>
                         <li>
                           <a href="">

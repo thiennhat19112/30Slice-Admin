@@ -16,6 +16,7 @@ import App from '../app/App';
 import Login from '../pages/login';
 import Error from '../pages/error';
 import Dashboard from '../pages/dashboard';
+import Profile from '../pages/profile';
 
 const routes = createBrowserRouter([
   {
@@ -45,6 +46,11 @@ const routes = createBrowserRouter([
             path: 'product',
             exact: true,
             element: <div>Product</div>,
+          },
+          {
+            path: 'profile',
+            exact: true,
+            element: <Profile />,
           },
         ],
       },
