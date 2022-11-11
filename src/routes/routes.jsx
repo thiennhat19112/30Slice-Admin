@@ -17,6 +17,8 @@ import Login from '../pages/login';
 import Error from '../pages/error';
 import Dashboard from '../pages/dashboard';
 import Profile from '../pages/profile';
+import ForgetPassword from '../pages/forget-password';
+import ResetPassword from '../pages/reset-password';
 
 const routes = createBrowserRouter([
   {
@@ -60,6 +62,24 @@ const routes = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Login />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'forget-password',
+        exact: true,
+        element: (
+          <ProtectedRoute>
+            <ForgetPassword />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: 'reset-password',
+        exact: true,
+        element: (
+          <ProtectedRoute>
+            <ResetPassword />
           </ProtectedRoute>
         ),
       },

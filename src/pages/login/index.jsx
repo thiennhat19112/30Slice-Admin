@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate,NavLink } from 'react-router-dom';
 
 import { useForm } from 'react-hook-form';
 
@@ -148,8 +148,9 @@ const Login = () => {
                                         Giữ tôi đăng nhập
                                       </span>
                                     </label>
+                                    
                                   </div>
-                                  <a href="forget-password.html"></a>
+                                  <NavLink to="/forget-password">Quên mật khẩu</NavLink>
                                 </div>
                                 {message && (
                                   <div className="form-group">

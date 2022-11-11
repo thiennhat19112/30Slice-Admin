@@ -1,4 +1,4 @@
-import { useRouteError } from 'react-router-dom';
+import { useRouteError,Link } from 'react-router-dom';
 
 const Error = () => {
   const error = useRouteError();
@@ -26,12 +26,12 @@ const Error = () => {
                 </div>
                 <h5 className="fw-500">Ối! Có lỗi xảy ra.</h5>
                 <div className="content-center mt-30">
-                  <a
-                    href="index.html"
+                  <Link
+                    to="/"
                     className="btn btn-primary btn-default btn-squared px-30"
                   >
                     Trở về trang chủ
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
