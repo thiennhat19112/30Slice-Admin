@@ -7,8 +7,24 @@ const getAdminBoard = () => {
   return axios.get(API_URL + 'admin/info', { headers: authHeader() });
 };
 
+const ChangePassword = async (old_password, new_password) => {
+  const response = await axios.post(API_URL + 'admin/change-password', {
+    old_password,
+    new_password,
+  },{
+    headers: authHeader()
+  });
+
+  if (response.data) {
+    console.log(response.data);
+
+  }
+  return response.data;
+};
+
 const adminService = {
   getAdminBoard,
+  ChangePassword
 };
 
 export default adminService;

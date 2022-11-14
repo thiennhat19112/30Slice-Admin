@@ -25,6 +25,8 @@ export const login = createAsyncThunk(
   }
 );
 
+
+
 export const getInfo = createAsyncThunk(
   'auth/getInfo',
   async (thunkAPI) => {
