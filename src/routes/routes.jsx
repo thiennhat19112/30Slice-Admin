@@ -19,6 +19,8 @@ import Dashboard from '../pages/dashboard';
 import Profile from '../pages/profile';
 import ForgetPassword from '../pages/forget-password';
 import ResetPassword from '../pages/reset-password';
+import Category from '../pages/category';
+import Product from '../pages/product';
 
 const routes = createBrowserRouter([
   {
@@ -45,14 +47,19 @@ const routes = createBrowserRouter([
             element: <div>Item</div>,
           },
           {
-            path: 'product',
+            path: 'products',
             exact: true,
-            element: <div>Product</div>,
+            element: <Product />,
           },
           {
             path: 'profile',
             exact: true,
             element: <Profile />,
+          },
+          {
+            path: 'category',
+            exact: true,
+            element: <Category />,
           },
         ],
       },

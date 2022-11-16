@@ -27,6 +27,12 @@ const login = async (username, password) => {
   return response.data;
 };
 
+const getCategory = async () => {
+  const response = await axios.get(API_URL + 'category/getAllCategories');
+  return response.data;
+};
+
+
 
 const logout = () => {
   localStorage.removeItem('user');
@@ -35,6 +41,7 @@ const logout = () => {
 const authService = {
   login,
   logout,
+  getCategory
 };
 
 export default authService;
