@@ -270,7 +270,7 @@ const Category = () => {
       <div className="row">
         {categories.map((item, index) => {
           return (
-            <div key={index} className="col-md-6 col-sm-12 mb-25">
+            <div key={index} className="col-md-4 col-sm-12 mb-25">
               <div className="media  py-30  pl-30 pr-20 bg-white radius-xl users-list ">
                 <div className="media-body d-xl-flex users-list-body">
                   <div className="flex-1 pr-xl-30 users-list-body__title">
@@ -279,19 +279,27 @@ const Category = () => {
                     <p className="mb-0"></p>
                     <div className="userDatatable-content d-inline-block">
                       <span>
-                       {item.Is_Show == true ? (<span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">Đang hiện</span>):(<span class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">Đang ẩn</span>)}
+                        {item.Is_Show == true ? (
+                          <span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
+                            Đang hiện
+                          </span>
+                        ) : (
+                          <span class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">
+                            Đang ẩn
+                          </span>
+                        )}
                       </span>
                     </div>
                   </div>
                   <div className="users-list__button mt-xl-0 mt-15">
                     <button className="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">
-                      Sửa
+                      <i className="fa-solid fa-pen-to-square"></i> Sửa
                     </button>
                     <button
                       type="button"
-                      className="border btn-danger-outline text-capitalize px-25 color-gray transparent shadow2 follow my-xl-0 radius-md"
+                      className="btn btn-outline-danger btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
                     >
-                      Xoá
+                      <i class="fa-solid fa-trash"></i>  Xoá
                     </button>
                   </div>
                 </div>
