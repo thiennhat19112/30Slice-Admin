@@ -292,9 +292,9 @@ const Category = () => {
                     </div>
                   </div>
                   <div className="users-list__button mt-xl-0 mt-15">
-                    <button className="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">
+                    <Link to={/category/+ item._id} className="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow">
                       <i className="fa-solid fa-pen-to-square"></i> Sửa
-                    </button>
+                    </Link>
                     <button
                       type="button"
                       className="btn btn-outline-danger btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
