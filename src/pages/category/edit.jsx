@@ -140,9 +140,9 @@ const EditCategory = () => {
                                     return (
                                       <option
                                         key={item._id}
-                                        value={item._id}
+                                        value={item?._id}
                                         selected={
-                                          item._id == category?.Parent_Id
+                                          item._id === category?.Parent_Id
                                         }
                                       >
                                         {item.Name}
