@@ -21,6 +21,20 @@ const ChangePassword = async (old_password, new_password) => {
   }
   return response.data;
 };
+const EditCategory = async (old_category, new_category) => {
+  const response = await axios.post(API_URL + 'admin/edit-category', {
+    old_category,
+    new_category,
+  },{
+    headers: authHeader()
+  });
+
+  if (response.data) {
+    console.log(response.data);
+  }
+  return response.data;
+};
+
 
 const adminService = {
   getAdminBoard,

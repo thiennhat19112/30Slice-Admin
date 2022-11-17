@@ -31,6 +31,16 @@ const getCategory = async () => {
   const response = await axios.get(API_URL + 'category/getAllCategories');
   return response.data;
 };
+const getOneCategory = async (id) => {
+  const response = await axios.get(API_URL + 'category/getOneCategory/' + id);
+  return response.data;
+};
+const getParentCategory = async () => {
+  const response = await axios.get(API_URL + 'category/getCategoriesParent');
+  return response.data;
+};
+
+
 
 
 
@@ -41,7 +51,9 @@ const logout = () => {
 const authService = {
   login,
   logout,
-  getCategory
+  getCategory,
+  getOneCategory,
+  getParentCategory
 };
 
 export default authService;

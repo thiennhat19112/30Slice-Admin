@@ -299,7 +299,7 @@ const Category = () => {
                       type="button"
                       className="btn btn-outline-danger btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
                     >
-                      <i class="fa-solid fa-trash"></i>  Xoá
+                      <i className="fa-solid fa-trash"></i>  Xoá
                     </button>
                   </div>
                 </div>

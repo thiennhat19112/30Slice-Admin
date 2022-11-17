@@ -68,13 +68,13 @@ const News = () => {
       <div className="row">
         <div className="col-lg-12">
           {loading ? (
-            <div class="card-body">
-              <div class="spin-container text-center">
-                <div class="atbd-spin-dots spin-lg">
-                  <span class="spin-dot badge-dot dot-primary"></span>
-                  <span class="spin-dot badge-dot dot-primary"></span>
-                  <span class="spin-dot badge-dot dot-primary"></span>
-                  <span class="spin-dot badge-dot dot-primary"></span>
+            <div className="card-body">
+              <div className="spin-container text-center">
+                <div className="atbd-spin-dots spin-lg">
+                  <span className="spin-dot badge-dot dot-primary"></span>
+                  <span className="spin-dot badge-dot dot-primary"></span>
+                  <span className="spin-dot badge-dot dot-primary"></span>
+                  <span className="spin-dot badge-dot dot-primary"></span>
                 </div>
               </div>
             </div>
@@ -115,7 +115,7 @@ const News = () => {
                   <tbody>
                     {arrNews.length > 0 &&
                     arrNews.map((item) => (
-                      <tr>
+                      <tr key={item?._id}>
                         <td>
                           <div className="userDatatable-inline-title">
                             <span className="text-dark fw-500 text-wrap mw-300">
@@ -167,7 +167,7 @@ const News = () => {
                               type="button"
                               className="btn btn-outline-danger btn-default btn-squared text-capitalize px-10  global-shadow"
                             >
-                              <i class="fa-solid fa-trash"></i> Xoá
+                              <i className="fa-solid fa-trash"></i> Xoá
                             </button>
                           </div>
                         </td>

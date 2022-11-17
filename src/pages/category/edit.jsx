@@ -1,4 +1,25 @@
+import { useParams } from "react-router-dom";
+import authService from "../../app/services/auth.service";
+import { useEffect, useState } from "react";
+
 const EditCategory = () => {
+  const params = useParams();
+  const id = params.id;
+  const [category, setCategory] = useState({});
+  const [selected, setSelected] = useState(true);
+  const [parentCategory, setParentCategory] = useState([]);
+
+  useEffect(() => {
+    authService.getOneCategory(id).then((res) => {
+      console.log(res);
+      setCategory(res);
+      setSelected(res.Is_Show);
+    });
+    authService.getParentCategory().then((res) => {
+      setParentCategory(res);
+    });
+  }, [id]);
+
   return (
     <>
       <div className="container-fluid">
@@ -7,7 +28,7 @@ const EditCategory = () => {
             <div className="shop-breadcrumb">
               <div className="breadcrumb-main">
                 <h4 className="text-capitalize breadcrumb-title">
-                 Sửa Loại Sản Phẩm
+                  Sửa Loại Sản Phẩm
                 </h4>
               </div>
             </div>
@@ -34,90 +55,29 @@ const EditCategory = () => {
                           <form>
                             {/* form group */}
                             <div className="form-group">
-                              <label htmlFor="name1">product name</label>
+                              <label htmlFor="name1">ID</label>
                               <input
                                 type="text"
                                 className="form-control"
                                 id="name1"
                                 placeholder="red chair"
+                                defaultValue={category._id}
+                                readOnly
                               />
                             </div>
-                            {/* form group 1 */}
                             <div className="form-group">
-                              <label htmlFor="name2">sub text</label>
+                              <label htmlFor="name1">Tên Loại</label>
                               <input
                                 type="text"
                                 className="form-control"
-                                id="name2"
-                                placeholder="sub heading"
+                                id="name1"
+                                placeholder="red chair"
+                                defaultValue={category.Name}
                               />
                             </div>
-                            {/* form group 2 */}
-                            <div className="form-group">
-                              <div className="countryOption">
-                                <label htmlFor="countryOption">category</label>
-                                <select
-                                  className="js-example-basic-single js-states form-control"
-                                  id="countryOption"
-                                >
-                                  <option value="JAN">event</option>
-                                  <option value="FBR">Venues</option>
-                                </select>
-                              </div>
-                            </div>
-                            {/* form group 3 */}
-                            <div className="form-group quantity-appearance">
-                              <label>price</label>
-                              <div className="input-group">
-                                <div className="input-group-prepend">
-                                  <span
-                                    className="input-group-text"
-                                    id="basic-addon1"
-                                  >
-                                    <span data-feather="dollar-sign" />
-                                  </span>
-                                </div>
-                                <div className="pt_Quantity">
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    min={0}
-                                    max={100}
-                                    step={1}
-                                    defaultValue={0}
-                                    data-inc={1}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            {/* form group 4 */}
-                            <div className="form-group quantity-appearance">
-                              <label>Discount</label>
-                              <div className="input-group">
-                                <div className="input-group-prepend">
-                                  <span
-                                    className="input-group-text"
-                                    id="basic-addon2"
-                                  >
-                                    <span data-feather="percent" />
-                                  </span>
-                                </div>
-                                <div className="pt_Quantity">
-                                  <input
-                                    type="number"
-                                    className="form-control"
-                                    min={0}
-                                    max={100}
-                                    step={1}
-                                    defaultValue={0}
-                                    data-inc={1}
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            {/* form group 5 */}
+
                             <div className="form-group status-radio add-product-status-radio mb-20">
-                              <label className="mb-15">status</label>
+                              <label className="mb-15">Ẩn/Hiện</label>
                               <div className="d-flex">
                                 <div className="radio-horizontal-list d-flex flex-wrap">
                                   <div className="radio-theme-default custom-radio ">
@@ -125,13 +85,13 @@ const EditCategory = () => {
                                       className="radio"
                                       type="radio"
                                       name="radio-optional"
-                                      defaultValue={0}
+                                      defaultValue={true}
                                       id="radio-hl1"
+                                      checked={selected === true}
+                                      onChange={() => setSelected(true)}
                                     />
                                     <label htmlFor="radio-hl1">
-                                      <span className="radio-text">
-                                        Published
-                                      </span>
+                                      <span className="radio-text">Hiện</span>
                                     </label>
                                   </div>
                                   <div className="radio-theme-default custom-radio ">
@@ -139,114 +99,63 @@ const EditCategory = () => {
                                       className="radio"
                                       type="radio"
                                       name="radio-optional"
-                                      defaultValue={0}
+                                      defaultValue={false}
                                       id="radio-hl2"
+                                      checked={selected === false}
+                                      onChange={() => setSelected(false)}
                                     />
                                     <label htmlFor="radio-hl2">
-                                      <span className="radio-text">draft</span>
+                                      <span className="radio-text">Ẩn</span>
                                     </label>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            {/* form group 6 */}
                             <div className="form-group">
-                              <label htmlFor="exampleFormControlTextarea1">
-                                Product Description
-                              </label>
-                              <textarea
-                                className="form-control"
-                                id="exampleFormControlTextarea1"
-                                rows={3}
-                                placeholder="loram ipsum dolor sit amit"
-                                defaultValue={""}
-                              />
-                            </div>
-                            {/* form group 7 */}
-                            <div className="form-group">
-                              <label htmlFor="name8">Meta Title</label>
+                              <label htmlFor="name8">Thứ tự</label>
                               <input
-                                type="text"
+                                type="number"
                                 className="form-control"
                                 id="name8"
-                                placeholder="Meta title"
+                                placeholder="Số thứ tự"
+                                defaultValue={category.Ordinal}
                               />
                             </div>
-                            {/* form group 8 */}
-                            <div className="form-group mb-0">
-                              <label htmlFor="name9">Meta Keyword</label>
-                              <input
-                                type="text"
-                                className="form-control"
-                                id="name9"
-                                placeholder="Meta keyword"
-                              />
+                            <div className="form-group">
+                              <div className="countryOption">
+                                <label htmlFor="countryOption">Con ?</label>
+                                <select
+                                  className="js-example-basic-single js-states form-control"
+                                  id="countryOption"
+                                  defaultValue={category.Parent_Id}
+                                >
+                                  <option
+                                    value="null"
+                                    selected={category.Parent_Id == null}
+                                  >
+                                    Không
+                                  </option>
+
+                                  {parentCategory.map((item) => {
+                                    return (
+                                      <option
+                                        key={item._id}
+                                        value={item._id}
+                                        selected={
+                                          item._id == category?.Parent_Id
+                                        }
+                                      >
+                                        {item.Name}
+                                      </option>
+                                    );
+                                  })}
+                                </select>
+                              </div>
                             </div>
                           </form>
                           {/* End: form */}
                         </div>
                         {/* End: card body */}
-                      </div>
-                    </div>
-                    {/* End: card */}
-                    {/* Start: card */}
-                    <div className="card add-product p-sm-30 p-20 ">
-                      <div className="card-body p-0">
-                        <div className="card-header">
-                          <h6 className="fw-500">Product image</h6>
-                        </div>
-                        {/* Start: product body */}
-                        <div className="add-product__body-img px-sm-40 px-20">
-                          <label
-                            htmlFor="upload"
-                            className="file-upload__label"
-                          >
-                            <span className="upload-product-img px-10 d-block">
-                              <span className="file-upload">
-                                <span data-feather="upload" />
-                                <input
-                                  id="upload"
-                                  className="file-upload__input"
-                                  type="file"
-                                  name="file-upload"
-                                />
-                              </span>
-                              <span className="pera">
-                                Drag and drop an image
-                              </span>
-                              <span>
-                                or{" "}
-                                <a href="#" className="color-secondary">
-                                  Browse
-                                </a>{" "}
-                                to choose a file
-                              </span>
-                            </span>
-                          </label>
-                          <div className="upload-product-media d-flex justify-content-between align-items-center mt-25">
-                            <div className="upload-media-area d-flex">
-                              <img
-                                src="img/food-restaurant-media.png"
-                                alt="img"
-                              />
-                              <div className=" upload-media-area__title  d-flex flex-wrap align-items-center ml-10">
-                                <div>
-                                  <p>Product_image.jpg</p>
-                                  <span>68.8 KB</span>
-                                </div>
-                                <div className="upload-media-area__btn">
-                                  <button
-                                    type="button"
-                                    className="transparent rounded-circle wh-30 border-0 color-danger"
-                                  >
-                                    <span data-feather="trash-2" />
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        {/* End: product body */}
                       </div>
                     </div>
                     {/* End: card */}
