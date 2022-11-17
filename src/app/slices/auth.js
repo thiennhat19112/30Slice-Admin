@@ -1,8 +1,9 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { setMessage } from './message';
 
-import AuthService from '../services/auth.service';
-import  adminService  from '../services/admin.service';
+import adminService from '../services/admin.service';
+// import AuthService from '../services/auth.service';
+import AuthService from '../services/auth/auth.service';
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -25,28 +26,20 @@ export const login = createAsyncThunk(
   }
 );
 
-
-
-export const getInfo = createAsyncThunk(
-  'auth/getInfo',
-  async (thunkAPI) => {
-    try {
-      const data = await adminService.getAdminBoard();
-      console.log(data);
-      return { user: data };
-    } catch (error) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      // thunkAPI.dispatch(setMessage(message));
-      // return thunkAPI.rejectWithValue();
-    }
+export const getInfo = createAsyncThunk('auth/getInfo', async (thunkAPI) => {
+  try {
+    const data = await adminService.getAdminBoard();
+    console.log(data);
+    return { user: data };
+  } catch (error) {
+    const message =
+      (error.response && error.response.data && error.response.data.message) ||
+      error.message ||
+      error.toString();
+    // thunkAPI.dispatch(setMessage(message));
+    // return thunkAPI.rejectWithValue();
   }
-);
-
+});
 
 export const logout = createAsyncThunk('auth/logout', async () => {
   await AuthService.logout();
@@ -59,6 +52,11 @@ const initialState = user
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    refresh: (state, action) => {
+      state.user.accessToken = action.payload;
+    },
+  },
   extraReducers: {
     [login.pending]: (state, action) => {
       state.isLoggedIn = false;
@@ -81,5 +79,6 @@ const authSlice = createSlice({
 
 export const selectUser = (state) => state.auth.isLoggedIn;
 
+export const { refresh } = authSlice.actions;
 const { reducer } = authSlice;
 export default reducer;

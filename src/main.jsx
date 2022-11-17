@@ -41,6 +41,8 @@ import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 
+import setupInterceptors from './app/services/auth/setupInterceptors';
+
 import { RouterProvider } from 'react-router-dom';
 import routes from './routes/routes';
 
@@ -54,3 +56,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={routes} />
   </Provider>
 );
+
+setupInterceptors(store);

@@ -1,4 +1,34 @@
+import { useState, useEffect } from 'react';
+
+import UserService from '../../app/services/auth/user.service';
+import EventBus from '../../app/common/EventBus';
+
 function Dashboard() {
+  const [content, setContent] = useState();
+
+  useEffect(() => {
+    UserService.getAdminBoard().then(
+      (response) => {
+        setContent(response.data);
+      },
+      (error) => {
+        console.log(error);
+        setContent(
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+            error.message ||
+            error.toString()
+        );
+
+        if (error.response && error.response.status === 403) {
+          window.alert('Token đã hết hạn, bạn sẽ bị đăng xuất!');
+          EventBus.dispatch('logout');
+        }
+      }
+    );
+  }, []);
+
   return (
     <div className="container-fluid">
       <div className="row ">
@@ -6,6 +36,7 @@ function Dashboard() {
           <div className="breadcrumb-main">
             <h4 className="text-capitalize breadcrumb-title">
               Ecommerce Dashboard
+              {content}
             </h4>
             <div className="breadcrumb-action justify-content-center flex-wrap">
               <div className="action-btn">

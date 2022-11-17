@@ -1,5 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
+import api from './auth/api';
+
 
 const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
 

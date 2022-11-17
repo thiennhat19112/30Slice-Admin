@@ -1,10 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
     <aside className="sidebar-wrapper">
       <div className="sidebar sidebar-collapse" id="sidebar">
         <div className="sidebar__menu-group">
           <ul className="sidebar_nav">
+            <li className="menu-title">
+              <span>Thống kê</span>
+            </li>
+            <li>
+              <NavLink to="/" className="">
+                <span data-feather="activity" className="nav-icon" />
+                <span className="menu-text">Thống kê dữ liệu</span>
+              </NavLink>
+            </li>
             <li className="menu-title">
               <span>Loại Sản Phẩm</span>
             </li>
@@ -27,7 +36,7 @@ const Sidebar = () => {
               <span>Tin tức</span>
             </li>
             <li>
-            <NavLink to="/news" className="">
+              <NavLink to="/news" className="">
                 <span data-feather="activity" className="nav-icon" />
                 <span className="menu-text">Quản Lý tin tức</span>
               </NavLink>
