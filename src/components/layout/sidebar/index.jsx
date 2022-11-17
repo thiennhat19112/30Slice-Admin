@@ -23,6 +23,15 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý sản phẩm</span>
               </NavLink>
             </li>
+            <li className="menu-title">
+              <span>Tin tức</span>
+            </li>
+            <li>
+            <NavLink to="/news" className="">
+                <span data-feather="activity" className="nav-icon" />
+                <span className="menu-text">Quản Lý tin tức</span>
+              </NavLink>
+            </li>
           </ul>
         </div>
       </div>

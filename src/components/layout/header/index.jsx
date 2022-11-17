@@ -49,14 +49,14 @@ const Header = () => {
                 alt="img"
               />
             </a>
-            <form action="/" className="search-form">
+            {/* <form action="/" className="search-form">
               <span data-feather="search" />
               <input
                 className="form-control mr-sm-2 box-shadow-none"
                 type="text"
                 placeholder="Search..."
               />
-            </form>
+            </form> */}
             <div className="top-menu">
               <div className="strikingDash-top-menu position-relative">
                 <ul>

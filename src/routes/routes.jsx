@@ -21,6 +21,7 @@ import ForgetPassword from '../pages/forget-password';
 import ResetPassword from '../pages/reset-password';
 import Category from '../pages/category';
 import Product from '../pages/product';
+import News from '../pages/news';
 
 const routes = createBrowserRouter([
   {
@@ -60,6 +61,11 @@ const routes = createBrowserRouter([
             path: 'category',
             exact: true,
             element: <Category />,
+          },
+          {
+            path: 'news',
+            exact: true,
+            element: <News />,
           },
         ],
       },
