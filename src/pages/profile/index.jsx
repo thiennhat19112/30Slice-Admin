@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import Input from "../../components/sharedComponents/input";
 import { passwordValidator } from "../../components/sharedComponents/validatorPatterns";
 import { selectMessage } from "../../app/redux/slices/auth/message";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {  toast } from "react-toastify";
 import { ChangePasswordAdmin } from "../../app/services/admin/admin.service";
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
@@ -94,18 +93,6 @@ const Profile = () => {
 
   return (
     <>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="colored"
-      />
       <div className="profile-setting ">
         <div className="container-fluid">
           <div className="row">
