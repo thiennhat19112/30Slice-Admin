@@ -1,4 +1,4 @@
-import api from "../axios/api";
+import api from "../../axios/api";
 
 const getStylelistBoard = () => {
   return api.get("user/test/stylelist");

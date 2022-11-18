@@ -41,11 +41,11 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { store, persistor } from "./app/redux/store";
 
-import setupInterceptors from "./app/services/axios/setupInterceptors";
+import setupInterceptors from "./app/axios/setupInterceptors";
 
 import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
-import app from "./app/services/firebase/firebaseConfig";
+import app from "./app/firebase/firebaseConfig";
 import "./main.css";
 import { PersistGate } from "redux-persist/integration/react";
 
