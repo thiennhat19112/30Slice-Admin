@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
-import SwitchIOS from "../../CustomMui/switch";
+import { Link } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
+import SwitchIOS from '../../CustomMui/switch';
 
-// import { getCategory } from "../../app/services/category.service";
+// import { getCategory } from "../../app/services/admin/category.service";
 import {
   getCategory,
   UpdateCategory,
-} from "../../app/services/auth/category.service";
+} from '../../app/services/admin/category.service';
 const Category = () => {
   const [arrCategories, setArrCategories] = useState([]);
   const _isMounted = useRef(false);
@@ -131,7 +131,7 @@ const Category = () => {
                               id="exampleFormControlTextarea1"
                               rows={3}
                               placeholder="Project description"
-                              defaultValue={""}
+                              defaultValue={''}
                             />
                           </div>
                           <div className="form-group textarea-group">
@@ -315,17 +315,14 @@ const Category = () => {
                     <div className="media-body d-xl-flex users-list-body">
                       <div className="flex-1 pr-xl-30 users-list-body__title">
                         <h6 className="mt-0 fw-500">{item.Name} </h6>
-                        <span> {item.Parent_Id == null ? "Cha" : "Con"}</span>
+                        <span> {item.Parent_Id == null ? 'Cha' : 'Con'}</span>
                         <p className="mb-0"></p>
                         <div className="userDatatable-content d-inline-block">
                           Ẩn/Hiện
                           <SwitchIOS
                             defaultChecked={item?.Is_Show}
                             onChange={() =>
-                              handleUpdateStatus(
-                                item?._id,
-                                item?.Is_Show
-                              )
+                              handleUpdateStatus(item?._id, item?.Is_Show)
                             }
                             name="Is_Show"
                           />

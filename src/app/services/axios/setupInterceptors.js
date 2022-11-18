@@ -1,6 +1,6 @@
 import { refresh } from '../../slices/auth';
 import axiosInstance from './api';
-import TokenService from './token.service';
+import TokenService from '../auth/token.service';
 
 const setup = (store) => {
   axiosInstance.interceptors.request.use(

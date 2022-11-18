@@ -4,7 +4,7 @@ import {
   getParentCategory,
   getOneCategory,
   UpdateCategory,
-} from "../../app/services/auth/category.service";
+} from "../../app/services/admin/category.service";
 
 const EditCategory = () => {
   const params = useParams();

@@ -1,7 +1,8 @@
-import api from "./api";
+import api from '../axios/api';
+
 export const getCategory = async () => {
   try {
-    const response = await api.get("category/getAllCategories");
+    const response = await api.get('category/getAllCategories');
     if (response.status === 200) {
       return response.data;
     }
@@ -12,7 +13,7 @@ export const getCategory = async () => {
 
 export const getOneCategory = async (id) => {
   try {
-    const response = await api.get("category/getOneCategory/" + id);
+    const response = await api.get('category/getOneCategory/' + id);
     if (response.status === 200) {
       return response.data;
     }
@@ -22,7 +23,7 @@ export const getOneCategory = async (id) => {
 };
 export const getParentCategory = async () => {
   try {
-    const response = await api.get("category/getCategoriesParent");
+    const response = await api.get('category/getCategoriesParent');
     if (response.status === 200) {
       return response.data;
     }
@@ -32,11 +33,11 @@ export const getParentCategory = async () => {
 };
 export const UpdateCategory = async (data) => {
   try {
-    const response = await api.put("category", data);
+    const response = await api.put('category', data);
     if (response.status === 200) {
       return response.data;
     }
   } catch (err) {
     throw new Error(err);
   }
-}
+};
