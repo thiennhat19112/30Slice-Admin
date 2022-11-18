@@ -45,7 +45,7 @@ import setupInterceptors from './app/services/auth/setupInterceptors';
 
 import { RouterProvider } from 'react-router-dom';
 import routes from './routes/routes';
-
+import app from './app/services/firebaseConfig';
 import './main.css';
 
 // import '/assets/theme_assets/sass/style.scss';
