@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { getNews } from "../../app/services/news.service";
+import { getNews, updateNews } from "../../app/services/news.service";
+import SwitchIOS from "../../CustomMui/switch";
+import Modal from "./Modal";
 
 const News = () => {
   const _isMounted = useRef(false);
   const [arrNews, setArrNews] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [keySearch,setKeySearch] = useState("");
 
   const loadNews = async () => {
     _isMounted.current && setLoading(true);
@@ -12,6 +15,7 @@ const News = () => {
     _isMounted.current && setLoading(false);
     _isMounted.current && setArrNews(data);
   };
+
 
   useEffect(() => {
     _isMounted.current = true;
@@ -24,6 +28,31 @@ const News = () => {
   useEffect(() => {
     loadNews();
   }, []);
+
+  const handleUpdateStatus = async (id, Is_Show) => {
+    const data = { Is_Show: !Is_Show, _id: id };
+    try {
+      await updateNews(data);
+      _isMounted && loadNews();
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const handleUpdateHot = async (id, Is_Hot) => {
+    const data = { Is_Hot: !Is_Hot, _id: id };
+    try {
+      await updateNews(data);
+      _isMounted && loadNews();
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
+  const handleSearch = (e) => {
+    _isMounted && setKeySearch(e.target.value)
+  }
+
 
   return (
     <div className="container-fluid">
@@ -49,6 +78,8 @@ const News = () => {
                   type="search"
                   placeholder="Search by Name"
                   aria-label="Search"
+                  value={keySearch}
+                  onChange={handleSearch}
                 />
               </form>
             </div>
@@ -102,7 +133,7 @@ const News = () => {
                         <span className="userDatatable-title">Lượt xem</span>
                       </th>
                       <th>
-                        <span className="userDatatable-title">Trạng thái</span>
+                        <span className="userDatatable-title">Ẩn/Hiện</span>
                       </th>
                       <th>
                         <span className="userDatatable-title">Nỗi bật</span>
@@ -114,68 +145,84 @@ const News = () => {
                   </thead>
                   <tbody>
                     {arrNews.length > 0 &&
-                    arrNews.map((item) => (
-                      <tr key={item?._id}>
-                        <td>
-                          <div className="userDatatable-inline-title">
-                            <span className="text-dark fw-500 text-wrap mw-300">
-                              <h6>{item?.Title}</h6>
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="userDatatable-content">
-                            <img src={item?.image} width={50} alt="" />
-                          </div>
-                        </td>
-                        <td>
-                          <div className="userDatatable-content">
-                            {item?.Create_By}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="userDatatable-content">
-                            {moment(item?.createdAt).format("L")}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="userDatatable-content">
-                            {item?.Views}
-                          </div>
-                        </td>
-                        <td>
-                          <div className="userDatatable-content d-inline-block">
-                            <span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
-                              active
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="userDatatable-content d-inline-block">
-                            <span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
-                              active
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
-                            <button className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
-                              <i className="fa-solid fa-pen-to-square"></i> Sửa
-                            </button>
+                      arrNews.map((item) => (
+                        <tr key={item?._id}>
+                          <td>
+                            <div className="userDatatable-inline-title">
+                              <span className="text-dark fw-500 text-wrap text-start mw-300">
+                                <h6>{item?.Title}</h6>
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userDatatable-content">
+                              <img src={item?.image} width={50} alt="" />
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userDatatable-content">
+                              {item?.Create_By}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userDatatable-content">
+                              {moment(item?.createdAt).format("L")}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userDatatable-content text-center">
+                              {item?.Views}
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userDatatable-content d-inline-block">
+                              <SwitchIOS
+                                onChange={() =>
+                                  handleUpdateStatus(
+                                    item?._id,
+                                    item?.Is_Show
+                                  )
+                                }
+                                defaultChecked={item?.Is_Show}
+                                name="Is_Show"
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            <div className="userDatatable-content d-inline-block">
+                              <SwitchIOS
+                                defaultChecked={item?.Is_Hot}
+                                name="Is_Hot"
+                                onChange={() =>
+                                  handleUpdateHot(
+                                    item?._id,
+                                    item?.Is_Hot
+                                  )
+                                }
+                              />
+                            </div>
+                          </td>
+                          <td>
+                            <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
+                              <button className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
+                                <i className="fa-solid fa-pen-to-square"></i>{" "}
+                                Sửa
+                              </button>
 
-                            <button
-                              type="button"
-                              className="btn btn-outline-danger btn-default btn-squared text-capitalize px-10  global-shadow"
-                            >
-                              <i className="fa-solid fa-trash"></i> Xoá
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                              <button
+                                type="button"
+                                className="btn btn-outline-danger btn-default btn-squared text-capitalize px-10  global-shadow"
+                              >
+                                <i className="fa-solid fa-trash"></i> Xoá
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
+              {/* phan trang */}
               <div className="d-flex justify-content-end pt-30">
                 <nav className="atbd-page ">
                   <ul className="atbd-pagination d-flex">
@@ -227,6 +274,7 @@ const News = () => {
             </div>
           )}
         </div>
+        <Modal />
       </div>
     </div>
   );

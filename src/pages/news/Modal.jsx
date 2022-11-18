@@ -1,9 +1,10 @@
+import { FormControlLabel } from "@mui/material";
 import React from "react";
+import SwitchIOS from "../../CustomMui/switch";
 
-const ModalNews = () => {
+const Modal = () => {
   return (
     <div>
-      {" "}
       {/* Modal */}
       <div
         className="modal fade new-member"
@@ -17,194 +18,74 @@ const ModalNews = () => {
           <div className="modal-content  radius-xl">
             <div className="modal-header">
               <h6 className="modal-title fw-500" id="staticBackdropLabel">
-                Create project
+                Thêm tin tức
               </h6>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span data-feather="x" />
-              </button>
             </div>
             <div className="modal-body">
               <div className="new-member-modal">
                 <form>
                   <div className="form-group mb-20">
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Duran Clayton"
-                    />
-                  </div>
-                  <div className="form-group mb-20">
-                    <div className="category-member">
-                      <select
-                        className="js-example-basic-single js-states form-control"
-                        id="category-member"
-                      >
-                        <option value="JAN">1</option>
-                        <option value="FBR">2</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="form-group mb-20">
+                    <label
+                      htmlFor="title-news"
+                      className="fs-14 color-light strikethrough"
+                    >
+                      Tiêu đề tin tức
+                    </label>
                     <textarea
                       className="form-control"
-                      id="exampleFormControlTextarea1"
+                      id="title-news"
                       rows={3}
-                      placeholder="Project description"
                       defaultValue={""}
                     />
                   </div>
-                  <div className="form-group textarea-group">
-                    <label className="mb-15">status</label>
-                    <div className="d-flex">
-                      <div className="project-task-list__left d-flex align-items-center">
-                        <div className="checkbox-group d-flex mr-50 pr-10">
-                          <div className="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                            <input
-                              className="checkbox"
-                              type="checkbox"
-                              id="check-grp-1"
-                              defaultChecked=""
-                            />
-                            <label
-                              htmlFor="check-grp-1"
-                              className="fs-14 color-light strikethrough"
-                            >
-                              status
-                            </label>
-                          </div>
-                        </div>
-                        <div className="checkbox-group d-flex mr-50 pr-10">
-                          <div className="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                            <input
-                              className="checkbox"
-                              type="checkbox"
-                              id="check-grp-2"
-                            />
-                            <label
-                              htmlFor="check-grp-2"
-                              className="fs-14 color-light strikethrough"
-                            >
-                              Deactivated
-                            </label>
-                          </div>
-                        </div>
-                        <div className="checkbox-group d-flex">
-                          <div className="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                            <input
-                              className="checkbox"
-                              type="checkbox"
-                              id="check-grp-3"
-                            />
-                            <label
-                              htmlFor="check-grp-3"
-                              className="fs-14 color-light strikethrough"
-                            >
-                              bloked
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                  <div className="form-group mb-20">
+                    <label
+                      htmlFor="desc-news"
+                      className="fs-14 color-light strikethrough"
+                    >
+                      Mô tả
+                    </label>
+                    <textarea
+                      className="form-control"
+                      id="desc-news"
+                      rows={3}
+                      defaultValue={""}
+                    />
                   </div>
-                  <div className="mb-25">
-                    <div className="form-group mb-10">
-                      <label htmlFor="name47">project member</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="name47"
-                        placeholder="Search members"
-                      />
-                    </div>
-                    <ul className="d-flex flex-wrap mb-20 user-group-people__parent">
-                      <li>
-                        <a href="#">
-                          <img
-                            className="rounded-circle wh-34"
-                            src="img/tm1.png"
-                            alt="author"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <img
-                            className="rounded-circle wh-34"
-                            src="img/tm2.png"
-                            alt="author"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <img
-                            className="rounded-circle wh-34"
-                            src="img/tm3.png"
-                            alt="author"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <img
-                            className="rounded-circle wh-34"
-                            src="img/tm4.png"
-                            alt="author"
-                          />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="#">
-                          <img
-                            className="rounded-circle wh-34"
-                            src="img/tm5.png"
-                            alt="author"
-                          />
-                        </a>
-                      </li>
-                    </ul>
+                  <div className="form-group mb-20">
+                    <label
+                      htmlFor="img-news"
+                      className="fs-14 color-light strikethrough"
+                    >
+                      Hình ảnh
+                    </label>
+                    <input class="form-control" type="file" id="formFile" />
                   </div>
-                  <div className="d-flex new-member-calendar">
-                    <div className="form-group w-100 mr-sm-15 form-group-calender">
-                      <label htmlFor="datepicker">start Date</label>
-                      <div className="position-relative">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="datepicker"
-                          placeholder="mm/dd/yyyy"
-                        />
-                        <a href="#">
-                          <span data-feather="calendar" />
-                        </a>
-                      </div>
-                    </div>
-                    <div className="form-group w-100 form-group-calender">
-                      <label htmlFor="datepicker2">End Date</label>
-                      <div className="position-relative">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="datepicker2"
-                          placeholder="mm/dd/yyyy"
-                        />
-                        <a href="#">
-                          <span data-feather="calendar" />
-                        </a>
-                      </div>
-                    </div>
+                  <div className="form-group mb-20 ">
+                    <FormControlLabel
+                      className="mr-50"
+                      labelPlacementStart
+                      control={<SwitchIOS defaultChecked={true} />}
+                      label="Ẩn/Hiện"
+                    />
+                    <FormControlLabel
+                      className="mr-50"
+                      labelPlacementStart
+                      control={<SwitchIOS />}
+                      label="Nỗi bật"
+                    />
                   </div>
-                  <div className="button-group d-flex pt-25">
-                    <button className="btn btn-primary btn-default btn-squared text-capitalize">
-                      add new project
+                  <div className="button-group d-flex pt-25 justify-content-end">
+                    <button className="btn btn-success btn-default btn-squared text-capitalize">
+                      Thêm
                     </button>
-                    <button className="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light">
-                      cancel
+                    <button
+                      type="button"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                      className="btn btn-danger btn-default btn-squared fw-400 text-capitalize"
+                    >
+                      Huỷ
                     </button>
                   </div>
                 </form>
