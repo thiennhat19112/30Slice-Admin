@@ -3,7 +3,10 @@ import { useEffect, useState, useRef } from "react";
 import SwitchIOS from "../../CustomMui/switch";
 
 // import { getCategory } from "../../app/services/category.service";
-import { getCategory } from "../../app/services/auth/category.service";
+import {
+  getCategory,
+  UpdateCategory,
+} from "../../app/services/auth/category.service";
 const Category = () => {
   const [arrCategories, setArrCategories] = useState([]);
   const _isMounted = useRef(false);
@@ -23,9 +26,18 @@ const Category = () => {
     _isMounted.current && setArrCategories(data);
   };
 
+  const handleUpdateStatus = async (id, Is_Show) => {
+    const data = { Is_Show: !Is_Show, _id: id };
+    try {
+      await UpdateCategory(data);
+      _isMounted && loadCategory();
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+
   useEffect(() => {
     loadCategory();
-
   }, []);
 
   return (
@@ -309,6 +321,12 @@ const Category = () => {
                           Ẩn/Hiện
                           <SwitchIOS
                             defaultChecked={item?.Is_Show}
+                            onChange={() =>
+                              handleUpdateStatus(
+                                item?._id,
+                                item?.Is_Show
+                              )
+                            }
                             name="Is_Show"
                           />
                         </div>

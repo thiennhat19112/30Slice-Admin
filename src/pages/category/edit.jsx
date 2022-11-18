@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import {
   getParentCategory,
   getOneCategory,
+  UpdateCategory,
 } from "../../app/services/auth/category.service";
 
 const EditCategory = () => {
