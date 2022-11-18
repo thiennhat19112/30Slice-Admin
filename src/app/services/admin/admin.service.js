@@ -1,8 +1,20 @@
 // import axios from 'axios';
 // import authHeader from './auth-header';
 // import api from './auth/api';
+import api from '../../axios/api';
 
 
+
+export const ChangePasswordAdmin = async (data) => {
+    try {
+      const response = await api.put('admin/change-password', data);
+      if (response.status === 200 || response.status === 201) {
+        return response;
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 // const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
 
 // const getAdminBoard = () => {

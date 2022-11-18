@@ -1,17 +1,21 @@
 import { NavLink } from "react-router-dom";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 const ForgetPassword = () => {
   const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
+  const [loading, setLoading] = useState(false);
 
   const refEmail = useRef();
   const HandleSubmit = async () => {
     let email = refEmail.current.value;
+    setLoading(true);
+
     const response = await axios.post(API_URL + "admin/forgot-password", {
       email,
     });
     if (response.status === 200) {
-        alert("Thành Công! Vui lòng kiểm tra email hoặc email spam")
+      setLoading(false);
+      alert("Thành Công! Vui lòng kiểm tra email hoặc email spam");
     }
     console.log(response);
   };
@@ -91,6 +95,9 @@ const ForgetPassword = () => {
                                 onClick={HandleSubmit}
                                 className="btn btn-primary btn-default btn-squared text-capitalize lh-normal px-md-50 py-15 signIn-createBtn"
                               >
+                                {loading && (
+                                  <span className="spinner-border spinner-border-sm"></span>
+                                )}
                                 Gửi yêu cầu
                               </button>
                             </div>
