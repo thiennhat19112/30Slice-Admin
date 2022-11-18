@@ -1,6 +1,7 @@
-import { NavLink, useSearchParams,useNavigate } from "react-router-dom";
+import { NavLink, useSearchParams, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 const ResetPassword = () => {
   const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
   const [loading, setLoading] = useState(false);
@@ -20,7 +21,16 @@ const ResetPassword = () => {
     );
     if (response.status === 200) {
       setLoading(false);
-      alert("Đổi mật khẩu thành công vui lòng đăng nhập lại!");
+      toast.success("Đổi mật khẩu thành công vui lòng đăng nhập lại!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       navigate("/login");
     }
   };

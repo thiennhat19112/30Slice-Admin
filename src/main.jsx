@@ -48,13 +48,26 @@ import routes from "./routes/routes";
 import app from "./app/firebase/firebaseConfig";
 import "./main.css";
 import { PersistGate } from "redux-persist/integration/react";
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import '/assets/theme_assets/sass/style.scss';
 // import '/assets/vendor_assets/css/bootstrap/bootstrap.scss';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
+    <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       <RouterProvider router={routes} />
     </PersistGate>
   </Provider>
