@@ -61,6 +61,14 @@ const Modal = () => {
                     </label>
                     <input class="form-control" type="file" id="formFile" />
                   </div>
+                  <div className="form-group mb-20">
+                    <label
+                      className="fs-14 color-light strikethrough"
+                    >
+                      Nội dung
+                    </label>
+                    <textarea name="message" id="mail-reply-message2" class="form-control-lg" placeholder="Type your message..."></textarea>
+                  </div>
                   <div className="form-group mb-20 ">
                     <FormControlLabel
                       className="mr-50"
