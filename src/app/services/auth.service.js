@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
 
@@ -17,43 +17,23 @@ const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
 // };
 
 const login = async (username, password) => {
-  const response = await axios.post(API_URL + 'admin/login', {
+  const response = await axios.post(API_URL + "admin/login", {
     username,
     password,
   });
   if (response.data.accessToken) {
-    localStorage.setItem('user', JSON.stringify(response.data));
+    localStorage.setItem("user", JSON.stringify(response.data));
   }
   return response.data;
 };
 
-const getCategory = async () => {
-  const response = await axios.get(API_URL + 'category/getAllCategories');
-  return response.data;
-};
-const getOneCategory = async (id) => {
-  const response = await axios.get(API_URL + 'category/getOneCategory/' + id);
-  return response.data;
-};
-const getParentCategory = async () => {
-  const response = await axios.get(API_URL + 'category/getCategoriesParent');
-  return response.data;
-};
-
-
-
-
-
 const logout = () => {
-  localStorage.removeItem('user');
+  localStorage.removeItem("user");
 };
 
 const authService = {
   login,
   logout,
-  getCategory,
-  getOneCategory,
-  getParentCategory
 };
 
 export default authService;
