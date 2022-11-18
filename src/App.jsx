@@ -14,6 +14,15 @@ function App() {
   useEffect(() => {
     dispatch(clearMessage());
   }, [dispatch]);
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = "/assets/theme_assets/js/main.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+       document.body.removeChild(script);
+    }
+ }, []);
 
   return (
     <>

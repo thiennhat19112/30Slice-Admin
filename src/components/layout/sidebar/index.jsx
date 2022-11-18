@@ -42,6 +42,45 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý tin tức</span>
               </NavLink>
             </li>
+            <li className="has-child">
+              <a href="#" className="">
+                <span data-feather="home" className="nav-icon" />
+                <span className="menu-text">Dashboard</span>
+                <span className="toggle-icon" />
+              </a>
+              <ul>
+                <li>
+                  <a className="" href="index.html">
+                    Social Media
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="business.html">
+                    FineTech / Business
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="performance.html">
+                    Site Performance
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="ecommerce.html">
+                    Ecommerce
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="crm.html">
+                    CRM
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="sales.html">
+                    Sales Performance
+                  </a>
+                </li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
