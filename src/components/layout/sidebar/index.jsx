@@ -1,3 +1,4 @@
+import { Activity } from 'react-feather';
 import { NavLink } from 'react-router-dom';
 const Sidebar = () => {
   return (
@@ -10,7 +11,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/" className="">
-                <span data-feather="activity" className="nav-icon" />
+                <Activity className="nav-icon" />
                 <span className="menu-text">Thống kê dữ liệu</span>
               </NavLink>
             </li>
