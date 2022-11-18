@@ -6,7 +6,7 @@ import Input from "../../components/sharedComponents/input";
 import { passwordValidator } from "../../components/sharedComponents/validatorPatterns";
 import { selectMessage } from "../../app/slices/message";
 import { clearMessage } from "../../app/slices/message";
-import adminService from "../../app/services/admin.service";
+
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 const Profile = () => {

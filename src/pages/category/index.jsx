@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import SwitchIOS from "../../CustomMui/switch";
 
-import { getCategory } from "../../app/services/category.service";
-import authHeader from "../../app/services/auth-header";
+// import { getCategory } from "../../app/services/category.service";
+import { getCategory } from "../../app/services/auth/category.service";
 const Category = () => {
   const [arrCategories, setArrCategories] = useState([]);
   const _isMounted = useRef(false);

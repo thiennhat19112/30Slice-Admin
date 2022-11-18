@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import {
   getParentCategory,
   getOneCategory,
-} from "../../app/services/category.service";
+} from "../../app/services/auth/category.service";
 
 const EditCategory = () => {
   const params = useParams();
