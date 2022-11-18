@@ -35,25 +35,28 @@
 //               //     /
 //                     /
 
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
-import { Provider } from 'react-redux';
-import { store } from './app/store';
+import { Provider } from "react-redux";
+import { store, persistor } from "./app/store";
 
-import setupInterceptors from './app/services/auth/setupInterceptors';
+import setupInterceptors from "./app/services/auth/setupInterceptors";
 
-import { RouterProvider } from 'react-router-dom';
-import routes from './routes/routes';
-import app from './app/services/firebaseConfig';
-import './main.css';
+import { RouterProvider } from "react-router-dom";
+import routes from "./routes/routes";
+import app from "./app/services/firebaseConfig";
+import "./main.css";
+import { PersistGate } from "redux-persist/integration/react";
 
 // import '/assets/theme_assets/sass/style.scss';
 // import '/assets/vendor_assets/css/bootstrap/bootstrap.scss';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <RouterProvider router={routes} />
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={routes} />
+    </PersistGate>
   </Provider>
 );
 
