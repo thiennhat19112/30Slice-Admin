@@ -1,6 +1,10 @@
 import { useParams } from "react-router-dom";
-import authService from "../../app/services/auth.service";
 import { useEffect, useState } from "react";
+import {
+  getParentCategory,
+  getOneCategory,
+  UpdateCategory,
+} from "../../app/services/admin/category.service";
 
 const EditCategory = () => {
   const params = useParams();
@@ -10,12 +14,11 @@ const EditCategory = () => {
   const [parentCategory, setParentCategory] = useState([]);
 
   useEffect(() => {
-    authService.getOneCategory(id).then((res) => {
-      console.log(res);
+    getOneCategory(id).then((res) => {
       setCategory(res);
       setSelected(res.Is_Show);
     });
-    authService.getParentCategory().then((res) => {
+    getParentCategory().then((res) => {
       setParentCategory(res);
     });
   }, [id]);

@@ -1,26 +1,38 @@
-import { NavLink, useSearchParams } from "react-router-dom";
-import { useRef } from "react";
+import { NavLink, useSearchParams, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 const ResetPassword = () => {
   const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
-
+  const [loading, setLoading] = useState(false);
   const refNewPassword = useRef();
   const [param] = useSearchParams();
-  console.log(param.get("token"));
+  const navigate = useNavigate();
   let token = param.get("token");
   const HandleSubmit = async () => {
+    setLoading(true);
     let new_password = refNewPassword.current.value;
     const response = await axios.post(
       API_URL + "admin/reset-password",
-      {new_password},
+      { new_password },
       {
         headers: { Authorization: "Bearer " + token },
       }
     );
     if (response.status === 200) {
-      alert("Đổi mật khẩu thành công vui lòng đăng nhập lại!");
+      setLoading(false);
+      toast.success("Đổi mật khẩu thành công vui lòng đăng nhập lại!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate("/login");
     }
-    console.log(response);
   };
 
   return (
@@ -120,6 +132,9 @@ const ResetPassword = () => {
                                 onClick={HandleSubmit}
                                 className="btn btn-primary btn-default btn-squared mr-15 text-capitalize lh-normal px-50 py-15 signIn-createBtn "
                               >
+                                {loading && (
+                                  <span className="spinner-border spinner-border-sm"></span>
+                                )}
                                 Đổi mật khẩu
                               </button>
                             </div>

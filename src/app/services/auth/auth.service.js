@@ -1,4 +1,4 @@
-import api from './api';
+import api from '../../axios/api';
 import TokenService from './token.service';
 
 const login = async (username, password) => {

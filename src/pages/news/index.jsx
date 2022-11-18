@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { getNews, updateNews } from "../../app/services/news.service";
-import SwitchIOS from "../../CustomMui/switch";
-import Modal from "./Modal";
+import { useEffect, useRef, useState } from 'react';
+import { getNews, updateNews } from '../../app/services/admin/news.service';
+import SwitchIOS from '../../CustomMui/switch';
+import Modal from './Modal';
 
 const News = () => {
   const _isMounted = useRef(false);
   const [arrNews, setArrNews] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [keySearch,setKeySearch] = useState("");
+  const [keySearch, setKeySearch] = useState('');
 
   const loadNews = async () => {
     _isMounted.current && setLoading(true);
@@ -15,7 +15,6 @@ const News = () => {
     _isMounted.current && setLoading(false);
     _isMounted.current && setArrNews(data);
   };
-
 
   useEffect(() => {
     _isMounted.current = true;
@@ -50,9 +49,8 @@ const News = () => {
   };
 
   const handleSearch = (e) => {
-    _isMounted && setKeySearch(e.target.value)
-  }
-
+    _isMounted && setKeySearch(e.target.value);
+  };
 
   return (
     <div className="container-fluid">
@@ -166,7 +164,7 @@ const News = () => {
                           </td>
                           <td>
                             <div className="userDatatable-content">
-                              {moment(item?.createdAt).format("L")}
+                              {moment(item?.createdAt).format('L')}
                             </div>
                           </td>
                           <td>
@@ -178,10 +176,7 @@ const News = () => {
                             <div className="userDatatable-content d-inline-block">
                               <SwitchIOS
                                 onChange={() =>
-                                  handleUpdateStatus(
-                                    item?._id,
-                                    item?.Is_Show
-                                  )
+                                  handleUpdateStatus(item?._id, item?.Is_Show)
                                 }
                                 defaultChecked={item?.Is_Show}
                                 name="Is_Show"
@@ -194,10 +189,7 @@ const News = () => {
                                 defaultChecked={item?.Is_Hot}
                                 name="Is_Hot"
                                 onChange={() =>
-                                  handleUpdateHot(
-                                    item?._id,
-                                    item?.Is_Hot
-                                  )
+                                  handleUpdateHot(item?._id, item?.Is_Hot)
                                 }
                               />
                             </div>
@@ -205,7 +197,7 @@ const News = () => {
                           <td>
                             <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
                               <button className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
-                                <i className="fa-solid fa-pen-to-square"></i>{" "}
+                                <i className="fa-solid fa-pen-to-square"></i>{' '}
                                 Sửa
                               </button>
 

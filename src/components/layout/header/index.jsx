@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout } from '../../../app/slices/auth';
+import { logout } from '../../../app/redux/slices/auth/auth';
 import EventBus from '../../../app/common/EventBus';
 
 const Header = () => {
