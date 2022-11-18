@@ -12,7 +12,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ProtectedRoute from './protectedRoute';
 import PrivateRoute from './privateRoute';
 
-import App from '../app';
+import App from '../App';
 import Login from '../pages/login';
 import Error from '../pages/error';
 import Dashboard from '../pages/dashboard';
