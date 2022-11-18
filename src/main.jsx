@@ -39,7 +39,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import { Provider } from "react-redux";
-import { store, persistor } from "./app/store";
+import { store, persistor } from "./app/redux/store";
 
 import setupInterceptors from "./app/services/axios/setupInterceptors";
 

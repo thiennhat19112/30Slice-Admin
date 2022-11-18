@@ -8,10 +8,10 @@ import Input from '../../components/sharedComponents/input';
 import { usernameValidator } from '../../components/sharedComponents/validatorPatterns';
 import { passwordValidator } from '../../components/sharedComponents/validatorPatterns';
 
-import { selectMessage } from '../../app/slices/message';
+import { selectMessage } from '../../app/redux/slices/message';
 
-import { login } from '../../app/slices/auth';
-import { clearMessage } from '../../app/slices/message';
+import { login } from '../../app/redux/slices/auth';
+import { clearMessage } from '../../app/redux/slices/message';
 
 const Login = () => {
   let navigate = useNavigate();

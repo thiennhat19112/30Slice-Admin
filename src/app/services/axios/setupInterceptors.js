@@ -1,4 +1,4 @@
-import { refresh } from '../../slices/auth';
+import { refresh } from '../../redux/slices/auth';
 import axiosInstance from './api';
 import TokenService from '../auth/token.service';
 
