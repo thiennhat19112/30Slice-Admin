@@ -1,8 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import SwitchIOS from "../../CustomMui/switch";
-
-// import { getCategory } from "../../app/services/admin/category.service";
+import { Edit,XCircle } from "react-feather";
 import {
   getCategory,
   UpdateCategory,
@@ -335,13 +334,13 @@ const Category = () => {
                           to={/category/ + item._id}
                           className="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
                         >
-                          <i className="fa-solid fa-pen-to-square"></i> Sửa
+                          <Edit/> Sửa
                         </Link>
                         <button
                           type="button"
                           className="btn btn-outline-danger btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
                         >
-                          <i className="fa-solid fa-trash"></i> Xoá
+                         <XCircle/> Xoá
                         </button>
                       </div>
                     </div>

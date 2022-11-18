@@ -1,5 +1,5 @@
-import { Activity } from 'react-feather';
-import { NavLink } from 'react-router-dom';
+import { Activity, Box, Archive, Book } from "react-feather";
+import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   return (
     <aside className="sidebar-wrapper">
@@ -20,7 +20,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/category" className="">
-                <span data-feather="activity" className="nav-icon" />
+                <Archive className="nav-icon" />
                 <span className="menu-text">Quản lý loại sản phẩm</span>
               </NavLink>
             </li>
@@ -29,7 +29,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/products" className="">
-                <span data-feather="activity" className="nav-icon" />
+                <Box className="nav-icon" />
                 <span className="menu-text">Quản lý sản phẩm</span>
               </NavLink>
             </li>
@@ -38,8 +38,8 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/news" className="">
-                <span data-feather="activity" className="nav-icon" />
-                <span className="menu-text">Quản Lý tin tức</span>
+                <Book className="nav-icon" />
+                <span className="menu-text">Quản lý tin tức</span>
               </NavLink>
             </li>
           </ul>
