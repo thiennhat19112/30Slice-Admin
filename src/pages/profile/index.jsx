@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getInfo } from "../../app/redux/slices/auth";
+import { getInfo } from "../../app/redux/slices/auth/auth";
 import { useForm } from "react-hook-form";
 import Input from "../../components/sharedComponents/input";
 import { passwordValidator } from "../../components/sharedComponents/validatorPatterns";
-import { selectMessage } from "../../app/redux/slices/message";
-import { clearMessage } from "../../app/redux/slices/message";
+import { selectMessage } from "../../app/redux/slices/auth/message";
+import { clearMessage } from "../../app/redux/slices/auth/message";
 
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';

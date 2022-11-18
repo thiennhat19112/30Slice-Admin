@@ -5,7 +5,7 @@ import Header from './components/layout/header';
 import Sidebar from './components/layout/sidebar';
 import Footer from './components/layout/footer';
 import Spin from './components/layout/spin';
-import { clearMessage } from './app/redux/slices/message';
+import { clearMessage } from './app/redux/slices/auth/message';
 
 function App() {
   const dispatch = useDispatch();
