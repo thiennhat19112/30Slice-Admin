@@ -7,7 +7,7 @@ const setup = (store) => {
     (config) => {
       const token = TokenService.getLocalAccessToken();
       if (token) {
-        config.headers['accesstoken'] = token;
+        config.headers['Authorization'] = 'Bearer' + token;
       }
       return config;
     },
@@ -33,7 +33,6 @@ const setup = (store) => {
               refreshToken: TokenService.getLocalRefreshToken(),
             });
             const { accessToken } = rs.data;
-            
 
             dispatch(refresh(accessToken));
             TokenService.updateLocalAccessToken(accessToken);
