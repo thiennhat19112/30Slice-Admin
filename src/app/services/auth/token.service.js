@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 
 const getLocalRefreshToken = () => {
 
-  const user = useSelector((state) => state.auth.user);
+  const user = JSON.parse(localStorage.getItem('user'));
   return user?.refreshToken;
 };
 
