@@ -37,18 +37,17 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-
 import { Provider } from "react-redux";
-import { store, persistor } from "./app/redux/store";
+import { ToastContainer } from "react-toastify";
+import { RouterProvider } from "react-router-dom";
 
+import { store, persistor } from "./app/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import setupInterceptors from "./app/axios/setupInterceptors";
 
-import { RouterProvider } from "react-router-dom";
 import routes from "./routes/routes";
 import app from "./app/firebase/firebaseConfig";
 import "./main.css";
-import { PersistGate } from "redux-persist/integration/react";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import '/assets/theme_assets/sass/style.scss';
 // import '/assets/vendor_assets/css/bootstrap/bootstrap.scss';
