@@ -78,7 +78,5 @@ const authSlice = createSlice({
 });
 
 export const selectUser = (state) => state.auth.isLoggedIn;
-
 export const { refresh } = authSlice.actions;
-const { reducer } = authSlice;
-export default reducer;
+export default authSlice.reducer;
