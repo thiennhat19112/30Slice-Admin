@@ -1,13 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
-import { getNews, updateNews } from '../../app/services/admin/news.service';
-import SwitchIOS from '../../CustomMui/switch';
-import Modal from './Modal';
+import { useEffect, useRef, useState } from "react";
+import {
+  deleteNews,
+  getNews,
+  updateNews,
+} from "../../app/services/admin/news.service";
+import SwitchIOS from "../../CustomMui/switch";
+import Modal from "./Modal";
 
 const News = () => {
   const _isMounted = useRef(false);
   const [arrNews, setArrNews] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [keySearch, setKeySearch] = useState('');
+  const [keySearch, setKeySearch] = useState("");
 
   const loadNews = async () => {
     _isMounted.current && setLoading(true);
@@ -46,6 +50,12 @@ const News = () => {
     } catch (err) {
       throw new Error(err);
     }
+  };
+
+  const handleDelete = async (id) => {
+    const data = { _id: id }
+    await deleteNews(data);
+    _isMounted && loadNews();
   };
 
   const handleSearch = (e) => {
@@ -164,7 +174,7 @@ const News = () => {
                           </td>
                           <td>
                             <div className="userDatatable-content">
-                              {moment(item?.createdAt).format('L')}
+                              {moment(item?.createdAt).format("L")}
                             </div>
                           </td>
                           <td>
@@ -197,11 +207,12 @@ const News = () => {
                           <td>
                             <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
                               <button className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
-                                <i className="fa-solid fa-pen-to-square"></i>{' '}
+                                <i className="fa-solid fa-pen-to-square"></i>{" "}
                                 Sửa
                               </button>
 
                               <button
+                                onClick={() => handleDelete(item?._id)}
                                 type="button"
                                 className="btn btn-outline-danger btn-default btn-squared text-capitalize px-10  global-shadow"
                               >
@@ -266,7 +277,7 @@ const News = () => {
             </div>
           )}
         </div>
-        <Modal />
+        <Modal loadNews={loadNews} />
       </div>
     </div>
   );

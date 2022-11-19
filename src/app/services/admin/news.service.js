@@ -1,10 +1,8 @@
-import axios from "axios";
-
-const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
+import api from '../../axios/api';
 
 export const getNews = async () => {
     try{
-        const response = await axios.get(API_URL + 'news/getAllNews');
+        const response = await api.get('news/getAllNews');
         if(response.status === 200){
             return response.data;
         }
@@ -17,7 +15,7 @@ export const getNews = async () => {
 
 export const getOneNews = async (id) => {
     try{
-        const response = await axios.get(API_URL + 'news/getOneNews/' + id);
+        const response = await api.get('news/getOneNews/' + id);
         if(response.status === 200) {
             return response.data;
         }
@@ -30,7 +28,7 @@ export const getOneNews = async (id) => {
 
 export const addNews = async (data) => {
      try{
-        await axios.post(API_URL + 'news/', data)
+        await api.post('news/', data)
      }catch(err){
         throw new Error(err)
      }
@@ -38,7 +36,15 @@ export const addNews = async (data) => {
 
 export const updateNews = async (data) => {
     try{
-        await axios.put(API_URL + 'news/', data)
+        await api.put('news/', data)
+    }catch(err){
+        throw new Error(err)
+    }
+}
+
+export const deleteNews = async (data) => {
+    try{
+        await api.delete('news/',{data})
     }catch(err){
         throw new Error(err)
     }

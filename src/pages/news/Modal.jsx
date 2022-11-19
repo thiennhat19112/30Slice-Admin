@@ -1,8 +1,31 @@
-import { FormControlLabel } from "@mui/material";
-import React from "react";
-import SwitchIOS from "../../CustomMui/switch";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import { useState } from "react";
+import { addNews } from "../../app/services/admin/news.service";
+import { useRef } from "react";
+import { uploadLoadFIle } from "../../app/services/upload";
+import { useSelector } from "react-redux";
 
-const Modal = () => {
+const Modal = ({loadNews}) => {
+  const [news, setNews] = useState({ Is_Show: true });
+  const [selected, setSelected] = useState(true);
+  const [isValid , setIsValid] = useState(true)
+  const file = useRef()
+  const {name} = useSelector(state => state.auth.user)
+
+  const handleChange = (e) => {
+    setNews((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+  
+  const handleSubmit = async (e) => {
+    const urlImg = await uploadLoadFIle(file.current.files[0])
+    const data = {...news,Is_Show : selected, image : urlImg,Create_By : name}
+    await addNews(data)
+    loadNews()
+    e.preventDefault()
+  }
   return (
     <div>
       {/* Modal */}
@@ -36,6 +59,8 @@ const Modal = () => {
                       id="title-news"
                       rows={3}
                       defaultValue={""}
+                      name="Title"
+                      onBlur={handleChange}
                     />
                   </div>
                   <div className="form-group mb-20">
@@ -46,10 +71,12 @@ const Modal = () => {
                       Mô tả
                     </label>
                     <textarea
-                      className="form-control"
+                      className="form-control"  
                       id="desc-news"
                       rows={3}
                       defaultValue={""}
+                      name="Desc"
+                      onBlur={handleChange}
                     />
                   </div>
                   <div className="form-group mb-20">
@@ -59,32 +86,63 @@ const Modal = () => {
                     >
                       Hình ảnh
                     </label>
-                    <input class="form-control" type="file" id="formFile" />
+                    <input ref={file} class="form-control" type="file" id="formFile" />
                   </div>
                   <div className="form-group mb-20">
-                    <label
-                      className="fs-14 color-light strikethrough"
-                    >
+                    <label className="fs-14 color-light strikethrough">
                       Nội dung
                     </label>
-                    <textarea name="message" id="mail-reply-message2" class="form-control-lg" placeholder="Type your message..."></textarea>
+                    <CKEditor
+                      editor={ClassicEditor}
+                      onReady={(editor) => {
+                        // You can store the "editor" and use when it is needed.
+                        console.log("Editor is ready to use!", editor);
+                      }}
+                      onBlur={(event, editor) => {
+                        const data = editor.getData();
+                        setNews((prev) => {
+                          return { ...prev, Content: data };
+                        });
+                      }}
+                    />
                   </div>
                   <div className="form-group mb-20 ">
-                    <FormControlLabel
-                      className="mr-50"
-                      labelPlacementStart
-                      control={<SwitchIOS defaultChecked={true} />}
-                      label="Ẩn/Hiện"
-                    />
-                    <FormControlLabel
-                      className="mr-50"
-                      labelPlacementStart
-                      control={<SwitchIOS />}
-                      label="Nỗi bật"
-                    />
+                    <label className="mb-15">Ẩn/Hiện</label>
+                    <div className="d-flex">
+                      <div className="radio-horizontal-list d-flex flex-wrap">
+                        <div className="radio-theme-default custom-radio ">
+                          <input
+                            className="radio"
+                            type="radio"
+                            name="Is_Show"
+                            value={true}
+                            id="radio-hl1"
+                            checked={selected === true}
+                            onChange={() => setSelected(true)}
+                          />
+                          <label htmlFor="radio-hl1">
+                            <span className="radio-text">Hiện</span>
+                          </label>
+                        </div>
+                        <div className="radio-theme-default custom-radio ">
+                          <input
+                            className="radio"
+                            type="radio"
+                            name="Is_Show"
+                            value={false}
+                            id="radio-hl2"
+                            checked={selected === false}
+                            onChange={() => setSelected(false)}
+                          />
+                          <label htmlFor="radio-hl2">
+                            <span className="radio-text">Ẩn</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div className="button-group d-flex pt-25 justify-content-end">
-                    <button className="btn btn-success btn-default btn-squared text-capitalize">
+                    <button type="button" aria-label={isValid ? "close" : ""} onClick={handleSubmit} className="btn btn-success btn-default btn-squared text-capitalize">
                       Thêm
                     </button>
                     <button
