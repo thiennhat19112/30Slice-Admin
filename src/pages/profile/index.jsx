@@ -4,9 +4,10 @@ import { useForm } from "react-hook-form";
 import Input from "../../components/sharedComponents/input";
 import { passwordValidator } from "../../components/sharedComponents/validatorPatterns";
 import { selectMessage } from "../../app/redux/slices/auth/message";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { ChangePasswordAdmin } from "../../app/services/admin/admin.service";
 import { useNavigate } from "react-router-dom";
+import { Settings, Key,Camera } from "react-feather";
 const Profile = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -17,8 +18,8 @@ const Profile = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const { user } = useSelector((state) => state.auth);
-
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
   const onSubmit = async (user) => {
     setLoading(true);
 
@@ -28,29 +29,29 @@ const Profile = () => {
       const res = await ChangePasswordAdmin(user);
       setLoading(false);
       if (res.status === 201) {
-      toast.success(res.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      navigate(-1);
-    }else{
-      toast.error(res.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-    }
+        toast.success(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        navigate(-1);
+      } else {
+        toast.error(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
 
       // navigate('/');
     } catch (err) {
@@ -101,102 +102,9 @@ const Profile = () => {
                 <h4 className="text-capitalize breadcrumb-title">
                   Tài Khoản Của Tôi
                 </h4>
-                <div className="breadcrumb-action justify-content-center flex-wrap">
-                  <div className="action-btn">
-                    <div className="form-group mb-0">
-                      <div className="input-container icon-left position-relative">
-                        <span className="input-icon icon-left">
-                          <span data-feather="calendar" />
-                        </span>
-                        <input
-                          type="text"
-                          className="form-control form-control-default date-ranger"
-                          name="date-ranger"
-                          placeholder="Oct 30, 2019 - Nov 30, 2019"
-                        />
-                        <span className="input-icon icon-right">
-                          <span data-feather="chevron-down" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="dropdown action-btn">
-                    <button
-                      className="btn btn-sm btn-default btn-white dropdown-toggle"
-                      type="button"
-                      id="dropdownMenu2"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i className="la la-download" /> Export
-                    </button>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenu2"
-                    >
-                      <span className="dropdown-item">Export With</span>
-                      <div className="dropdown-divider" />
-                      <a href="" className="dropdown-item">
-                        <i className="la la-print" /> Printer
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-file-pdf" /> PDF
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-file-text" /> Google Sheets
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-file-excel" /> Excel (XLSX)
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-file-csv" /> CSV
-                      </a>
-                    </div>
-                  </div>
-                  <div className="dropdown action-btn">
-                    <button
-                      className="btn btn-sm btn-default btn-white dropdown-toggle"
-                      type="button"
-                      id="dropdownMenu3"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    >
-                      <i className="la la-share" /> Share
-                    </button>
-                    <div
-                      className="dropdown-menu"
-                      aria-labelledby="dropdownMenu3"
-                    >
-                      <span className="dropdown-item">Share Link</span>
-                      <div className="dropdown-divider" />
-                      <a href="" className="dropdown-item">
-                        <i className="la la-facebook" /> Facebook
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-twitter" /> Twitter
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-google" /> Google
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-feed" /> Feed
-                      </a>
-                      <a href="" className="dropdown-item">
-                        <i className="la la-instagram" /> Instagram
-                      </a>
-                    </div>
-                  </div>
-                  <div className="action-btn">
-                    <a href="" className="btn btn-sm btn-primary btn-add">
-                      <i className="la la-plus" /> Add New
-                    </a>
-                  </div>
-                </div>
               </div>
             </div>
-            <div className="col-xxl-3 col-lg-4 col-sm-5">
+            <div className="col-xxl-3 col-lg-4 col-sm-5 mt-4">
               {/* Profile Acoount */}
               <div className="card mb-25">
                 <div className="card-body text-center p-0">
@@ -212,18 +120,18 @@ const Profile = () => {
                         {/* Profile picture image*/}
                         <img
                           className="ap-img__main rounded-circle wh-120"
-                          src="assets/img/author/profile.png"
+                          src="assets/img/admin.png"
                           alt="profile"
                         />
                         <span className="cross" id="remove_pro_pic">
-                          <span data-feather="camera" />
+                          <Camera />
                         </span>
                       </label>
                     </div>
                     <div className="ap-nameAddress pb-3">
-                      <h5 className="ap-nameAddress__title">Duran Clayton</h5>
+                      <h5 className="ap-nameAddress__title">{user.name}</h5>
                       <p className="ap-nameAddress__subTitle fs-14 m-0">
-                        UI/UX Designer
+                        {user.role.toUpperCase()}
                       </p>
                     </div>
                   </div>
@@ -243,7 +151,7 @@ const Profile = () => {
                         aria-controls="v-pills-profile"
                         aria-selected="true"
                       >
-                        <span data-feather="settings" />
+                        <Settings />
                         Thông Tin Tài Khoản
                       </a>
                       <a
@@ -255,7 +163,7 @@ const Profile = () => {
                         aria-controls="v-pills-messages"
                         aria-selected="false"
                       >
-                        <span data-feather="key" />
+                        <Key />
                         Đổi mật khẩu
                       </a>
                     </div>
@@ -296,6 +204,7 @@ const Profile = () => {
                                       className="form-control"
                                       id="name1"
                                       placeholder="Duran Clayton"
+                                      defaultValue={user.username}
                                     />
                                   </div>
                                   <div className="form-group mb-1">
@@ -305,6 +214,17 @@ const Profile = () => {
                                       className="form-control"
                                       id="email45"
                                       placeholder="Contact@example.com"
+                                      defaultValue={user.email}
+                                    />
+                                  </div>
+                                  <div className="form-group mb-1">
+                                    <label htmlFor="phone">Số điện thoại</label>
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="phone"
+                                      placeholder="012345678"
+                                      defaultValue={user.phone}
                                     />
                                   </div>
                                 </form>

@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { Activity, Box, Archive, Book } from "react-feather";
+import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   return (
     <aside className="sidebar-wrapper">
@@ -10,7 +11,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/" className="">
-                <span data-feather="activity" className="nav-icon" />
+                <Activity className="nav-icon" />
                 <span className="menu-text">Thống kê dữ liệu</span>
               </NavLink>
             </li>
@@ -19,7 +20,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/category" className="">
-                <span data-feather="activity" className="nav-icon" />
+                <Archive className="nav-icon" />
                 <span className="menu-text">Quản lý loại sản phẩm</span>
               </NavLink>
             </li>
@@ -28,7 +29,7 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/products" className="">
-                <span data-feather="activity" className="nav-icon" />
+                <Box className="nav-icon" />
                 <span className="menu-text">Quản lý sản phẩm</span>
               </NavLink>
             </li>
@@ -37,9 +38,48 @@ const Sidebar = () => {
             </li>
             <li>
               <NavLink to="/news" className="">
-                <span data-feather="activity" className="nav-icon" />
-                <span className="menu-text">Quản Lý tin tức</span>
+                <Book className="nav-icon" />
+                <span className="menu-text">Quản lý tin tức</span>
               </NavLink>
+            </li>
+            <li className="has-child">
+              <a href="#" className="">
+                <span data-feather="home" className="nav-icon" />
+                <span className="menu-text">Dashboard</span>
+                <span className="toggle-icon" />
+              </a>
+              <ul>
+                <li>
+                  <a className="" href="index.html">
+                    Social Media
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="business.html">
+                    FineTech / Business
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="performance.html">
+                    Site Performance
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="ecommerce.html">
+                    Ecommerce
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="crm.html">
+                    CRM
+                  </a>
+                </li>
+                <li>
+                  <a className="" href="sales.html">
+                    Sales Performance
+                  </a>
+                </li>
+              </ul>
             </li>
           </ul>
         </div>

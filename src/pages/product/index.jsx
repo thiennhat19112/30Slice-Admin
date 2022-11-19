@@ -1,3 +1,5 @@
+import { Eye, Edit, XCircle } from 'react-feather';
+
 const Product = () => {
   return (
     <div className="container-fluid">
@@ -88,7 +90,7 @@ const Product = () => {
                               id="exampleFormControlTextarea1"
                               rows={3}
                               placeholder="Project description"
-                              defaultValue={""}
+                              defaultValue={''}
                             />
                           </div>
                           <div className="form-group textarea-group">
@@ -318,7 +320,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm6.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -359,17 +361,17 @@ const Product = () => {
                       <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
                         <li>
                           <a href="#" className="view">
-                            <span data-feather="eye" />
+                            <Eye />
                           </a>
                         </li>
                         <li>
                           <a href="#" className="edit">
-                            <span data-feather="edit" />
+                            <Edit />
                           </a>
                         </li>
                         <li>
                           <a href="#" className="remove">
-                            <span data-feather="trash-2" />
+                            <XCircle />
                           </a>
                         </li>
                       </ul>
@@ -396,7 +398,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm1.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -474,7 +476,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm2.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -552,7 +554,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm3.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -630,7 +632,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm4.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -708,7 +710,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm5.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -786,7 +788,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm6.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -864,7 +866,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm1.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -942,7 +944,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm2.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -1020,7 +1022,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm3.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
@@ -1098,7 +1100,7 @@ const Product = () => {
                             className="profile-image rounded-circle d-block m-0 wh-38"
                             style={{
                               backgroundImage: 'url("img/tm4.png")',
-                              backgroundSize: "cover",
+                              backgroundSize: 'cover',
                             }}
                           />
                         </div>
