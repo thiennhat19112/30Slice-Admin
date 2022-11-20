@@ -7,6 +7,8 @@ import {
   UpdateCategory,
   DeleteCategory,
 } from "../../app/services/admin/category.service";
+import { toast } from "react-toastify";
+
 const Category = () => {
   const [arrCategories, setArrCategories] = useState([]);
   const _isMounted = useRef(false);
@@ -30,6 +32,24 @@ const Category = () => {
     const data = { Is_Show: !Is_Show, _id: id };
     try {
       await UpdateCategory(data);
+      _isMounted && loadCategory();
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+  const handleDeleteCategory = async (id) => {
+    try {
+      const res = await DeleteCategory(id);
+      toast.error(res, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
       _isMounted && loadCategory();
     } catch (err) {
       throw new Error(err);
@@ -382,7 +402,7 @@ const Category = () => {
                                   Không
                                 </button>
                                 <button
-                                  onClick={() => DeleteCategory(item._id)}
+                                  onClick={() => handleDeleteCategory(item._id)}
                                   type="button"
                                   className="btn btn-success btn-outlined btn-sm"
                                   data-dismiss="modal"
