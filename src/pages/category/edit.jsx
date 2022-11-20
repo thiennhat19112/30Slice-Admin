@@ -1,12 +1,13 @@
-import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useForm } from 'react-hook-form';
+import { useEffect, useState, useRef } from 'react';
 
-import { useEffect, useState, useRef } from "react";
 import {
   getParentCategory,
   getOneCategory,
   UpdateCategory,
-} from "../../app/services/admin/category.service";
+} from '../../app/services/admin/category.service';
 
 const EditCategory = () => {
   const params = useParams();
@@ -16,13 +17,24 @@ const EditCategory = () => {
   const _isMounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
-  const refName = useRef("");
+  const refName = useRef('');
   const refOrdinal = useRef();
   const refParent = useRef();
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit1 = (data) => {
+    console.log(data);
+  };
+
   useEffect(() => {
     _isMounted.current = true;
-
     return () => {
       _isMounted.current = false;
     };
@@ -36,6 +48,7 @@ const EditCategory = () => {
     _isMounted.current && setParentCategory(dataParent);
     _isMounted.current && setLoading(false);
   };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -45,31 +58,31 @@ const EditCategory = () => {
       Is_Show: selected,
       Ordinal: parseInt(refOrdinal.current.value),
       Parent_Id:
-        refParent.current.value === "0" ? null : refParent.current.value,
+        refParent.current.value === '0' ? null : refParent.current.value,
     };
 
     const res = await UpdateCategory(data);
     if (res.status === 201) {
       toast.success(res.data.message, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: 'colored',
       });
-    }else{
+    } else {
       toast.error(res.data.message, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "colored",
+        theme: 'colored',
       });
     }
     setLoading(false);
@@ -78,7 +91,9 @@ const EditCategory = () => {
   };
 
   useEffect(() => {
-    loadCategory();
+    loadCategory().then(() => {
+      reset(category, parentCategory);
+    });
   }, [id]);
 
   return (
@@ -115,7 +130,7 @@ const EditCategory = () => {
               <div className="global-shadow border px-sm-30 py-sm-50 px-0 py-20 bg-white radius-xl w-100 mb-40">
                 <div className="row justify-content-center">
                   <div className="col-xl-7 col-lg-10">
-                    <form onSubmit={onSubmit}>
+                    <form onSubmit={handleSubmit(onSubmit1)}>
                       <div className="mx-sm-30 mx-20 ">
                         {/* Start: card */}
                         <div className="card add-product p-sm-30 p-20 mb-30">
@@ -133,21 +148,22 @@ const EditCategory = () => {
                               <div className="form-group">
                                 <label htmlFor="id">ID</label>
                                 <input
-                                  type="text"
                                   id="id"
-                                  defaultValue={id}
                                   readOnly
+                                  type="text"
                                   className="form-control"
+                                  defaultValue={category._id}
+                                  {...register('_id')}
                                 />
                               </div>
                               <div className="form-group">
-                                <label htmlFor="name1">Tên Loại</label>
+                                <label htmlFor="name">Tên Loại</label>
                                 <input
                                   type="text"
-                                  id={"name1"}
+                                  id={'name'}
                                   defaultValue={category.Name}
                                   className="form-control"
-                                  ref={refName}
+                                  {...register('Name')}
                                 />
                               </div>
 
