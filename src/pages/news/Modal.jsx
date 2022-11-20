@@ -11,7 +11,7 @@ const Modal = ({ loadNews }) => {
   const [selected, setSelected] = useState(true);
   const [isValid, setIsValid] = useState(true);
   const file = useRef();
-  const { name } = useSelector((state) => state.auth.user);
+  const { name } = useSelector((state) => state.auth.user.name);
 
   const handleChange = (e) => {
     setNews((prev) => {
@@ -98,11 +98,11 @@ const Modal = ({ loadNews }) => {
                     <label className="fs-14 color-light strikethrough">
                       Nội dung
                     </label>
-                    <div class="form-group">
+                    <div className="form-group">
                       <textarea
                         name="message"
                         id="mail-message"
-                        class="form-control-lg"
+                        className="form-control-lg"
                         placeholder="Type your message..."
                       ></textarea>
                     </div>
