@@ -280,7 +280,7 @@ const Profile = () => {
                                       id="old_password"
                                       required="Trường này không được để trống"
                                       pattern={passwordValidator}
-                                      error={errors.password}
+                                      error={errors.old_password}
                                     />
                                   </div>
                                   <div className="form-group mb-1">
@@ -292,9 +292,9 @@ const Profile = () => {
                                         id="new_password"
                                         required="Trường này không được để trống"
                                         pattern={passwordValidator}
-                                        error={errors.password}
+                                        error={errors.new_password}
                                       />
-                                      <span className="fa fa-fw fa-eye-slash text-light fs-16 field-icon toggle-password2" />
+
                                     </div>
                                     {message && (
                                       <div className="form-group">
