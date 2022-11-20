@@ -60,7 +60,7 @@ const EditCategory = () => {
       _id: data._id,
       Name: data.Name,
       Ordinal: parseInt(data.Ordinal),
-      Is_Show: selected,
+      Is_Show: data.Is_Show,
       Parent_Id: data.ParentCategory === '0' ? null : data.ParentCategory,
     };
 
@@ -151,7 +151,7 @@ const EditCategory = () => {
                                   {...register('Name')}
                                 />
                               </div>
-                              
+
                               <div className="form-group">
                                 <label htmlFor="Is_Show1" className="mb-15">
                                   Hiện
