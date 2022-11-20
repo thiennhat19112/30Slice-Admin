@@ -35,7 +35,7 @@ export const UpdateCategory = async (data) => {
   try {
     const response = await api.put("category", data);
     if (response.status === 201 || response.status === 200) {
-      return response.data;
+      return response;
     }
   } catch (err) {
     throw new Error(err);

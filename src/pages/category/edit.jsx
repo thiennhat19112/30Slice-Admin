@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import SwitchIOS from "../../CustomMui/switch";
+import { toast } from "react-toastify";
 
 import { useEffect, useState, useRef } from "react";
 import {
@@ -15,6 +15,11 @@ const EditCategory = () => {
   const [parentCategory, setParentCategory] = useState([]);
   const _isMounted = useRef(false);
   const [loading, setLoading] = useState(false);
+  const [selected, setSelected] = useState();
+  const refName = useRef("");
+  const refOrdinal = useRef();
+  const refParent = useRef();
+
   useEffect(() => {
     _isMounted.current = true;
 
@@ -25,10 +30,51 @@ const EditCategory = () => {
   const loadCategory = async () => {
     _isMounted.current && setLoading(true);
     const data = await getOneCategory(id);
-    const dataParent = await getParentCategory();
-    _isMounted.current && setLoading(false);
+    _isMounted.current && setSelected(data.Is_Show);
     _isMounted.current && setCategory(data);
+    const dataParent = await getParentCategory();
     _isMounted.current && setParentCategory(dataParent);
+    _isMounted.current && setLoading(false);
+  };
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const data = {
+      _id: id,
+      Name: refName.current.value,
+      Is_Show: selected,
+      Ordinal: parseInt(refOrdinal.current.value),
+      Parent_Id:
+        refParent.current.value === "0" ? null : refParent.current.value,
+    };
+
+    const res = await UpdateCategory(data);
+    if (res.status === 201) {
+      toast.success(res.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }else{
+      toast.error(res.data.message, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+    setLoading(false);
+    _isMounted && loadCategory();
+    console.log(res);
   };
 
   useEffect(() => {
@@ -69,48 +115,78 @@ const EditCategory = () => {
               <div className="global-shadow border px-sm-30 py-sm-50 px-0 py-20 bg-white radius-xl w-100 mb-40">
                 <div className="row justify-content-center">
                   <div className="col-xl-7 col-lg-10">
-                    <div className="mx-sm-30 mx-20 ">
-                      {/* Start: card */}
-                      <div className="card add-product p-sm-30 p-20 mb-30">
-                        <div className="card-body p-0">
-                          <div className="card-header">
-                            <h6 className="fw-500">Thông tin loại sản phẩm</h6>
-                          </div>
-                          {/* Start: card body */}
-                          <div className="add-product__body px-sm-40 px-20">
-                            {/* Start: form */}
-                            <form>
+                    <form onSubmit={onSubmit}>
+                      <div className="mx-sm-30 mx-20 ">
+                        {/* Start: card */}
+                        <div className="card add-product p-sm-30 p-20 mb-30">
+                          <div className="card-body p-0">
+                            <div className="card-header">
+                              <h6 className="fw-500">
+                                Thông tin loại sản phẩm
+                              </h6>
+                            </div>
+                            {/* Start: card body */}
+                            <div className="add-product__body px-sm-40 px-20">
+                              {/* Start: form */}
+
                               {/* form group */}
                               <div className="form-group">
-                                <label htmlFor="name1">ID</label>
+                                <label htmlFor="id">ID</label>
                                 <input
                                   type="text"
-                                  className="form-control"
-                                  id="name1"
-                                  placeholder="red chair"
-                                  defaultValue={category._id}
+                                  id="id"
+                                  defaultValue={id}
                                   readOnly
+                                  className="form-control"
                                 />
                               </div>
                               <div className="form-group">
                                 <label htmlFor="name1">Tên Loại</label>
                                 <input
                                   type="text"
-                                  className="form-control"
-                                  id="name1"
-                                  placeholder="red chair"
+                                  id={"name1"}
                                   defaultValue={category.Name}
+                                  className="form-control"
+                                  ref={refName}
                                 />
                               </div>
 
-                              <div className="form-group status-radio add-product-status-radio mb-20">
+                              <div className="form-group mb-20 ">
                                 <label className="mb-15">Ẩn/Hiện</label>
-
-                                <SwitchIOS
-                                  defaultChecked={category?.Is_Show}
-                                  name="Is_Show"
-                                />
+                                <div className="d-flex">
+                                  <div className="radio-horizontal-list d-flex flex-wrap">
+                                    <div className="radio-theme-default custom-radio ">
+                                      <input
+                                        className="radio"
+                                        type="radio"
+                                        name="Is_Show"
+                                        value={true}
+                                        id="radio-hl1"
+                                        checked={selected === true}
+                                        onChange={() => setSelected(true)}
+                                      />
+                                      <label htmlFor="radio-hl1">
+                                        <span className="radio-text">Hiện</span>
+                                      </label>
+                                    </div>
+                                    <div className="radio-theme-default custom-radio ">
+                                      <input
+                                        className="radio"
+                                        type="radio"
+                                        name="Is_Show"
+                                        value={false}
+                                        id="radio-hl2"
+                                        checked={selected === false}
+                                        onChange={() => setSelected(false)}
+                                      />
+                                      <label htmlFor="radio-hl2">
+                                        <span className="radio-text">Ẩn</span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
+
                               <div className="form-group">
                                 <label htmlFor="name8">Thứ tự</label>
                                 <input
@@ -118,7 +194,8 @@ const EditCategory = () => {
                                   className="form-control"
                                   id="name8"
                                   placeholder="Số thứ tự"
-                                  defaultValue={category.Ordinal}
+                                  defaultValue={category?.Ordinal}
+                                  ref={refOrdinal}
                                 />
                               </div>
                               <div className="form-group">
@@ -127,49 +204,51 @@ const EditCategory = () => {
                                   <select
                                     className="js-example-basic-single js-states form-control"
                                     id="countryOption"
-                                    defaultValue={category.Parent_Id}
+                                    defaultValue={category?.Parent_Id}
+                                    ref={refParent}
                                   >
                                     <option
-                                      value="null"
-                                      selected={category.Parent_Id == null}
+                                      value="0"
+                                      selected={category?.Parent_Id == null}
                                     >
                                       Không
                                     </option>
-
-                                    {parentCategory.map((item) => {
-                                      return (
-                                        <option
-                                          key={item._id}
-                                          value={item?._id}
-                                          selected={
-                                            item._id === category?.Parent_Id
-                                          }
-                                        >
-                                          {item.Name}
-                                        </option>
-                                      );
-                                    })}
+                                    {parentCategory &&
+                                      parentCategory.map((item) => {
+                                        return (
+                                          <option
+                                            key={item._id}
+                                            value={item?._id}
+                                            selected={
+                                              item._id === category?.Parent_Id
+                                            }
+                                          >
+                                            {item.Name}
+                                          </option>
+                                        );
+                                      })}
                                   </select>
                                 </div>
                               </div>
-                            </form>
-                            {/* End: form */}
+
+                              {/* End: form */}
+                            </div>
+                            {/* End: card body */}
                           </div>
-                          {/* End: card body */}
                         </div>
+                        {/* End: card */}
+                        {/* Start: button group */}
+                        <div className="button-group add-product-btn d-flex justify-content-end mt-40">
+                          <button className="btn btn-light btn-default btn-squared fw-400 text-capitalize">
+                            Huỷ
+                          </button>
+                          <button className="btn btn-primary btn-default btn-squared text-capitalize">
+                            Lưu
+                          </button>
+                        </div>
+                        {/* End: button group */}
                       </div>
-                      {/* End: card */}
-                      {/* Start: button group */}
-                      <div className="button-group add-product-btn d-flex justify-content-end mt-40">
-                        <button className="btn btn-light btn-default btn-squared fw-400 text-capitalize">
-                          cancel
-                        </button>
-                        <button className="btn btn-primary btn-default btn-squared text-capitalize">
-                          save product
-                        </button>
-                      </div>
-                      {/* End: button group */}
-                    </div>
+                    </form>
                   </div>
                   {/* ends: col-lg-8 */}
                 </div>
