@@ -6,26 +6,26 @@ import { useRef } from "react";
 import { uploadLoadFIle } from "../../app/services/upload";
 import { useSelector } from "react-redux";
 
-const Modal = ({loadNews}) => {
+const Modal = ({ loadNews }) => {
   const [news, setNews] = useState({ Is_Show: true });
   const [selected, setSelected] = useState(true);
-  const [isValid , setIsValid] = useState(true)
-  const file = useRef()
-  const {name} = useSelector(state => state.auth.user)
+  const [isValid, setIsValid] = useState(true);
+  const file = useRef();
+  const { name } = useSelector((state) => state.auth.user);
 
   const handleChange = (e) => {
     setNews((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
-  
+
   const handleSubmit = async (e) => {
-    const urlImg = await uploadLoadFIle(file.current.files[0])
-    const data = {...news,Is_Show : selected, image : urlImg,Create_By : name}
-    await addNews(data)
-    loadNews()
-    e.preventDefault()
-  }
+    const urlImg = await uploadLoadFIle(file.current.files[0]);
+    const data = { ...news, Is_Show: selected, image: urlImg, Create_By: name };
+    await addNews(data);
+    loadNews();
+    e.preventDefault();
+  };
   return (
     <div>
       {/* Modal */}
@@ -37,7 +37,7 @@ const Modal = ({loadNews}) => {
         aria-labelledby="staticBackdropLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-dialog modal-xl modal-dialog-centered">
           <div className="modal-content  radius-xl">
             <div className="modal-header">
               <h6 className="modal-title fw-500" id="staticBackdropLabel">
@@ -57,7 +57,7 @@ const Modal = ({loadNews}) => {
                     <textarea
                       className="form-control"
                       id="title-news"
-                      rows={3}
+                      rows={2}
                       defaultValue={""}
                       name="Title"
                       onBlur={handleChange}
@@ -71,7 +71,7 @@ const Modal = ({loadNews}) => {
                       Mô tả
                     </label>
                     <textarea
-                      className="form-control"  
+                      className="form-control"
                       id="desc-news"
                       rows={3}
                       defaultValue={""}
@@ -86,13 +86,26 @@ const Modal = ({loadNews}) => {
                     >
                       Hình ảnh
                     </label>
-                    <input ref={file} class="form-control" type="file" id="formFile" />
+                    <input
+                      ref={file}
+                      class="form-control"
+                      type="file"
+                      id="formFile"
+                    />
                   </div>
                   <div className="form-group mb-20">
                     <label className="fs-14 color-light strikethrough">
                       Nội dung
                     </label>
-                    <CKEditor
+                    <div class="form-group">
+                      <textarea
+                        name="message"
+                        id="mail-message"
+                        class="form-control-lg"
+                        placeholder="Type your message..."
+                      ></textarea>
+                    </div>
+                    {/* <CKEditor
                       editor={ClassicEditor}
                       onReady={(editor) => {
                         // You can store the "editor" and use when it is needed.
@@ -104,8 +117,9 @@ const Modal = ({loadNews}) => {
                           return { ...prev, Content: data };
                         });
                       }}
-                    />
+                    /> */}
                   </div>
+
                   <div className="form-group mb-20 ">
                     <label className="mb-15">Ẩn/Hiện</label>
                     <div className="d-flex">
@@ -142,7 +156,12 @@ const Modal = ({loadNews}) => {
                     </div>
                   </div>
                   <div className="button-group d-flex pt-25 justify-content-end">
-                    <button type="button" aria-label={isValid ? "close" : ""} onClick={handleSubmit} className="btn btn-success btn-default btn-squared text-capitalize">
+                    <button
+                      type="button"
+                      aria-label={isValid ? "close" : ""}
+                      onClick={handleSubmit}
+                      className="btn btn-success btn-default btn-squared text-capitalize"
+                    >
                       Thêm
                     </button>
                     <button

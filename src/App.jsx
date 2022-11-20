@@ -27,7 +27,15 @@ function App() {
       document.body.removeChild(script);
     };
   }, []);
-
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = '/assets/vendor_assets/js/trumbowyg.min.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
   return (
     <>
       <Header />
