@@ -218,31 +218,17 @@ const EditCategory = () => {
                                 <div className="countryOption">
                                   <label htmlFor="countryOption">Con ?</label>
                                   <select
-                                    className="js-example-basic-single js-states form-control"
                                     id="countryOption"
-                                    defaultValue={category?.Parent_Id}
-                                    ref={refParent}
+                                    className="js-example-basic-single js-states form-control"
+                                    defaultValue={category.Parent_Id}
+                                    {...register('ParentCategory')}
                                   >
-                                    <option
-                                      value="0"
-                                      selected={category?.Parent_Id == null}
-                                    >
-                                      Không
-                                    </option>
-                                    {parentCategory &&
-                                      parentCategory.map((item) => {
-                                        return (
-                                          <option
-                                            key={item._id}
-                                            value={item?._id}
-                                            selected={
-                                              item._id === category?.Parent_Id
-                                            }
-                                          >
-                                            {item.Name}
-                                          </option>
-                                        );
-                                      })}
+                                    <option value={null}>Không</option>
+                                    {parentCategory.map((item) => (
+                                      <option key={item._id} value={item._id}>
+                                        {item.Name}
+                                      </option>
+                                    ))}
                                   </select>
                                 </div>
                               </div>
