@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import SwitchIOS from "../../CustomMui/switch";
-import { Edit,XCircle } from "react-feather";
+import { Edit, XCircle } from "react-feather";
 import {
   getCategory,
   UpdateCategory,
+  DeleteCategory,
 } from "../../app/services/admin/category.service";
 const Category = () => {
   const [arrCategories, setArrCategories] = useState([]);
@@ -334,14 +335,64 @@ const Category = () => {
                           to={/category/ + item._id}
                           className="btn btn-primary btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
                         >
-                          <Edit/> Sửa
+                          <Edit /> Sửa
                         </Link>
                         <button
                           type="button"
                           className="btn btn-outline-danger btn-default btn-squared text-capitalize px-20 mb-10 global-shadow"
+                          data-toggle="modal"
+                          data-target={"#modal-info-delete" + item._id}
                         >
-                         <XCircle/> Xoá
+                          <XCircle /> Xoá
                         </button>
+                        <div
+                          className="modal-info-delete modal fade show"
+                          id={"modal-info-delete" + item._id}
+                          tabIndex={-1}
+                          role="dialog"
+                          aria-hidden="true"
+                        >
+                          <div
+                            className="modal-dialog modal-sm modal-info"
+                            role="document"
+                          >
+                            <div className="modal-content">
+                              <div className="modal-body">
+                                <div className="modal-info-body d-flex">
+                                  <div className="modal-info-icon warning">
+                                    <span data-feather="info" />
+                                  </div>
+                                  <div className="modal-info-text">
+                                    <h6>
+                                      Bạn có thực sự muốn xoá loại{" "}
+                                      <b>{item?.Name}</b>?
+                                    </h6>
+                                    <p>
+                                      Xoá sẽ không khôi phục lại đâu nha cha nội
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="modal-footer">
+                                <button
+                                  type="button"
+                                  className="btn btn-danger btn-outlined btn-sm"
+                                  data-dismiss="modal"
+                                >
+                                  Không
+                                </button>
+                                <button
+                                  onClick={() => DeleteCategory(item._id)}
+                                  type="button"
+                                  className="btn btn-success btn-outlined btn-sm"
+                                  data-dismiss="modal"
+                                >
+                                  Xoá
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

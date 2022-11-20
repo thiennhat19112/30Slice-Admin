@@ -41,3 +41,13 @@ export const UpdateCategory = async (data) => {
     throw new Error(err);
   }
 };
+export const DeleteCategory = async (id) => {
+  try {
+    const response = await api.delete('category?id=' + id);
+    if (response.status === 200) {
+      return response.data;
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+}
