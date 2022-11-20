@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 import { useEffect, useState, useRef } from "react";
 import { AddCategory } from "../../app/services/admin/category.service";
-
+import { X } from "react-feather";
 const Modal = (props) => {
   const [selected, setSelected] = useState(true);
   const refName = useRef("");
@@ -65,7 +65,7 @@ const Modal = (props) => {
               data-dismiss="modal"
               aria-label="Close"
             >
-              <span data-feather="x" />
+              <X/>
             </button>
           </div>
           <div className="modal-body">
