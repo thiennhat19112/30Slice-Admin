@@ -1,10 +1,16 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectUser } from '../app/redux/slices/auth/auth';
+import { selectLoginState, selectUser } from '../app/redux/slices/auth/auth';
+import { ROLE } from '../app/services/role/role';
 
 function PrivateRoute({ children }) {
-  const isLoggedIn = useSelector(selectUser);
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  const isLoggedIn = useSelector(selectLoginState);
+  const user = useSelector(selectUser);
+  return isLoggedIn && ROLE.includes(user.role) ? (
+    children
+  ) : (
+    <Navigate to="/login" />
+  );
 }
 
 export default PrivateRoute;

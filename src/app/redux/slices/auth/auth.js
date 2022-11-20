@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { setMessage } from './message';
+import { ROLE } from '../../../services/role/role';
 
 // import adminService from '../../services/admin/admin.service';
 import AuthService from '../../../services/auth/auth.service';
-
 
 const user = JSON.parse(localStorage.getItem('user'));
 
@@ -12,7 +12,10 @@ export const login = createAsyncThunk(
   async ({ username, password }, thunkAPI) => {
     try {
       const data = await AuthService.login(username, password);
-      return { user: data };
+      if (ROLE.includes(data.role)) {
+        return { user: data };
+      }
+      throw new Error('Hãy đăng nhập bằng tài khoản hệ thống.');
     } catch (error) {
       const message =
         (error.response &&
@@ -45,9 +48,10 @@ export const logout = createAsyncThunk('auth/logout', async () => {
   await AuthService.logout();
 });
 
-const initialState = user
-  ? { isLoggedIn: true, user }
-  : { isLoggedIn: false, user: null };
+const initialState =
+  user && ROLE.includes(user.role)
+    ? { isLoggedIn: true, user }
+    : { isLoggedIn: false, user: null };
 
 const authSlice = createSlice({
   name: 'auth',
@@ -63,8 +67,13 @@ const authSlice = createSlice({
       state.user = null;
     },
     [login.fulfilled]: (state, action) => {
-      state.isLoggedIn = true;
-      state.user = action.payload.user;
+      if (ROLE.includes(action.payload.user.role)) {
+        state.isLoggedIn = true;
+        state.user = action.payload.user;
+      } else {
+        state.isLoggedIn = false;
+        state.user = null;
+      }
     },
     [login.rejected]: (state, action) => {
       state.isLoggedIn = false;
@@ -77,6 +86,8 @@ const authSlice = createSlice({
   },
 });
 
-export const selectUser = (state) => state.auth.isLoggedIn;
+export const selectLoginState = (state) => state.auth.isLoggedIn;
+export const selectUser = (state) => state.auth.user;
+
 export const { refresh } = authSlice.actions;
 export default authSlice.reducer;
