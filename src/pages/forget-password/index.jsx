@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useRef, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
+import { toastSuccess } from "../../components/sharedComponents/toast";
 
 const ForgetPassword = () => {
   const API_URL = import.meta.env.REACT_APP_API_ENDPOINT;
@@ -18,16 +18,7 @@ const ForgetPassword = () => {
     console.log(response);
     if (response.status === 200) {
       setLoading(false);
-      toast.success("Thành Công! Vui lòng kiểm tra email hoặc email spam", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toastSuccess("Thành Công! Vui lòng kiểm tra email hoặc email spam");
     }
   };
 

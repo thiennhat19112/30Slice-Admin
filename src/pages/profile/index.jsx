@@ -4,10 +4,13 @@ import { useForm } from "react-hook-form";
 import Input from "../../components/sharedComponents/input";
 import { passwordValidator } from "../../components/sharedComponents/validatorPatterns";
 import { selectMessage } from "../../app/redux/slices/auth/message";
-import { toast } from "react-toastify";
+import {
+  toastSuccess,
+  toastError,
+} from "../../components/sharedComponents/toast";
 import { ChangePasswordAdmin } from "../../app/services/admin/admin.service";
 import { useNavigate } from "react-router-dom";
-import { Settings, Key,Camera } from "react-feather";
+import { Settings, Key, Camera } from "react-feather";
 const Profile = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -29,28 +32,10 @@ const Profile = () => {
       const res = await ChangePasswordAdmin(user);
       setLoading(false);
       if (res.status === 201) {
-        toast.success(res.data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toastSuccess(res.data.message);
         navigate(-1);
       } else {
-        toast.error(res.data.message, {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
+        toastError(res.data.message);
       }
 
       // navigate('/');
@@ -294,7 +279,6 @@ const Profile = () => {
                                         pattern={passwordValidator}
                                         error={errors.new_password}
                                       />
-
                                     </div>
                                     {message && (
                                       <div className="form-group">

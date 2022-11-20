@@ -1,5 +1,8 @@
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import {
+  toastSuccess,
+  toastError,
+} from "../../components/sharedComponents/toast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState, useRef } from "react";
 import SwitchIOS from "../../CustomMui/switch";
@@ -63,27 +66,9 @@ const EditCategory = () => {
 
     const res = await UpdateCategory(req);
     if (res.status === 201) {
-      toast.success(res.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toastSuccess(res.data.message);
     } else {
-      toast.error(res.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toastError(res.data.message);
     }
     setLoading(false);
     _isMounted && loadCategory();
@@ -167,9 +152,7 @@ const EditCategory = () => {
                                 />
                               </div>
                               <div className="form-group">
-                                <label htmlFor="Is_Show">
-                                  Ẩn/Hiện
-                                </label>
+                                <label htmlFor="Is_Show">Ẩn/Hiện</label>
                                 <SwitchIOS
                                   onChange={() => {
                                     setSelected(!selected);

@@ -6,9 +6,9 @@ import {
   getCategory,
   UpdateCategory,
   DeleteCategory,
-  getParentCategory
+  getParentCategory,
 } from "../../app/services/admin/category.service";
-import { toast } from "react-toastify";
+import { toastError } from "../../components/sharedComponents/toast";
 import Modal from "./modal";
 
 const Category = () => {
@@ -47,16 +47,7 @@ const Category = () => {
   const handleDeleteCategory = async (id) => {
     try {
       const res = await DeleteCategory(id);
-      toast.error(res, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toastError(res);
       _isMounted && loadCategory();
     } catch (err) {
       throw new Error(err);
@@ -105,7 +96,10 @@ const Category = () => {
                 Thêm loại sản phẩm
               </a>
               {/* Modal */}
-              <Modal parentCategory={parentCategory} loadCategory={loadCategory} />
+              <Modal
+                parentCategory={parentCategory}
+                loadCategory={loadCategory}
+              />
               {/* Modal */}
             </div>
           </div>
@@ -132,7 +126,9 @@ const Category = () => {
                     <div className="media-body d-xl-flex users-list-body">
                       <div className="flex-1 pr-xl-30">
                         <div className="users-list-body__title">
-                          <h6 className="mt-0 fw-500">#{item.Ordinal} {item.Name} </h6>
+                          <h6 className="mt-0 fw-500">
+                            #{item.Ordinal} {item.Name}{" "}
+                          </h6>
                           <span> {item.Parent_Id == null ? "Cha" : "Con"}</span>
                           <p className="mb-0"></p>
                         </div>

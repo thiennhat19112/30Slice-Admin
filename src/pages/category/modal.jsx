@@ -1,5 +1,7 @@
-import { toast } from "react-toastify";
-
+import {
+  toastSuccess,
+  toastError,
+} from "../../components/sharedComponents/toast";
 import { useEffect, useState, useRef } from "react";
 import { AddCategory } from "../../app/services/admin/category.service";
 import { X } from "react-feather";
@@ -19,28 +21,10 @@ const Modal = (props) => {
     };
     const res = await AddCategory(data);
     if (res.status === 201) {
-      toast.success(res.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toastSuccess(res.data.message);
       props.loadCategory();
     } else {
-      toast.error(res.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
+      toastError(res.data.message);
     }
   };
 
@@ -65,7 +49,7 @@ const Modal = (props) => {
               data-dismiss="modal"
               aria-label="Close"
             >
-              <X/>
+              <X />
             </button>
           </div>
           <div className="modal-body">
