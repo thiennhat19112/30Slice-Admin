@@ -1,13 +1,14 @@
-import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState, useRef } from 'react';
+import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { useEffect, useState, useRef } from "react";
+import SwitchIOS from "../../CustomMui/switch";
 
 import {
   getParentCategory,
   getOneCategory,
   UpdateCategory,
-} from '../../app/services/admin/category.service';
+} from "../../app/services/admin/category.service";
 
 const EditCategory = () => {
   const params = useParams();
@@ -17,7 +18,7 @@ const EditCategory = () => {
   const _isMounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
-  const refName = useRef('');
+  const refName = useRef("");
   const refOrdinal = useRef();
   const refParent = useRef();
 
@@ -49,40 +50,39 @@ const EditCategory = () => {
     _isMounted.current && setLoading(false);
   };
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
     setLoading(true);
-    const data = {
-      _id: id,
-      Name: refName.current.value,
+    // console.log(data);
+    const req = {
+      _id: data._id,
+      Name: data.Name,
+      Ordinal: parseInt(data.Ordinal),
       Is_Show: selected,
-      Ordinal: parseInt(refOrdinal.current.value),
-      Parent_Id:
-        refParent.current.value === '0' ? null : refParent.current.value,
+      Parent_Id: data.ParentCategory === "0" ? null : data.ParentCategory,
     };
 
-    const res = await UpdateCategory(data);
+    const res = await UpdateCategory(req);
     if (res.status === 201) {
       toast.success(res.data.message, {
-        position: 'top-right',
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: "colored",
       });
     } else {
       toast.error(res.data.message, {
-        position: 'top-right',
+        position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'colored',
+        theme: "colored",
       });
     }
     setLoading(false);
@@ -130,7 +130,7 @@ const EditCategory = () => {
               <div className="global-shadow border px-sm-30 py-sm-50 px-0 py-20 bg-white radius-xl w-100 mb-40">
                 <div className="row justify-content-center">
                   <div className="col-xl-7 col-lg-10">
-                    <form onSubmit={handleSubmit(onSubmit1)}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                       <div className="mx-sm-30 mx-20 ">
                         {/* Start: card */}
                         <div className="card add-product p-sm-30 p-20 mb-30">
@@ -153,69 +153,30 @@ const EditCategory = () => {
                                   type="text"
                                   className="form-control"
                                   defaultValue={category._id}
-                                  {...register('_id')}
+                                  {...register("_id")}
                                 />
                               </div>
                               <div className="form-group">
                                 <label htmlFor="name">Tên Loại</label>
                                 <input
                                   type="text"
-                                  id={'name'}
+                                  id={"name"}
                                   defaultValue={category.Name}
                                   className="form-control"
-                                  {...register('Name')}
+                                  {...register("Name")}
                                 />
                               </div>
-
-                              <br />
-                              <div className="form-group mb-20 ">
-                                <input
-                                  className="radio"
-                                  type="checkbox"
-                                  name="Is_Show"
-                                  {...register('Is_Show')}
-                                />
-                                <label htmlFor="Is_Show" className="mb-15">
-                                  Hiện
+                              <div className="form-group">
+                                <label htmlFor="Is_Show">
+                                  Ẩn/Hiện
                                 </label>
-
-                                {/* <div className="d-flex">
-                                  <div className="radio-horizontal-list d-flex flex-wrap">
-                                    <div className="radio-theme-default custom-radio ">
-                                      <input
-                                        type="checkbox"
-                                        name="vehicle1"
-                                        value="Bike"
-                                      />
-                                      <input
-                                        className="radio"
-                                        type="radio"
-                                        name="Is_Show"
-                                        value={true}
-                                        id="radio-hl1"
-                                        checked={selected === true}
-                                        onChange={() => setSelected(true)}
-                                      />
-                                      <label htmlFor="radio-hl1">
-                                        <span className="radio-text">Hiện</span>
-                                      </label>
-                                    </div>
-                                    <div className="radio-theme-default custom-radio ">
-                                      <input
-                                        className="radio"
-                                        type="radio"
-                                        name="Is_Show"
-                                        value={false}
-                                        id="radio-hl2"
-                                        checked={selected === false}
-                                        onChange={() => setSelected(false)}
-                                      />
-                                      <label htmlFor="radio-hl2">
-                                        <span className="radio-text">Ẩn</span>
-                                      </label>
-                                    </div>
-                                  </div>
-                                </div> */}
+                                <SwitchIOS
+                                  onChange={() => {
+                                    setSelected(!selected);
+                                  }}
+                                  defaultChecked={selected}
+                                  name="Is_Show"
+                                />
                               </div>
 
                               <div className="form-group">
@@ -226,7 +187,7 @@ const EditCategory = () => {
                                   id="name8"
                                   placeholder="Số thứ tự"
                                   defaultValue={category?.Ordinal}
-                                  {...register('Ordinal')}
+                                  {...register("Ordinal")}
                                 />
                               </div>
                               <div className="form-group">
@@ -236,9 +197,9 @@ const EditCategory = () => {
                                     id="countryOption"
                                     className="js-example-basic-single js-states form-control"
                                     defaultValue={category.Parent_Id}
-                                    {...register('ParentCategory')}
+                                    {...register("ParentCategory")}
                                   >
-                                    <option value={null}>Không</option>
+                                    <option value="0">Không</option>
                                     {parentCategory.map((item) => (
                                       <option key={item._id} value={item._id}>
                                         {item.Name}
