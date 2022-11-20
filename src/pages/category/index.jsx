@@ -28,6 +28,7 @@ const Category = () => {
   const loadCategory = async () => {
     _isMounted.current && setLoading(true);
     const data = await getCategory();
+    console.log(data);
     _isMounted.current && setLoading(false);
     _isMounted.current && setArrCategories(data);
     const dataParent = await getParentCategory();
@@ -131,7 +132,7 @@ const Category = () => {
                     <div className="media-body d-xl-flex users-list-body">
                       <div className="flex-1 pr-xl-30">
                         <div className="users-list-body__title">
-                          <h6 className="mt-0 fw-500">{item.Name} </h6>
+                          <h6 className="mt-0 fw-500">#{item.Ordinal} {item.Name} </h6>
                           <span> {item.Parent_Id == null ? "Cha" : "Con"}</span>
                           <p className="mb-0"></p>
                         </div>
