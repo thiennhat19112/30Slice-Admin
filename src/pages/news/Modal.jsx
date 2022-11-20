@@ -86,9 +86,10 @@ const Modal = ({ loadNews }) => {
                     >
                       Hình ảnh
                     </label>
+
                     <input
                       ref={file}
-                      class="form-control"
+                      className="form-control"
                       type="file"
                       id="formFile"
                     />
