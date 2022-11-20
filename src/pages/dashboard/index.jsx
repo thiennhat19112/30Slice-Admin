@@ -4,30 +4,30 @@ import UserService from '../../app/services/auth/user.service';
 import EventBus from '../../app/common/EventBus';
 
 function Dashboard() {
-  const [content, setContent] = useState();
+  const [content, setContent] = useState('');
 
-  useEffect(() => {
-    UserService.getAdminBoard().then(
-      (response) => {
-        setContent(response.data);
-      },
-      (error) => {
-        console.log(error);
-        setContent(
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-            error.message ||
-            error.toString()
-        );
+  // useEffect(() => {
+  //   UserService.getAdminBoard().then(
+  //     (response) => {
+  //       setContent(response.data);
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //       setContent(
+  //         (error.response &&
+  //           error.response.data &&
+  //           error.response.data.message) ||
+  //           error.message ||
+  //           error.toString()
+  //       );
 
-        if (error.response && error.response.status === 403) {
-          window.alert('Token đã hết hạn, bạn sẽ bị đăng xuất!');
-          EventBus.dispatch('logout');
-        }
-      }
-    );
-  }, []);
+  //       if (error.response && error.response.status === 403) {
+  //         window.alert('Token đã hết hạn, bạn sẽ bị đăng xuất!');
+  //         EventBus.dispatch('logout');
+  //       }
+  //     }
+  //   );
+  // }, []);
 
   return (
     <div className="container-fluid">
