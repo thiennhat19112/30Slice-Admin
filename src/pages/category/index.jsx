@@ -137,7 +137,7 @@ const Category = () => {
                           <p className="mb-0"></p>
                         </div>
                         <div className="userDatatable-content d-inline-block">
-                          Ẩn/Hiện
+                          Hiện
                           <SwitchIOS
                             onChange={() =>
                               handleUpdateStatus(item?._id, item?.Is_Show)
