@@ -1,13 +1,13 @@
-import { refresh } from "../redux/slices/auth/auth";
-import axiosInstance from "./api";
-import TokenService from "../services/auth/token.service";
-import EventBus from "../common/EventBus";
+import { refresh } from '../redux/slices/auth/auth';
+import axiosInstance from './api';
+import TokenService from '../services/auth/token.service';
+import EventBus from '../common/EventBus';
 const setup = (store) => {
   axiosInstance.interceptors.request.use(
     (config) => {
       const token = TokenService.getLocalAccessToken();
       if (token) {
-        config.headers["authorization"] = "Bearer " + token;
+        config.headers['authorization'] = 'Bearer ' + token;
       }
       return config;
     },
@@ -24,12 +24,12 @@ const setup = (store) => {
     async (err) => {
       const originalConfig = err.config;
 
-      if (originalConfig?.url !== "/auth/signin" && err.response) {
+      if (originalConfig?.url !== '/auth/signin' && err.response) {
         if (err.response.status === 401 && !originalConfig._retry) {
           originalConfig._retry = true;
 
           try {
-            const rs = await axiosInstance.post("/auth/refreshtoken", {
+            const rs = await axiosInstance.post('/auth/refreshtoken', {
               refreshToken: TokenService.getLocalRefreshToken(),
             });
 
@@ -40,8 +40,9 @@ const setup = (store) => {
 
             return axiosInstance(originalConfig);
           } catch (_error) {
-            EventBus.dispatch("logout");
-            return window.alert("Token đã hết hạn, bạn sẽ bị đăng xuất!");
+            window.alert('Token đã hết hạn, bạn sẽ bị đăng xuất!');
+            EventBus.dispatch('logout');
+            return Promise.reject(_error);
           }
         }
       }
