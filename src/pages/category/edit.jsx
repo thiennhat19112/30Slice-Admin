@@ -27,7 +27,7 @@ const EditCategory = () => {
     reset,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: { Is_Show: category.Is_Show } });
 
   const onSubmit1 = (data) => {
     console.log(data);
@@ -167,11 +167,26 @@ const EditCategory = () => {
                                 />
                               </div>
 
+                              <br />
                               <div className="form-group mb-20 ">
-                                <label className="mb-15">Ẩn/Hiện</label>
-                                <div className="d-flex">
+                                <input
+                                  className="radio"
+                                  type="checkbox"
+                                  name="Is_Show"
+                                  {...register('Is_Show')}
+                                />
+                                <label htmlFor="Is_Show" className="mb-15">
+                                  Ẩn/Hiện
+                                </label>
+
+                                {/* <div className="d-flex">
                                   <div className="radio-horizontal-list d-flex flex-wrap">
                                     <div className="radio-theme-default custom-radio ">
+                                      <input
+                                        type="checkbox"
+                                        name="vehicle1"
+                                        value="Bike"
+                                      />
                                       <input
                                         className="radio"
                                         type="radio"
@@ -200,7 +215,7 @@ const EditCategory = () => {
                                       </label>
                                     </div>
                                   </div>
-                                </div>
+                                </div> */}
                               </div>
 
                               <div className="form-group">
@@ -211,7 +226,7 @@ const EditCategory = () => {
                                   id="name8"
                                   placeholder="Số thứ tự"
                                   defaultValue={category?.Ordinal}
-                                  ref={refOrdinal}
+                                  {...register('Ordinal')}
                                 />
                               </div>
                               <div className="form-group">
