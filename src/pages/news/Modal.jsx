@@ -86,7 +86,7 @@ const Modal = ({loadNews}) => {
                     >
                       Hình ảnh
                     </label>
-                    <input ref={file} class="form-control" type="file" id="formFile" />
+                    <input ref={file} className="form-control" type="file" id="formFile" />
                   </div>
                   <div className="form-group mb-20">
                     <label className="fs-14 color-light strikethrough">
