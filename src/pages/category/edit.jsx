@@ -176,7 +176,7 @@ const EditCategory = () => {
                                   {...register('Is_Show')}
                                 />
                                 <label htmlFor="Is_Show" className="mb-15">
-                                  Ẩn/Hiện
+                                  Hiện
                                 </label>
 
                                 {/* <div className="d-flex">
