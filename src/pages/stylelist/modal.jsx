@@ -1,4 +1,6 @@
-const Modal = () => {
+import Autocomplete from "../../CustomMui/autocomplete";
+import { X } from "react-feather";
+const Modal = (props) => {
   return (
     <div
       className="modal fade new-member"
@@ -12,7 +14,7 @@ const Modal = () => {
         <div className="modal-content  radius-xl">
           <div className="modal-header">
             <h6 className="modal-title fw-500" id="staticBackdropLabel">
-              Create project
+              Thêm thợ cắt tóc
             </h6>
             <button
               type="button"
@@ -20,7 +22,7 @@ const Modal = () => {
               data-dismiss="modal"
               aria-label="Close"
             >
-              <span data-feather="x" />
+              <X />
             </button>
           </div>
           <div className="modal-body">
@@ -34,15 +36,11 @@ const Modal = () => {
                   />
                 </div>
                 <div className="form-group mb-20">
-                  <div className="category-member">
-                    <select
-                      className="js-example-basic-single js-states form-control"
-                      id="category-member"
-                    >
-                      <option value="JAN">1</option>
-                      <option value="FBR">2</option>
-                    </select>
-                  </div>
+                  <Autocomplete
+                    time={props.time}
+                    title="Ca làm việc"
+                    id="shifts"
+                  />
                 </div>
                 <div className="form-group mb-20">
                   <textarea
@@ -106,64 +104,7 @@ const Modal = () => {
                     </div>
                   </div>
                 </div>
-                <div className="mb-25">
-                  <div className="form-group mb-10">
-                    <label htmlFor="name47">project member</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id="name47"
-                      placeholder="Search members"
-                    />
-                  </div>
-                  <ul className="d-flex flex-wrap mb-20 user-group-people__parent">
-                    <li>
-                      <a href="#">
-                        <img
-                          className="rounded-circle wh-34"
-                          src="img/tm1.png"
-                          alt="author"
-                        />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img
-                          className="rounded-circle wh-34"
-                          src="img/tm2.png"
-                          alt="author"
-                        />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img
-                          className="rounded-circle wh-34"
-                          src="img/tm3.png"
-                          alt="author"
-                        />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img
-                          className="rounded-circle wh-34"
-                          src="img/tm4.png"
-                          alt="author"
-                        />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <img
-                          className="rounded-circle wh-34"
-                          src="img/tm5.png"
-                          alt="author"
-                        />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+
                 <div className="d-flex new-member-calendar">
                   <div className="form-group w-100 mr-sm-15 form-group-calender">
                     <label htmlFor="datepicker">start Date</label>
@@ -210,4 +151,4 @@ const Modal = () => {
     </div>
   );
 };
-export default Modal
+export default Modal;

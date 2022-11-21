@@ -9,6 +9,37 @@ const StyleList = () => {
   const _isMounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const [arrStyleList, setArrStyleList] = useState([]);
+  const allAvailableTime = [
+    "07:00",
+    "07:30",
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
+    "10:00",
+    "10:30",
+    "11:00",
+    "11:30",
+    "12:00",
+    "12:30",
+    "13:00",
+    "13:30",
+    "14:00",
+    "14:30",
+    "15:00",
+    "15:30",
+    "16:00",
+    "16:30",
+    "17:00",
+    "17:30",
+    "18:00",
+    "18:30",
+    "19:00",
+    "19:30",
+    "20:00",
+    "20:30",
+    "21:00",
+  ];
   useEffect(() => {
     _isMounted.current = true;
 
@@ -36,7 +67,9 @@ const StyleList = () => {
                 <h4 className="text-capitalize fw-500 breadcrumb-title">
                   Quản lý thợ cắt tóc
                 </h4>
-                <span className="sub-title ml-sm-25 pl-sm-25">{arrStyleList?.length} Thợ cắt tóc</span>
+                <span className="sub-title ml-sm-25 pl-sm-25">
+                  {arrStyleList?.length} Thợ cắt tóc
+                </span>
               </div>
               <form
                 action="/"
@@ -59,10 +92,10 @@ const StyleList = () => {
                 data-target="#new-member"
               >
                 <i className="las la-plus fs-16" />
-               Thêm thợ cắt tóc
+                Thêm thợ cắt tóc
               </a>
               {/* Modal */}
-              <Modal />
+              <Modal time={allAvailableTime} />
               {/* Modal */}
             </div>
           </div>
@@ -111,7 +144,7 @@ const StyleList = () => {
                       </th>
                       <th>
                         <span className="userDatatable-title float-right">
-                         Thao tác
+                          Thao tác
                         </span>
                       </th>
                     </tr>
@@ -162,7 +195,10 @@ const StyleList = () => {
                         <td>
                           <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
                             <li>
-                              <Link to={/stylelist/+item?._id} className="edit">
+                              <Link
+                                to={/stylelist/ + item?._id}
+                                className="edit"
+                              >
                                 <Edit />
                               </Link>
                             </li>
