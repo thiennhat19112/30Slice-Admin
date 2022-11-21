@@ -1,7 +1,9 @@
 import { refresh } from '../redux/slices/auth/auth';
 import axiosInstance from './api';
 import TokenService from '../services/auth/token.service';
-import EventBus from '../common/EventBus';
+// import EventBus from '../common/EventBus';
+import { logout } from '../redux/slices/auth/auth';
+
 const setup = (store) => {
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -41,7 +43,7 @@ const setup = (store) => {
             return axiosInstance(originalConfig);
           } catch (_error) {
             window.alert('Token đã hết hạn, bạn sẽ bị đăng xuất!');
-            EventBus.dispatch('logout');
+            dispatch(logout());
             return Promise.reject(_error);
           }
         }
