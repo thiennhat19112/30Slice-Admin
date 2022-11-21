@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const Modal = (props) => {
+  const [timeSelected, setTimeSelected] = useState([]);
+
+  console.log(timeSelected);
   return (
     <div
       className="modal fade new-member"
@@ -43,6 +46,9 @@ const Modal = (props) => {
                     time={props.time}
                     title="Ca làm việc"
                     id="shifts"
+                    onChange={(e) =>
+                      setTimeSelected(e.map((item) => item.value))
+                    }
                   />
                 </div>
                 <div className="form-group mb-20">
