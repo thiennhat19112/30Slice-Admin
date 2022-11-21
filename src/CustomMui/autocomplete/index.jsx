@@ -169,11 +169,13 @@ export default function CustomizedHook(props) {
     groupedOptions,
     value,
     focused,
+    setAnchorEl,
   } = useAutocomplete({
     id: props.id,
-    defaultValue: [props.time[0]],
+    defaultValue: props.selectedTime,
     multiple: true,
     options: props.time,
+    getOptionLabel: (option) => option,
   });
 
   return (
