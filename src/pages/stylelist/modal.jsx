@@ -73,6 +73,7 @@ const Modal = (props) => {
                 </div>
                 <div className="form-group mb-20">
                   <Select
+                    placeholder={'Chọn ca làm việc...'}
                     components={animatedComponents}
                     closeMenuOnSelect={false}
                     options={groupedOptions}
