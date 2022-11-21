@@ -36,7 +36,7 @@ const StyleList = () => {
                 <h4 className="text-capitalize fw-500 breadcrumb-title">
                   Quản lý thợ cắt tóc
                 </h4>
-                <span className="sub-title ml-sm-25 pl-sm-25">274 Users</span>
+                <span className="sub-title ml-sm-25 pl-sm-25">{arrStyleList?.length} Thợ cắt tóc</span>
               </div>
               <form
                 action="/"
@@ -59,7 +59,7 @@ const StyleList = () => {
                 data-target="#new-member"
               >
                 <i className="las la-plus fs-16" />
-                Add New Member
+               Thêm thợ cắt tóc
               </a>
               {/* Modal */}
               <Modal />
