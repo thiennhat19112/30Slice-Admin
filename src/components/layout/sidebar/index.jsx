@@ -1,4 +1,4 @@
-import { Activity, Box, Archive, Book } from "react-feather";
+import { Activity, Box, Archive, Book,User,Users,Calendar,Truck,Info } from "react-feather";
 import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   return (
@@ -42,44 +42,50 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý tin tức</span>
               </NavLink>
             </li>
-            <li className="has-child">
-              <a href="#" className="">
-                <span data-feather="home" className="nav-icon" />
-                <span className="menu-text">Dashboard</span>
-                <span className="toggle-icon" />
-              </a>
-              <ul>
-                <li>
-                  <a className="" href="index.html">
-                    Social Media
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="business.html">
-                    FineTech / Business
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="performance.html">
-                    Site Performance
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="ecommerce.html">
-                    Ecommerce
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="crm.html">
-                    CRM
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="sales.html">
-                    Sales Performance
-                  </a>
-                </li>
-              </ul>
+            <li className="menu-title">
+              <span>Nhân viên</span>
+            </li>
+            <li>
+              <NavLink to="/employee" className="">
+                <Users className="nav-icon" />
+                <span className="menu-text">Quản lý nhân viên</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Khách hàng</span>
+            </li>
+            <li>
+              <NavLink to="/users" className="">
+                <User className="nav-icon" />
+                <span className="menu-text">Quản lý khách hàng</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Đơn hàng</span>
+            </li>
+            <li>
+              <NavLink to="/orders" className="">
+                <Truck className="nav-icon" />
+                <span className="menu-text">Quản lý đơn hàng</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Dịch vụ</span>
+            </li>
+            <li>
+              <NavLink to="/services" className="">
+                <Info className="nav-icon" />
+                <span className="menu-text">Quản lý dịch vụ</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Lịch đặt (nhân viên mới xem được)</span>
+            </li>
+            <li>
+              <NavLink to="/schedule" className="">
+                <Calendar className="nav-icon" />
+                <span className="menu-text">Quản lý lịch đặt</span>
+              </NavLink>
             </li>
           </ul>
         </div>
