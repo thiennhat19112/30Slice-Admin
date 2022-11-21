@@ -1,11 +1,41 @@
-import Autocomplete from "../../CustomMui/autocomplete";
-import { X } from "react-feather";
-import { useState } from "react";
-import { useEffect } from "react";
+import { X } from 'react-feather';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import Select from 'react-select';
+import makeAnimated from 'react-select/animated';
+
+import { groupedOptions } from './shift.js';
+
+const animatedComponents = makeAnimated();
+
+const groupStyles = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+};
+
+const groupBadgeStyles = {
+  backgroundColor: '#EBECF0',
+  borderRadius: '2em',
+  color: '#172B4D',
+  display: 'inline-block',
+  fontSize: 12,
+  fontWeight: 'normal',
+  lineHeight: '1',
+  minWidth: 1,
+  padding: '0.16666666666667em 0.5em',
+  textAlign: 'center',
+};
+
+const formatGroupLabel = (data) => (
+  <div style={groupStyles}>
+    <span>{data.label}</span>
+    <span style={groupBadgeStyles}>{data.options.length}</span>
+  </div>
+);
 
 const Modal = (props) => {
   const [timeSelected, setTimeSelected] = useState([]);
-
   console.log(timeSelected);
   return (
     <div
@@ -42,10 +72,12 @@ const Modal = (props) => {
                   />
                 </div>
                 <div className="form-group mb-20">
-                  <Autocomplete
-                    time={props.time}
-                    title="Ca làm việc"
-                    id="shifts"
+                  <Select
+                    components={animatedComponents}
+                    closeMenuOnSelect={false}
+                    options={groupedOptions}
+                    isMulti
+                    formatGroupLabel={formatGroupLabel}
                     onChange={(e) =>
                       setTimeSelected(e.map((item) => item.value))
                     }
@@ -57,7 +89,7 @@ const Modal = (props) => {
                     id="exampleFormControlTextarea1"
                     rows={3}
                     placeholder="Project description"
-                    defaultValue={""}
+                    defaultValue={''}
                   />
                 </div>
                 <div className="form-group textarea-group">
