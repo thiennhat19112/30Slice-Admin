@@ -1,6 +1,6 @@
 import { Eye, Edit, XCircle } from "react-feather";
 import Modal from "./modal";
-const Employee = () => {
+const StyleList = () => {
   return (
     <div className="container-fluid">
       <div className="row">
@@ -9,7 +9,7 @@ const Employee = () => {
             <div className=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
               <div className="d-flex align-items-center user-member__title justify-content-center mr-sm-25">
                 <h4 className="text-capitalize fw-500 breadcrumb-title">
-                  Quản lý nhân viên
+                  Quản lý thợ cắt tóc
                 </h4>
                 <span className="sub-title ml-sm-25 pl-sm-25">274 Users</span>
               </div>
@@ -303,4 +303,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default StyleList;

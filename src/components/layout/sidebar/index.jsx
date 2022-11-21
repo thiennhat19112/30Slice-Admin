@@ -8,6 +8,7 @@ import {
   Calendar,
   Truck,
   Info,
+  Scissors,
 } from "react-feather";
 import { NavLink } from "react-router-dom";
 const Sidebar = () => {
@@ -41,7 +42,7 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý loại sản phẩm</span>
               </NavLink>
             </li>
-           
+
             <li className="menu-title">
               <span>Người dùng</span>
             </li>
@@ -51,12 +52,16 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý nhân viên</span>
               </NavLink>
               <li>
-              <NavLink to="/users" className="">
-                <User className="nav-icon" />
-                <span className="menu-text">Quản lý khách hàng</span>
-              </NavLink>
+                <NavLink to="/stylelist" className="">
+                  <Scissors className="nav-icon" />
+                  <span className="menu-text">Quản lý thợ cắt tóc</span>
+                </NavLink>
+                <NavLink to="/users" className="">
+                  <User className="nav-icon" />
+                  <span className="menu-text">Quản lý khách hàng</span>
+                </NavLink>
+              </li>
             </li>
-          </li>
             <li className="menu-title">
               <span>Đơn hàng</span>
             </li>
