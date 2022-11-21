@@ -180,7 +180,10 @@ export default function CustomizedHook(props) {
     <Root>
       <div {...getRootProps()}>
         <Label {...getInputLabelProps()}>{props.title}</Label>
-        <InputWrapper ref={props.ref} className={focused ? "focused" : ""}>
+        <InputWrapper
+          onChange={props.onChange}
+          className={focused ? "focused" : ""}
+        >
           {value.map((option, index) => (
             <StyledTag
               key={index}

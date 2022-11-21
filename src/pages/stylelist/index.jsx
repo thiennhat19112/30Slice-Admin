@@ -95,7 +95,7 @@ const StyleList = () => {
                 Thêm thợ cắt tóc
               </a>
               {/* Modal */}
-              <Modal time={allAvailableTime} />
+              <Modal time={allAvailableTime}  />
               {/* Modal */}
             </div>
           </div>
