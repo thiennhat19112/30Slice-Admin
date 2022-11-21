@@ -1,4 +1,14 @@
-import { Activity, Box, Archive, Book,User,Users,Calendar,Truck,Info } from "react-feather";
+import {
+  Activity,
+  Box,
+  Archive,
+  Book,
+  User,
+  Users,
+  Calendar,
+  Truck,
+  Info,
+} from "react-feather";
 import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   return (
@@ -15,15 +25,7 @@ const Sidebar = () => {
                 <span className="menu-text">Thống kê dữ liệu</span>
               </NavLink>
             </li>
-            <li className="menu-title">
-              <span>Loại Sản Phẩm</span>
-            </li>
-            <li>
-              <NavLink to="/category" className="">
-                <Archive className="nav-icon" />
-                <span className="menu-text">Quản lý loại sản phẩm</span>
-              </NavLink>
-            </li>
+
             <li className="menu-title">
               <span>Sản Phẩm</span>
             </li>
@@ -33,33 +35,28 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý sản phẩm</span>
               </NavLink>
             </li>
-            <li className="menu-title">
-              <span>Tin tức</span>
-            </li>
             <li>
-              <NavLink to="/news" className="">
-                <Book className="nav-icon" />
-                <span className="menu-text">Quản lý tin tức</span>
+              <NavLink to="/category" className="">
+                <Archive className="nav-icon" />
+                <span className="menu-text">Quản lý loại sản phẩm</span>
               </NavLink>
             </li>
+           
             <li className="menu-title">
-              <span>Nhân viên</span>
+              <span>Người dùng</span>
             </li>
             <li>
               <NavLink to="/employee" className="">
                 <Users className="nav-icon" />
                 <span className="menu-text">Quản lý nhân viên</span>
               </NavLink>
-            </li>
-            <li className="menu-title">
-              <span>Khách hàng</span>
-            </li>
-            <li>
+              <li>
               <NavLink to="/users" className="">
                 <User className="nav-icon" />
                 <span className="menu-text">Quản lý khách hàng</span>
               </NavLink>
             </li>
+          </li>
             <li className="menu-title">
               <span>Đơn hàng</span>
             </li>
@@ -76,6 +73,15 @@ const Sidebar = () => {
               <NavLink to="/services" className="">
                 <Info className="nav-icon" />
                 <span className="menu-text">Quản lý dịch vụ</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Tin tức</span>
+            </li>
+            <li>
+              <NavLink to="/news" className="">
+                <Book className="nav-icon" />
+                <span className="menu-text">Quản lý tin tức</span>
               </NavLink>
             </li>
             <li className="menu-title">
