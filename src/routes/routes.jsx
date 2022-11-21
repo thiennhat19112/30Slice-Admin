@@ -23,6 +23,7 @@ import Category from '../pages/category';
 import Product from '../pages/product';
 import News from '../pages/news';
 import EditCategory from '../pages/category/edit';
+import Employee from '../pages/employee';
 
 const routes = createBrowserRouter([
   {
@@ -72,6 +73,11 @@ const routes = createBrowserRouter([
             path: 'news',
             exact: true,
             element: <News />,
+          },
+          {
+            path: 'employee',
+            exact: true,
+            element: <Employee />,
           },
         ],
       },
