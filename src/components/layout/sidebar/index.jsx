@@ -51,16 +51,17 @@ const Sidebar = () => {
                 <Users className="nav-icon" />
                 <span className="menu-text">Quản lý nhân viên</span>
               </NavLink>
-              <li>
-                <NavLink to="/stylelist" className="">
-                  <Scissors className="nav-icon" />
-                  <span className="menu-text">Quản lý thợ cắt tóc</span>
-                </NavLink>
-                <NavLink to="/users" className="">
-                  <User className="nav-icon" />
-                  <span className="menu-text">Quản lý khách hàng</span>
-                </NavLink>
-              </li>
+            </li>
+
+            <li>
+              <NavLink to="/stylelist" className="">
+                <Scissors className="nav-icon" />
+                <span className="menu-text">Quản lý thợ cắt tóc</span>
+              </NavLink>
+              <NavLink to="/users" className="">
+                <User className="nav-icon" />
+                <span className="menu-text">Quản lý khách hàng</span>
+              </NavLink>
             </li>
             <li className="menu-title">
               <span>Đơn hàng</span>
