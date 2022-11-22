@@ -1,8 +1,8 @@
-import { useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../../../app/redux/slices/auth/auth";
-import EventBus from "../../../app/common/EventBus";
+import { useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../../../app/redux/slices/auth/auth';
+// import EventBus from '../../../app/common/EventBus';
 import {
   LogIn,
   Search,
@@ -15,25 +15,29 @@ import {
   Settings,
   Key,
   Users,
-  LogOut
-} from "react-feather";
+  LogOut,
+} from 'react-feather';
 const Header = () => {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-  const logOut = useCallback(() => {
+  const logOut = () => {
     dispatch(logout());
-  }, [dispatch]);
+  };
 
-  useEffect(() => {
-    EventBus.on("logout", () => {
-      logOut();
-    });
+  // const logOut = useCallback(() => {
+  //   dispatch(logout());
+  // }, [dispatch]);
 
-    return () => {
-      EventBus.remove("logout");
-    };
-  }, [logOut]);
+  // useEffect(() => {
+  //   EventBus.on('logout', () => {
+  //     logOut();
+  //   });
+
+  //   return () => {
+  //     EventBus.remove('logout');
+  //   };
+  // }, [logOut]);
 
   return (
     <>
@@ -55,7 +59,11 @@ const Header = () => {
               <img className="svg" src="/assets/img/svg/bars.svg" alt="img" />
             </a>
             <a className="navbar-brand" href="#">
-              <img className="dark" src="/assets/img/logo30slice.png" alt="svg" />
+              <img
+                className="dark"
+                src="/assets/img/logo30slice.png"
+                alt="svg"
+              />
               <img
                 className="light"
                 src="/assets/img/logo30slice.png"

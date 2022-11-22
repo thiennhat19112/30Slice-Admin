@@ -1,4 +1,15 @@
-import { Activity, Box, Archive, Book } from "react-feather";
+import {
+  Activity,
+  Box,
+  Archive,
+  Book,
+  User,
+  Users,
+  Calendar,
+  Truck,
+  Info,
+  Scissors,
+} from "react-feather";
 import { NavLink } from "react-router-dom";
 const Sidebar = () => {
   return (
@@ -45,44 +56,14 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý tin tức</span>
               </NavLink>
             </li>
-            <li className="has-child">
-              <a href="#" className="">
-                <span data-feather="home" className="nav-icon" />
-                <span className="menu-text">Dashboard</span>
-                <span className="toggle-icon" />
-              </a>
-              <ul>
-                <li>
-                  <a className="" href="index.html">
-                    Social Media
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="business.html">
-                    FineTech / Business
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="performance.html">
-                    Site Performance
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="ecommerce.html">
-                    Ecommerce
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="crm.html">
-                    CRM
-                  </a>
-                </li>
-                <li>
-                  <a className="" href="sales.html">
-                    Sales Performance
-                  </a>
-                </li>
-              </ul>
+            <li className="menu-title">
+              <span>Lịch đặt (nhân viên mới xem được)</span>
+            </li>
+            <li>
+              <NavLink to="/schedule" className="">
+                <Calendar className="nav-icon" />
+                <span className="menu-text">Quản lý lịch đặt</span>
+              </NavLink>
             </li>
           </ul>
         </div>

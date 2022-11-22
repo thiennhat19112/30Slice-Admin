@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 import UserService from '../../app/services/auth/user.service';
-import EventBus from '../../app/common/EventBus';
+// import EventBus from '../../app/common/EventBus';
 
 function Dashboard() {
   const [content, setContent] = useState('');
