@@ -16,7 +16,7 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li className="menu-title">
-              <span>Loại Sản Phẩm</span>
+              <span>Sản Phẩm</span>
             </li>
             <li>
               <NavLink to="/category" className="">
@@ -24,13 +24,16 @@ const Sidebar = () => {
                 <span className="menu-text">Quản lý loại sản phẩm</span>
               </NavLink>
             </li>
-            <li className="menu-title">
-              <span>Sản Phẩm</span>
-            </li>
             <li>
               <NavLink to="/products" className="">
                 <Box className="nav-icon" />
                 <span className="menu-text">Quản lý sản phẩm</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/combo" className="">
+                <Box className="nav-icon" />
+                <span className="menu-text">Quản lý combo sản phẩm</span>
               </NavLink>
             </li>
             <li className="menu-title">

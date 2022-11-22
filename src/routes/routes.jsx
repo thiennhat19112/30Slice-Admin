@@ -64,6 +64,11 @@ const routes = createBrowserRouter([
             element: <Category />,
           },
           {
+            path: 'combo',
+            exact: true,
+            element: <News />,
+          },
+          {
             path: 'category/:id',
             exact: true,
             element: <EditCategory />,

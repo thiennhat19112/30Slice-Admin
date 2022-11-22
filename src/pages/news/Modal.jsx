@@ -11,7 +11,8 @@ const Modal = ({ loadNews }) => {
   const [selected, setSelected] = useState(true);
   const [isValid, setIsValid] = useState(true);
   const file = useRef();
-  const { name } = useSelector((state) => state.auth.user.name);
+  const { name } = useSelector((state) => state.auth.user);
+  
 
   const handleChange = (e) => {
     setNews((prev) => {
@@ -19,7 +20,7 @@ const Modal = ({ loadNews }) => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {debugger
     const urlImg = await uploadLoadFIle(file.current.files[0]);
     const data = { ...news, Is_Show: selected, image: urlImg, Create_By: name };
     await addNews(data);
@@ -100,10 +101,11 @@ const Modal = ({ loadNews }) => {
                     </label>
                     <div className="form-group">
                       <textarea
-                        name="message"
+                        name="Content"
                         id="mail-message"
                         className="form-control-lg"
                         placeholder="Type your message..."
+                        onChange={handleChange}
                       ></textarea>
                     </div>
                     {/* <CKEditor
