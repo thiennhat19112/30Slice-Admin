@@ -1,30 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom';
-// import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 
-// const ProtectedRoute = lazy(() => import('./protectedRoute'));
-// const PrivateRoute = lazy(() => import('./privateRoute'));
+const ProtectedRoute = lazy(() => import('./protectedRoute'));
+const PrivateRoute = lazy(() => import('./privateRoute'));
 
-// const App = lazy(() => import('../app/App'));
-// const Login = lazy(() => import('../pages/login'));
-// const Error = lazy(() => import('../pages/error'));
-// const Dashboard = lazy(() => import('../pages/dashboard'));
-
-import ProtectedRoute from './protectedRoute';
-import PrivateRoute from './privateRoute';
-
-import App from '../App';
-import Login from '../pages/login';
-import Error from '../pages/error';
-import Dashboard from '../pages/dashboard';
-import Profile from '../pages/profile';
-import ForgetPassword from '../pages/forget-password';
-import ResetPassword from '../pages/reset-password';
-import Category from '../pages/category';
-import Product from '../pages/product';
-import News from '../pages/news';
-import EditCategory from '../pages/category/edit';
-import Employee from '../pages/employee';
-import StyleList from '../pages/stylelist';
+const App = lazy(() => import('../App'));
+const Login = lazy(() => import('../pages/login'));
+const Error = lazy(() => import('../pages/error'));
+const Dashboard = lazy(() => import('../pages/dashboard'));
+const Profile = lazy(() => import('../pages/profile'));
+const ForgetPassword = lazy(() => import('../pages/forget-password'));
+const ResetPassword = lazy(() => import('../pages/reset-password'));
+const Category = lazy(() => import('../pages/category'));
+const Product = lazy(() => import('../pages/product'));
+const News = lazy(() => import('../pages/news'));
+const EditCategory = lazy(() => import('../pages/category/edit'));
+const Employee = lazy(() => import('../pages/employee'));
+const StyleList = lazy(() => import('../pages/stylelist'));
 
 const routes = createBrowserRouter([
   {
@@ -35,9 +27,11 @@ const routes = createBrowserRouter([
         path: '',
         exact: true,
         element: (
-          <PrivateRoute>
-            <App />
-          </PrivateRoute>
+          <Suspense fallback={<p>Loading...</p>}>
+            <PrivateRoute>
+              <App />
+            </PrivateRoute>
+          </Suspense>
         ),
         children: [
           {
@@ -91,31 +85,41 @@ const routes = createBrowserRouter([
         path: 'login',
         exact: true,
         element: (
-          <ProtectedRoute>
-            <Login />
-          </ProtectedRoute>
+          <Suspense fallback={<p>Loading...</p>}>
+            <ProtectedRoute>
+              <Login />
+            </ProtectedRoute>
+          </Suspense>
         ),
       },
       {
         path: 'forget-password',
         exact: true,
         element: (
-          <ProtectedRoute>
-            <ForgetPassword />
-          </ProtectedRoute>
+          <Suspense fallback={<p>Loading...</p>}>
+            <ProtectedRoute>
+              <ForgetPassword />
+            </ProtectedRoute>
+          </Suspense>
         ),
       },
       {
         path: 'reset-password',
         exact: true,
         element: (
-          <ProtectedRoute>
-            <ResetPassword />
-          </ProtectedRoute>
+          <Suspense fallback={<p>Loading...</p>}>
+            <ProtectedRoute>
+              <ResetPassword />
+            </ProtectedRoute>
+          </Suspense>
         ),
       },
     ],
-    errorElement: <Error />,
+    errorElement: (
+      <Suspense fallback={<p>Loading...</p>}>
+        <Error />,
+      </Suspense>
+    ),
   },
 ]);
 
