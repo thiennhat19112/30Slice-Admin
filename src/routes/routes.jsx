@@ -25,6 +25,7 @@ import News from '../pages/news';
 import EditCategory from '../pages/category/edit';
 import Employee from '../pages/employee';
 import StyleList from '../pages/stylelist';
+import Combo from '../pages/combo';
 
 const routes = createBrowserRouter([
   {
@@ -68,7 +69,7 @@ const routes = createBrowserRouter([
           {
             path: 'combo',
             exact: true,
-            element: <News />,
+            element: <Combo />,
           },
           {
             path: 'category/:id',
