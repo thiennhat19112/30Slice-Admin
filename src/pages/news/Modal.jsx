@@ -20,7 +20,7 @@ const Modal = ({ loadNews }) => {
     });
   };
 
-  const handleSubmit = async (e) => {debugger
+  const handleSubmit = async (e) => {
     const urlImg = await uploadLoadFIle(file.current.files[0]);
     const data = { ...news, Is_Show: selected, image: urlImg, Create_By: name };
     await addNews(data);
@@ -161,7 +161,7 @@ const Modal = ({ loadNews }) => {
                   <div className="button-group d-flex pt-25 justify-content-end">
                     <button
                       type="button"
-                      aria-label={isValid ? "close" : ""}
+                      aria-label={isValid ? "Close" : ""}
                       onClick={handleSubmit}
                       className="btn btn-success btn-default btn-squared text-capitalize"
                     >

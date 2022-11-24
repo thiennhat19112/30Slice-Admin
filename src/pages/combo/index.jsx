@@ -7,12 +7,14 @@ import {
   updateCombo,
 } from "../../app/services/admin/combos.service";
 import SwitchIOS from "../../CustomMui/switch";
+import Add from "./Add";
 
 const Combo = () => {
   const [combos, setCombos] = useState([]),
     [loading, setLoading] = useState(false),
     [keySearch, setKeySearch] = useState("");
-  const _isMounted = useRef(false);
+  const _isMounted = useRef(false),
+        addRef = useRef()
 
   const loadCombo = async () => {
     _isMounted.current && setLoading(true);
@@ -83,11 +85,10 @@ const Combo = () => {
             <div className="action-btn">
               <button
                 className="btn px-15 btn-primary"
-                data-toggle="modal"
-                data-target="#new-member"
+                onClick={()=> addRef.current.handleShow()}
               >
                 <i className="las la-plus fs-16" />
-                Thêm Tin tức
+                Thêm Combo
               </button>
             </div>
           </div>
@@ -298,6 +299,7 @@ const Combo = () => {
                   </ul>
                 </nav>
               </div>
+              <Add  loadCombo={ loadCombo} combos={combos ?? []} ref={addRef} />
             </div>
           )}
         </div>

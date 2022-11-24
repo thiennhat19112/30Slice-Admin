@@ -28,7 +28,8 @@ export const getOneCombo = async (id) => {
 
 export const addCombo = async (data) => {
      try{
-        await api.post('combo/', data)
+       const response = await api.post('combo/', data)
+       return response
      }catch(err){
         throw new Error(err)
      }
