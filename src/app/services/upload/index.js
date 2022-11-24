@@ -11,6 +11,7 @@ export async function uploadLoadFIle(file) {
   if (!file) {
     alert("Please upload an image first!");
   }
+  
   const storageRef = ref(storage, `/img/${file.name}`);
   const uploadTask = uploadBytesResumable(storageRef, file);
    uploadTask.on(
