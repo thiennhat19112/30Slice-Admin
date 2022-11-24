@@ -18,6 +18,7 @@ const EditCategory = lazy(() => import('../pages/category/edit'));
 const Employee = lazy(() => import('../pages/employee'));
 const StyleList = lazy(() => import('../pages/stylelist'));
 const Combo = lazy(() => import('../pages/combo'));
+import TestCk from '../pages/ckeditortest/index'
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -83,6 +84,11 @@ const routes = createBrowserRouter([
             path: 'stylelist',
             exact: true,
             element: <StyleList />,
+          },
+          {
+            path: 'test',
+            exact: true,
+            element: <TestCk />,
           },
         ],
       },

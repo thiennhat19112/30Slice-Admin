@@ -18,6 +18,7 @@
     "@mui/material": "^5.10.14",
     "@mui/styled-engine-sc": "^5.10.14",
     "@reduxjs/toolkit": "^1.8.6",
+    "@tinymce/tinymce-react": "^4.2.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.2.3",
     "firebase": "^9.14.0",
