@@ -57,6 +57,43 @@ const Sidebar = () => {
               </NavLink>
             </li>
             <li className="menu-title">
+              <span>Người dùng</span>
+            </li>
+            <li>
+              <NavLink to="/employee" className="">
+                <Users className="nav-icon" />
+                <span className="menu-text">Quản lý nhân viên</span>
+              </NavLink>
+              </li>
+              <li>
+              <NavLink to="/stylelist" className="">
+                <Scissors className="nav-icon" />
+                <span className="menu-text">Quản lý thợ cắt tóc</span>
+              </NavLink>
+              <NavLink to="/users" className="">
+                <User className="nav-icon" />
+                <span className="menu-text">Quản lý khách hàng</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Đơn hàng</span>
+            </li>
+            <li>
+              <NavLink to="/orders" className="">
+                <Truck className="nav-icon" />
+                <span className="menu-text">Quản lý đơn hàng</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
+              <span>Dịch vụ</span>
+            </li>
+            <li>
+              <NavLink to="/services" className="">
+                <Info className="nav-icon" />
+                <span className="menu-text">Quản lý dịch vụ</span>
+              </NavLink>
+            </li>
+            <li className="menu-title">
               <span>Lịch đặt (nhân viên mới xem được)</span>
             </li>
             <li>
