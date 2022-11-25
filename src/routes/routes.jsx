@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 
+// import ProtectedRoute from './protectedRoute';
 const ProtectedRoute = lazy(() => import('./protectedRoute'));
-const PrivateRoute = lazy(() => import('./privateRoute'));
+import PrivateRoute from './privateRoute';
 
-const App = lazy(() => import('../App'));
+import App from '../App';
 const Login = lazy(() => import('../pages/login'));
 const Error = lazy(() => import('../pages/error'));
 const Dashboard = lazy(() => import('../pages/dashboard'));
@@ -18,7 +19,8 @@ const EditCategory = lazy(() => import('../pages/category/edit'));
 const Employee = lazy(() => import('../pages/employee'));
 const StyleList = lazy(() => import('../pages/stylelist'));
 const Combo = lazy(() => import('../pages/combo'));
-import TestCk from '../pages/ckeditortest/index'
+const TestCk = lazy(() => import('../pages/ckeditortest'));
+
 const routes = createBrowserRouter([
   {
     path: '/',
@@ -28,67 +30,100 @@ const routes = createBrowserRouter([
         path: '',
         exact: true,
         element: (
-          <Suspense fallback={<p>Loading...</p>}>
-            <PrivateRoute>
-              <App />
-            </PrivateRoute>
-          </Suspense>
+          <PrivateRoute>
+            <App />
+          </PrivateRoute>
         ),
         children: [
           {
             path: '',
             exact: true,
-            element: <Dashboard />,
-          },
-          {
-            path: 'item',
-            exact: true,
-            element: <div>Item</div>,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Dashboard />,
+              </Suspense>
+            ),
           },
           {
             path: 'products',
             exact: true,
-            element: <Product />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Product />,
+              </Suspense>
+            ),
           },
           {
             path: 'profile',
             exact: true,
-            element: <Profile />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Profile />,
+              </Suspense>
+            ),
           },
           {
             path: 'category',
             exact: true,
-            element: <Category />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Category />,
+              </Suspense>
+            ),
           },
           {
             path: 'combo',
             exact: true,
-            element: <Combo />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Combo />,
+              </Suspense>
+            ),
           },
           {
             path: 'category/:id',
             exact: true,
-            element: <EditCategory />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <EditCategory />,
+              </Suspense>
+            ),
           },
           {
             path: 'news',
             exact: true,
-            element: <News />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <News />,
+              </Suspense>
+            ),
           },
           {
             path: 'employee',
             exact: true,
-            element: <Employee />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Employee />,
+              </Suspense>
+            ),
           },
           {
             path: 'stylelist',
             exact: true,
-            element: <StyleList />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <StyleList />,
+              </Suspense>
+            ),
           },
           {
             path: 'test',
             exact: true,
-            element: <TestCk />,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <TestCk />,
+              </Suspense>
+            ),
           },
         ],
       },
