@@ -45,10 +45,16 @@ const EditCategory = () => {
   });
   const loadCategory = async () => {
     _isMounted.current && setLoading(true);
-    const data = await getOneCategory(id);
+    // const data = await getOneCategory(id);
+    // const dataParent = await getParentCategory();
+    const getOneCategoryPromise = getOneCategory(id);
+    const getParentCategoryPromise = getParentCategory();
+    const [data, dataParent] = await Promise.all([
+      getOneCategoryPromise,
+      getParentCategoryPromise,
+    ]);
     _isMounted.current && setSelected(data.Is_Show);
     _isMounted.current && setCategory(data);
-    const dataParent = await getParentCategory();
     _isMounted.current && setParentCategory(dataParent);
     _isMounted.current && setLoading(false);
   };

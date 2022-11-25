@@ -27,12 +27,16 @@ const Category = () => {
   });
   const loadCategory = async () => {
     _isMounted.current && setLoading(true);
-    const data = await getCategory();
+    const categoryPromise = getCategory();
+    const parentCategoryPromise = getParentCategory();
+    const [category, parentCategory] = await Promise.all([
+      categoryPromise,
+      parentCategoryPromise,
+    ]);
     console.log(data);
     _isMounted.current && setLoading(false);
-    _isMounted.current && setArrCategories(data);
-    const dataParent = await getParentCategory();
-    _isMounted.current && setParentCategory(dataParent);
+    _isMounted.current && setArrCategories(category);
+    _isMounted.current && setParentCategory(parentCategory);
   };
 
   const handleUpdateStatus = async (id, Is_Show) => {
