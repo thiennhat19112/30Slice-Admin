@@ -14,7 +14,6 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../app/redux/slices/product";
-import AnimatedMulti from "../../CustomMui/autocomplete";
 import AutocompleteCustom from "../../CustomMui/autocomplete";
 import { useForm } from "react-hook-form";
 import { addCombo } from "../../app/services/admin/combos.service";
@@ -64,7 +63,7 @@ const Add = (props, ref) => {
       toastSuccess("Thêm thành công!");
       _isMounted.current && setShow(false);
       reset();
-      loadCombo()
+      await loadCombo()
       return;
     }
     toastError("Lỗi!");

@@ -45,7 +45,8 @@ export const updateCombo = async (data) => {
 
 export const deleteCombo = async (data) => {
     try{
-        await api.delete('combo/',{data})
+       const res = await api.delete('combo/',{data})
+       return res
     }catch(err){
         throw new Error(err)
     }

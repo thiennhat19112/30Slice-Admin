@@ -6,21 +6,47 @@ import {
   getCombos,
   updateCombo,
 } from "../../app/services/admin/combos.service";
+import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
+import {
+  toastError,
+  toastSuccess,
+} from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
 import Add from "./Add";
 
 const Combo = () => {
   const [combos, setCombos] = useState([]),
     [loading, setLoading] = useState(false),
-    [keySearch, setKeySearch] = useState("");
+    [keySearch, setKeySearch] = useState(""),
+    [isShowModal, setIsShowModal] = useState(false);
   const _isMounted = useRef(false),
-        addRef = useRef()
-
+    addRef = useRef(),
+    modalConfirmRef = useRef(),
+    Name = useRef(),
+    id = useRef();
   const loadCombo = async () => {
     _isMounted.current && setLoading(true);
     const data = await getCombos();
     _isMounted.current && setLoading(false);
     _isMounted.current && setCombos(data);
+  };
+
+  const onDelete = async (id) => {debugger
+    const res = await deleteCombo(id);
+    if (res.status === 200) {
+      toastSuccess("xoa thanh cong");
+      await loadCombo();
+      setIsShowModal(false)
+      return;
+    }
+    toastError("loi");
+  };
+
+  const onConfirm = (_id, name) => {
+    Name.current = name;
+    id.current = _id;
+    setIsShowModal(true)
+    modalConfirmRef.current?.handleShow();
   };
 
   useEffect(() => {
@@ -38,20 +64,14 @@ const Combo = () => {
     const data = { Is_Hot: !Is_Hot, _id: id };
     try {
       await updateCombo(data);
-      _isMounted && loadCombo();
+      _isMounted.current && loadCombo();
     } catch (err) {
       throw new Error(err);
     }
   };
 
-  const handleDelete = async (id) => {
-    const data = { _id: id };
-    await deleteCombo(data);
-    _isMounted && loadCombo();
-  };
-
   const handleSearch = (e) => {
-    _isMounted && setKeySearch(e.target.value);
+    _isMounted.current && setKeySearch(e.target.value);
   };
   return (
     <div className="container-fluid">
@@ -85,7 +105,10 @@ const Combo = () => {
             <div className="action-btn">
               <button
                 className="btn px-15 btn-primary"
-                onClick={()=> addRef.current.handleShow()}
+                onClick={() => {
+                  addRef.current.handleShow();
+                  setIsShowModal(true);
+                }}
               >
                 <i className="las la-plus fs-16" />
                 Thêm Combo
@@ -198,13 +221,13 @@ const Combo = () => {
                           </td> */}
                           <td>
                             <div className="userDatatable-content text-center">
-                              {item?.Rating} 
+                              {item?.Rating}
                             </div>
                           </td>
-                    
+
                           <td>
                             <div className="userDatatable-content text-center">
-                              {item?.Views} 
+                              {item?.Views}
                             </div>
                           </td>
                           <td>
@@ -237,7 +260,7 @@ const Combo = () => {
                               </button>
 
                               <button
-                                onClick={() => handleDelete(item?._id)}
+                                onClick={() => onConfirm(item?._id, item?.Name)}
                                 type="button"
                                 className="btn btn-outline-danger btn-default btn-squared text-capitalize px-10  global-shadow"
                               >
@@ -299,7 +322,17 @@ const Combo = () => {
                   </ul>
                 </nav>
               </div>
-              <Add  loadCombo={ loadCombo} combos={combos ?? []} ref={addRef} />
+              {isShowModal && (
+                <Add loadCombo={loadCombo} combos={combos ?? []} ref={addRef} />
+              )}
+              {isShowModal && (
+                <ModalConfirm
+                  id={id.current ?? null}
+                  Name={Name.current ?? null}
+                  funcDelete={onDelete}
+                  ref={modalConfirmRef}
+                />
+              )}
             </div>
           )}
         </div>

@@ -188,7 +188,7 @@ AutocompleteCustom.defaultProps = {
 
   useImperativeHandle(ref, () => ({
    InputValue : value
-  }),[]);
+  }));
   return (
     <Root >
       <div {...getRootProps()}>
