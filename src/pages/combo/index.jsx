@@ -31,8 +31,9 @@ const Combo = () => {
     _isMounted.current && setCombos(data);
   };
 
-  const onDelete = async (id) => {debugger
-    const res = await deleteCombo(id);
+  const onDelete = async (id) => {
+    const data = {_id : id}
+    const res = await deleteCombo(data);
     if (res.status === 200) {
       toastSuccess("xoa thanh cong");
       await loadCombo();
