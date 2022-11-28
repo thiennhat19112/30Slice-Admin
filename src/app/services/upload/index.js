@@ -4,12 +4,14 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+import { toastError } from "../../../components/sharedComponents/toast";
 
 export async function uploadLoadFIle(file) {
   
   const storage = getStorage();
   if (!file) {
-    alert("Please upload an image first!");
+    toastError("Vui lòng chọn hình ảnh!");
+    return
   }
   
   const storageRef = ref(storage, `/img/${file.name}`);

@@ -193,7 +193,7 @@ AutocompleteCustom.defaultProps = {
     <Root >
       <div {...getRootProps()}>
         {/* <Label {...getInputLabelProps()}>{LableName}</Label> */}
-        <InputWrapper ref={setAnchorEl} className={focused ? 'focused' : ''}>
+        <InputWrapper ref={setAnchorEl} className={'is-invalid' + focused ? 'focused' : ''}>
           {value.map((option, index) => (
             <StyledTag label={option[display]} {...getTagProps({ index })} />
           ))}

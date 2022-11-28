@@ -323,9 +323,9 @@ const Combo = () => {
                   </ul>
                 </nav>
               </div>
-              {isShowModal && (
+            
                 <Add loadCombo={loadCombo} combos={combos ?? []} ref={addRef} />
-              )}
+            
               {isShowModal && (
                 <ModalConfirm
                   id={id.current ?? null}

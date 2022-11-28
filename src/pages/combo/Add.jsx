@@ -28,7 +28,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const Add = (props, ref) => {
   const { combos,loadCombo } = props;
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(true);
   const _isMounted = useRef(false);
   const idProducts = useRef();
@@ -86,6 +86,9 @@ const Add = (props, ref) => {
     dispatch(fetchProduct());
   }, []);
 
+  console.log(errors);
+
+
   return (
     <Modal show={show} onHide={handleClose} animation={false}>
       <div className="modal-content  radius-xl">
@@ -116,7 +119,7 @@ const Add = (props, ref) => {
                 <input
                   type="text"
                   id={"name"}
-                  className="form-control"
+                  className={!!errors?.Name ? "is-invalid form-control"  : "form-control"}
                   {...register("Name", { required: true })}
                 />
               </div>
@@ -148,10 +151,10 @@ const Add = (props, ref) => {
                 <label htmlFor="Ordinal">Thứ tự</label>
                 <input
                   type="number"
-                  className="form-control"
+                  className={!!errors?.Ordinal ? "is-invalid form-control"  : "form-control"}
                   id="Ordinal"
                   placeholder="Số thứ tự"
-                  {...register("Ordinal", { required: true })}
+                  {...register("Ordinal", { required: true, min : 1 })}
                   defaultValue={combos[combos.length - 1]?.Ordinal + 1}
                 />
               </div>
@@ -159,20 +162,20 @@ const Add = (props, ref) => {
                 <label htmlFor="Price">Giá</label>
                 <input
                   type="number"
-                  className="form-control"
+                  className={!!errors?.Price ? "is-invalid form-control"  : "form-control"}
                   id="Price"
                   placeholder="Giá"
-                  {...register("Price", { required: true })}
+                  {...register("Price", { required: true, min : 1 })}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="Discount">Giảm giá (%)</label>
                 <input
                   type="number"
-                  className="form-control"
+                  className={!!errors?.Discount ? "is-invalid form-control"  : "form-control"}
                   id="Discount"
                   placeholder="Giảm giá"
-                  {...register("Discount")}
+                  {...register("Discount",{ required: true, min : 0 })}
                   defaultValue={0}
                 />
               </div>
@@ -180,10 +183,10 @@ const Add = (props, ref) => {
                 <label htmlFor="InStock">Số lượng</label>
                 <input
                   type="number"
-                  className="form-control"
+                  className={!!errors?.InStock ? "is-invalid form-control"  : "form-control"}
                   id="InStock"
                   placeholder="Số lượng"
-                  {...register("InStock", { required: true })}
+                  {...register("InStock",{ required: true, min : 1 })}
                 />
               </div>
               <div className="form-group mb-20">
@@ -194,7 +197,7 @@ const Add = (props, ref) => {
                   Mô tả
                 </label>
                 <textarea
-                  className="form-control"
+                   className={!!errors?.Details ? "is-invalid form-control"  : "form-control"}
                   id="Details"
                   rows={3}
                   defaultValue={""}

@@ -6,7 +6,7 @@ import { useImperativeHandle } from "react";
 import { useState } from "react";
 const ModalConfirm = (props, ref) => {
   const { Name, id, funcDelete } = props;
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [confirm, setConfirm] = useState(false);
   const _isMounted = useRef();
   const handleClose = () => {
@@ -38,7 +38,7 @@ const ModalConfirm = (props, ref) => {
   return (
     <Modal
       className="text-center"
-      show={true}
+      show={show}
       onHide={handleClose}
       animation={false}
     >
