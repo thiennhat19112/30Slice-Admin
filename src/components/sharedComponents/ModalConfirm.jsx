@@ -38,7 +38,7 @@ const ModalConfirm = (props, ref) => {
   return (
     <Modal
       className="text-center"
-      show={show}
+      show={true}
       onHide={handleClose}
       animation={false}
     >
