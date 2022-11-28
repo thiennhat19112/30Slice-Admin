@@ -28,7 +28,7 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 const Add = (props, ref) => {
   const { combos,loadCombo } = props;
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [selected, setSelected] = useState(true);
   const _isMounted = useRef(false);
   const idProducts = useRef();

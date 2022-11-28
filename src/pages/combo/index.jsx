@@ -106,8 +106,8 @@ const Combo = () => {
               <button
                 className="btn px-15 btn-primary"
                 onClick={() => {
-                  addRef.current.handleShow();
                   setIsShowModal(true);
+                  addRef.current?.handleShow();
                 }}
               >
                 <i className="las la-plus fs-16" />

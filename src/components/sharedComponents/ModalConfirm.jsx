@@ -52,7 +52,6 @@ const ModalConfirm = (props, ref) => {
               <h6>
                 Bạn có thực sự muốn xoá <b>{Name}</b>?
               </h6>
-              <p>Xoá sẽ không khôi phục lại đâu nha cha nội</p>
             </div>
           </div>
         </div>
