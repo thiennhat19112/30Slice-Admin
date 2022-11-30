@@ -1,17 +1,17 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from "react-router-dom";
 import {
   toastSuccess,
   toastError,
-} from '../../components/sharedComponents/toast';
-import { useForm } from 'react-hook-form';
-import { useEffect, useState, useRef } from 'react';
-import SwitchIOS from '../../CustomMui/switch';
+} from "../../components/sharedComponents/toast";
+import { useForm } from "react-hook-form";
+import { useEffect, useState, useRef } from "react";
+import SwitchIOS from "../../CustomMui/switch";
 
 import {
   getParentCategory,
   getOneCategory,
   UpdateCategory,
-} from '../../app/services/admin/category.service';
+} from "../../app/services/admin/category.service";
 
 const EditCategory = () => {
   const params = useParams();
@@ -21,7 +21,7 @@ const EditCategory = () => {
   const _isMounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const [selected, setSelected] = useState();
-  const refName = useRef('');
+  const refName = useRef("");
   const refOrdinal = useRef();
   const refParent = useRef();
 
@@ -67,7 +67,7 @@ const EditCategory = () => {
       Name: data.Name,
       Ordinal: parseInt(data.Ordinal),
       Is_Show: data.Is_Show,
-      Parent_Id: data.ParentCategory === '0' ? null : data.ParentCategory,
+      Parent_Id: data.ParentCategory === "0" ? null : data.ParentCategory,
     };
 
     const res = await UpdateCategory(req);
@@ -144,17 +144,17 @@ const EditCategory = () => {
                                   type="text"
                                   className="form-control"
                                   defaultValue={category._id}
-                                  {...register('_id')}
+                                  {...register("_id")}
                                 />
                               </div>
                               <div className="form-group">
                                 <label htmlFor="name">Tên Loại</label>
                                 <input
                                   type="text"
-                                  id={'name'}
+                                  id={"name"}
                                   defaultValue={category.Name}
                                   className="form-control"
-                                  {...register('Name')}
+                                  {...register("Name")}
                                 />
                               </div>
 
@@ -165,7 +165,7 @@ const EditCategory = () => {
                                 <span className="MuiSwitch-root MuiSwitch-sizeMedium css-1r4r6iz-MuiSwitch-root">
                                   <span
                                     className={` ${
-                                      selected && 'Mui-checked'
+                                      selected && "Mui-checked"
                                     } MuiButtonBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary PrivateSwitchBase-root MuiSwitch-switchBase MuiSwitch-colorPrimary css-5ryogn-MuiButtonBase-root-MuiSwitch-switchBase`}
                                   >
                                     <input
@@ -176,12 +176,12 @@ const EditCategory = () => {
                                       type="checkbox"
                                       name="Is_Show"
                                       defaultChecked={category.Is_Show}
-                                      {...register('Is_Show')}
+                                      {...register("Is_Show")}
                                     />
                                     <span className="MuiSwitch-thumb css-jsexje-MuiSwitch-thumb" />
                                   </span>
                                   <span className="MuiSwitch-track css-1yjjitx-MuiSwitch-track" />
-                                  <p style={{ display: 'none' }}>
+                                  <p style={{ display: "none" }}>
                                     <SwitchIOS />
                                   </p>
                                 </span>
@@ -195,7 +195,7 @@ const EditCategory = () => {
                                   id="name8"
                                   placeholder="Số thứ tự"
                                   defaultValue={category?.Ordinal}
-                                  {...register('Ordinal')}
+                                  {...register("Ordinal")}
                                 />
                               </div>
                               <div className="form-group">
@@ -205,7 +205,7 @@ const EditCategory = () => {
                                     id="countryOption"
                                     className="js-example-basic-single js-states form-control"
                                     defaultValue={category.Parent_Id}
-                                    {...register('ParentCategory')}
+                                    {...register("ParentCategory")}
                                   >
                                     <option value="0">Không</option>
                                     {parentCategory.map((item) => (
@@ -225,10 +225,12 @@ const EditCategory = () => {
                         {/* End: card */}
                         {/* Start: button group */}
                         <div className="button-group add-product-btn d-flex justify-content-end mt-40">
-                          <button className="btn btn-light btn-default btn-squared fw-400 text-capitalize">
-                            Huỷ
-                          </button>
-                          <button className="btn btn-primary btn-default btn-squared text-capitalize">
+                          <Link to="/category">
+                            <button className="btn btn-default btn-squared fw-400 text-capitalize">
+                              Huỷ
+                            </button>
+                          </Link>
+                          <button type="submit" className="btn btn-primary btn-default btn-squared text-capitalize">
                             Lưu
                           </button>
                         </div>
