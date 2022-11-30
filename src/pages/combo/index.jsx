@@ -13,17 +13,25 @@ import {
 } from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
 import Add from "./Add";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Combo = () => {
   const [combos, setCombos] = useState([]),
     [loading, setLoading] = useState(false),
     [keySearch, setKeySearch] = useState(""),
-    [isShowModal, setIsShowModal] = useState(false);
+    [isShowModal, setIsShowModal] = useState(false),
+    [isShowModalEdit,setIsShowModalEdit] = useState(false)
+
   const _isMounted = useRef(false),
     addRef = useRef(),
     modalConfirmRef = useRef(),
     Name = useRef(),
-    id = useRef();
+    id = useRef(),
+    combo = useRef();
+
+    const location = useLocation();
+    const type = location.pathname.split("/")[1];
+    
   const loadCombo = async () => {
     _isMounted.current && setLoading(true);
     const data = await getCombos();
@@ -48,6 +56,11 @@ const Combo = () => {
     id.current = _id;
     setIsShowModal(true)
     modalConfirmRef.current?.handleShow();
+  };
+
+  const onShowModalEdit = (data) => {
+    combo.current = {...data}
+   _isMounted.current && setIsShowModalEdit(true)
   };
 
   useEffect(() => {
@@ -255,7 +268,7 @@ const Combo = () => {
                           </td>
                           <td>
                             <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
-                              <button className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
+                              <button onClick={() => onShowModalEdit(item)} className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
                                 <i className="fa-solid fa-pen-to-square"></i>{" "}
                                 Sửa
                               </button>
@@ -334,6 +347,10 @@ const Combo = () => {
                   ref={modalConfirmRef}
                 />
               )}
+
+              {
+                isShowModalEdit && (<Edit />)
+              }
             </div>
           )}
         </div>
