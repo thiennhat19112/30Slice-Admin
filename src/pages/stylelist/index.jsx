@@ -2,7 +2,7 @@ import { Eye, Edit, XCircle } from 'react-feather';
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 import Modal from './modal';
-import { getStyleList } from '../../app/services/admin/stylelist.service';
+import { getStyleList,updateStyleList } from '../../app/services/admin/stylelist.service';
 import SwitchIOS from '../../CustomMui/switch';
 
 const StyleList = () => {
@@ -23,6 +23,24 @@ const StyleList = () => {
     console.log(data);
     _isMounted.current && setLoading(false);
     _isMounted.current && setArrStyleList(data);
+  };
+  const handleUpdateStatus = async (id, Is_Show) => {
+    const data = { Status_Code: !Is_Show, _id: id };
+    try {
+      await updateStyleList(data);
+      _isMounted && loadStyleList();
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+  const handleUpdateBlock = async (id, Is_Block) => {
+    const data = { Block_By_Admin: !Is_Block, _id: id };
+    try {
+      await updateStyleList(data);
+      _isMounted && loadStyleList();
+    } catch (err) {
+      throw new Error(err);
+    }
   };
   useEffect(() => {
     loadStyleList();
@@ -151,6 +169,9 @@ const StyleList = () => {
                             <SwitchIOS
                               defaultChecked={item?.Info.Status_Code}
                               name="Status"
+                              onChange={() =>
+                                handleUpdateStatus(item?.Info._id, item?.Info.Status_Code)
+                              }
                             />
                           </div>
                         </td>
@@ -159,6 +180,9 @@ const StyleList = () => {
                             <SwitchIOS
                               defaultChecked={item?.Info.Block_By_Admin}
                               name="Block"
+                              onChange={() =>
+                                handleUpdateBlock(item?.Info._id, item?.Info.Block_By_Admin)
+                              }
                             />
                           </div>
                         </td>
