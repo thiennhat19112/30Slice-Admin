@@ -20,3 +20,13 @@ export const updateStyleList = async (data) => {
     throw new Error(err);
   }
 }
+export const addStyleList = async (data) => {
+  try {
+    const response = await api.post("admin/addUser", data);
+    if (response.status === 200 || response.status === 201) {
+      return response;
+    }
+  } catch (err) {
+    throw new Error(err);
+  }
+}

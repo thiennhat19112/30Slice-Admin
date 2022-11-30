@@ -33,7 +33,8 @@ const Category = () => {
       categoryPromise,
       parentCategoryPromise,
     ]);
-    console.log(data);
+    // console.log(data);
+    console.log(category);
     _isMounted.current && setLoading(false);
     _isMounted.current && setArrCategories(category);
     _isMounted.current && setParentCategory(parentCategory);

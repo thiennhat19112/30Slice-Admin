@@ -9,7 +9,6 @@ const StyleList = () => {
   const _isMounted = useRef(false);
   const [loading, setLoading] = useState(false);
   const [arrStyleList, setArrStyleList] = useState([]);
-
   useEffect(() => {
     _isMounted.current = true;
 
@@ -83,7 +82,9 @@ const StyleList = () => {
                 Thêm thợ cắt tóc
               </a>
               {/* Modal */}
-              <Modal />
+              <Modal
+              loadStyleList={loadStyleList}
+              />
               {/* Modal */}
             </div>
           </div>
@@ -161,7 +162,7 @@ const StyleList = () => {
                         </td>
                         <td>
                           <div className="userDatatable-content">
-                            {moment(item?.Created_Date).format('L')}
+                            {moment(item?.createdAt).format('L')}
                           </div>
                         </td>
                         <td>

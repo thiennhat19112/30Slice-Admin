@@ -1,30 +1,33 @@
-import { X } from 'react-feather';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-
-import { groupedOptions } from './shift.js';
-
+import { X } from "react-feather";
+import { useRef, useState } from "react";
+import { useEffect } from "react";
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { addStyleList } from "../../app/services/admin/stylelist.service";
+import { groupedOptions } from "./shift.js";
+import {
+  toastSuccess,
+  toastError,
+} from "../../components/sharedComponents/toast";
 const animatedComponents = makeAnimated();
 
 const groupStyles = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
 };
 
 const groupBadgeStyles = {
-  backgroundColor: '#EBECF0',
-  borderRadius: '2em',
-  color: '#172B4D',
-  display: 'inline-block',
+  backgroundColor: "#EBECF0",
+  borderRadius: "2em",
+  color: "#172B4D",
+  display: "inline-block",
   fontSize: 12,
-  fontWeight: 'normal',
-  lineHeight: '1',
+  fontWeight: "normal",
+  lineHeight: "1",
   minWidth: 1,
-  padding: '0.16666666666667em 0.5em',
-  textAlign: 'center',
+  padding: "0.16666666666667em 0.5em",
+  textAlign: "center",
 };
 
 const formatGroupLabel = (data) => (
@@ -36,7 +39,33 @@ const formatGroupLabel = (data) => (
 
 const Modal = (props) => {
   const [timeSelected, setTimeSelected] = useState([]);
-  console.log(timeSelected);
+  const refUsername = useRef("");
+  const refPassword = useRef("");
+  const refEmail = useRef("");
+  const refPhone = useRef("");
+  const refName = useRef("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    let data = {
+      username: refUsername.current.value,
+      password: refPassword.current.value,
+      email: refEmail.current.value,
+      phone: refPhone.current.value,
+      full_name: refName.current.value,
+      shifts: timeSelected,
+      role: "styleList",
+    };
+    const res = await addStyleList(data);
+    if (res.status === 201) {
+      toastSuccess(res.data.message);
+      props.loadStyleList();
+    }
+    if (res.status === 200) {
+      toastError(res.data.message);
+    }
+  };
+
   return (
     <div
       className="modal fade new-member"
@@ -63,17 +92,60 @@ const Modal = (props) => {
           </div>
           <div className="modal-body">
             <div className="new-member-modal">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="form-group mb-20">
+                  <label htmlFor="username">Tên người dùng</label>
                   <input
+                    id="username"
                     type="text"
                     className="form-control"
-                    placeholder="Duran Clayton"
+                    placeholder="Username"
+                    ref={refUsername}
+                  />
+                </div>
+                <div className="form-group mb-20">
+                  <label htmlFor="password">Mật khẩu</label>
+                  <input
+                    id="password"
+                    type="password"
+                    className="form-control"
+                    placeholder="Password123..."
+                    ref={refPassword}
+                  />
+                </div>
+                <div className="form-group mb-20">
+                  <label htmlFor="full_name">Họ và tên</label>
+                  <input
+                    id="full_name"
+                    type="text"
+                    className="form-control"
+                    placeholder="Nguyễn Văn A..."
+                    ref={refName}
+                  />
+                </div>
+                <div className="form-group mb-20">
+                  <label htmlFor="email">Email</label>
+                  <input
+                    id="email"
+                    type="email"
+                    className="form-control"
+                    placeholder="example@gmail.com"
+                    ref={refEmail}
+                  />
+                </div>
+                <div className="form-group mb-20">
+                  <label htmlFor="phone">Số điện thoại</label>
+                  <input
+                    id="phone"
+                    type="number"
+                    className="form-control"
+                    placeholder="113"
+                    ref={refPhone}
                   />
                 </div>
                 <div className="form-group mb-20">
                   <Select
-                    placeholder={'Chọn ca làm việc...'}
+                    placeholder={"Chọn ca làm việc..."}
                     components={animatedComponents}
                     closeMenuOnSelect={false}
                     options={groupedOptions}
@@ -84,105 +156,20 @@ const Modal = (props) => {
                     }
                   />
                 </div>
-                <div className="form-group mb-20">
-                  <textarea
-                    className="form-control"
-                    id="exampleFormControlTextarea1"
-                    rows={3}
-                    placeholder="Project description"
-                    defaultValue={''}
-                  />
-                </div>
-                <div className="form-group textarea-group">
-                  <label className="mb-15">status</label>
-                  <div className="d-flex">
-                    <div className="project-task-list__left d-flex align-items-center">
-                      <div className="checkbox-group d-flex mr-50 pr-10">
-                        <div className="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                          <input
-                            className="checkbox"
-                            type="checkbox"
-                            id="check-grp-1"
-                            defaultChecked=""
-                          />
-                          <label
-                            htmlFor="check-grp-1"
-                            className="fs-14 color-light strikethrough"
-                          >
-                            status
-                          </label>
-                        </div>
-                      </div>
-                      <div className="checkbox-group d-flex mr-50 pr-10">
-                        <div className="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                          <input
-                            className="checkbox"
-                            type="checkbox"
-                            id="check-grp-2"
-                          />
-                          <label
-                            htmlFor="check-grp-2"
-                            className="fs-14 color-light strikethrough"
-                          >
-                            Deactivated
-                          </label>
-                        </div>
-                      </div>
-                      <div className="checkbox-group d-flex">
-                        <div className="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                          <input
-                            className="checkbox"
-                            type="checkbox"
-                            id="check-grp-3"
-                          />
-                          <label
-                            htmlFor="check-grp-3"
-                            className="fs-14 color-light strikethrough"
-                          >
-                            bloked
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="d-flex new-member-calendar">
-                  <div className="form-group w-100 mr-sm-15 form-group-calender">
-                    <label htmlFor="datepicker">start Date</label>
-                    <div className="position-relative">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="datepicker"
-                        placeholder="mm/dd/yyyy"
-                      />
-                      <a href="#">
-                        <span data-feather="calendar" />
-                      </a>
-                    </div>
-                  </div>
-                  <div className="form-group w-100 form-group-calender">
-                    <label htmlFor="datepicker2">End Date</label>
-                    <div className="position-relative">
-                      <input
-                        type="text"
-                        className="form-control"
-                        id="datepicker2"
-                        placeholder="mm/dd/yyyy"
-                      />
-                      <a href="#">
-                        <span data-feather="calendar" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
                 <div className="button-group d-flex pt-25">
-                  <button className="btn btn-primary btn-default btn-squared text-capitalize">
-                    add new project
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-default btn-squared text-capitalize"
+                  >
+                    Thêm nhân viên
                   </button>
-                  <button className="btn btn-light btn-default btn-squared fw-400 text-capitalize b-light color-light">
-                    cancel
+                  <button
+                    type="button"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    className="btn btn-light btn-default btn-squared fw-400 text-capitalize"
+                  >
+                    Huỷ
                   </button>
                 </div>
               </form>
