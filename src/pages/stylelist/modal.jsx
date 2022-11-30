@@ -114,6 +114,19 @@ const Modal = (props) => {
                   />
                 </div>
                 <div className="form-group mb-20">
+                  <Select
+                    placeholder={"Chọn ca làm việc..."}
+                    components={animatedComponents}
+                    closeMenuOnSelect={false}
+                    options={groupedOptions}
+                    isMulti
+                    formatGroupLabel={formatGroupLabel}
+                    onChange={(e) =>
+                      setTimeSelected(e.map((item) => item.value))
+                    }
+                  />
+                </div>
+                <div className="form-group mb-20">
                   <label htmlFor="full_name">Họ và tên</label>
                   <input
                     id="full_name"
@@ -143,19 +156,7 @@ const Modal = (props) => {
                     ref={refPhone}
                   />
                 </div>
-                <div className="form-group mb-20">
-                  <Select
-                    placeholder={"Chọn ca làm việc..."}
-                    components={animatedComponents}
-                    closeMenuOnSelect={false}
-                    options={groupedOptions}
-                    isMulti
-                    formatGroupLabel={formatGroupLabel}
-                    onChange={(e) =>
-                      setTimeSelected(e.map((item) => item.value))
-                    }
-                  />
-                </div>
+
                 <div className="button-group d-flex pt-25">
                   <button
                     type="submit"
