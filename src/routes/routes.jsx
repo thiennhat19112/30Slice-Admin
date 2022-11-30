@@ -40,7 +40,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <Dashboard />,
+                <Dashboard />
               </Suspense>
             ),
           },
@@ -49,7 +49,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <Product />,
+                <Product />
               </Suspense>
             ),
           },
@@ -58,7 +58,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <Profile />,
+                <Profile />
               </Suspense>
             ),
           },
@@ -67,7 +67,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <Category />,
+                <Category />
               </Suspense>
             ),
           },
@@ -76,7 +76,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <Combo />,
+                <Combo />
               </Suspense>
             ),
           },
@@ -85,7 +85,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <EditCategory />,
+                <EditCategory />
               </Suspense>
             ),
           },
@@ -94,7 +94,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <News />,
+                <News />
               </Suspense>
             ),
           },
@@ -103,7 +103,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <Employee />,
+                <Employee />
               </Suspense>
             ),
           },
@@ -112,7 +112,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <StyleList />,
+                <StyleList />
               </Suspense>
             ),
           },
@@ -121,7 +121,7 @@ const routes = createBrowserRouter([
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
-                <TestCk />,
+                <TestCk />
               </Suspense>
             ),
           },
