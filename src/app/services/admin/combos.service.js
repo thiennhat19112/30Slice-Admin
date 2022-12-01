@@ -37,7 +37,8 @@ export const addCombo = async (data) => {
 
 export const updateCombo = async (data) => {
     try{
-        await api.put('combo/', data)
+       const res = await api.put('combo/', data)
+       return res;
     }catch(err){
         throw new Error(err)
     }

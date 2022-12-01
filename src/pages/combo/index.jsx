@@ -13,7 +13,7 @@ import {
 } from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
 import Add from "./Add";
-import { useLocation, useNavigate } from "react-router-dom";
+import Edit from "./Edit";
 
 const Combo = () => {
   const [combos, setCombos] = useState([]),
@@ -24,19 +24,20 @@ const Combo = () => {
 
   const _isMounted = useRef(false),
     addRef = useRef(),
+    editRef = useRef(),
     modalConfirmRef = useRef(),
     Name = useRef(),
     id = useRef(),
     combo = useRef();
 
-    const location = useLocation();
-    const type = location.pathname.split("/")[1];
     
   const loadCombo = async () => {
     _isMounted.current && setLoading(true);
     const data = await getCombos();
     _isMounted.current && setLoading(false);
     _isMounted.current && setCombos(data);
+    _isMounted.current && setIsShowModalEdit(false)
+    _isMounted.current &&  setIsShowModal(false)
   };
 
   const onDelete = async (id) => {
@@ -45,7 +46,7 @@ const Combo = () => {
     if (res.status === 200) {
       toastSuccess("xoa thanh cong");
       await loadCombo();
-      setIsShowModal(false)
+      _isMounted.current &&  setIsShowModal(false)
       return;
     }
     toastError("loi");
@@ -60,7 +61,8 @@ const Combo = () => {
 
   const onShowModalEdit = (data) => {
     combo.current = {...data}
-   _isMounted.current && setIsShowModalEdit(true)
+    _isMounted.current && setIsShowModalEdit(true)
+    editRef.current?.handleShow()
   };
 
   useEffect(() => {
@@ -349,7 +351,7 @@ const Combo = () => {
               )}
 
               {
-                isShowModalEdit && (<Edit />)
+                isShowModalEdit && (<Edit combo={combo.current} ref={editRef} loadCombo={loadCombo}/>)
               }
             </div>
           )}

@@ -181,6 +181,7 @@ AutocompleteCustom.defaultProps = {
     focused,
     setAnchorEl,
   } = useAutocomplete({
+    defaultValue : defaultValue,
     multiple: multiple,
     options: options,
     getOptionLabel: (option) => option[display],

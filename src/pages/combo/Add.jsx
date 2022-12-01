@@ -7,11 +7,6 @@ import {
 } from "react";
 import Modal from "react-bootstrap/Modal";
 import { X } from "react-feather";
-import Checkbox from "@mui/material/Checkbox";
-import TextField from "@mui/material/TextField";
-import { Autocomplete, FormControl, MenuItem } from "@mui/material";
-import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../app/redux/slices/product";
 import AutocompleteCustom from "../../CustomMui/autocomplete";
@@ -23,9 +18,6 @@ import {
   toastError,
 } from "../../components/sharedComponents/toast";
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
 const Add = (props, ref) => {
   const { combos,loadCombo } = props;
   const [show, setShow] = useState(false);
@@ -36,7 +28,6 @@ const Add = (props, ref) => {
   const {
     register,
     handleSubmit,
-    watch,
     reset,
     formState: { errors },
   } = useForm();
@@ -86,7 +77,7 @@ const Add = (props, ref) => {
     dispatch(fetchProduct());
   }, []);
 
-  console.log(errors);
+ 
 
 
   return (
