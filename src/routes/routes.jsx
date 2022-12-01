@@ -20,6 +20,7 @@ const Employee = lazy(() => import('../pages/employee'));
 const StyleList = lazy(() => import('../pages/stylelist'));
 const Combo = lazy(() => import('../pages/combo'));
 const TestCk = lazy(() => import('../pages/ckeditortest'));
+const AddNews = lazy(() => import('../pages/news/AddNews'));
 
 const routes = createBrowserRouter([
   {
@@ -95,6 +96,15 @@ const routes = createBrowserRouter([
             element: (
               <Suspense fallback={<p>Loading...</p>}>
                 <News />
+              </Suspense>
+            ),
+          },
+          {
+            path: 'add-news',
+            exact: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <AddNews />
               </Suspense>
             ),
           },

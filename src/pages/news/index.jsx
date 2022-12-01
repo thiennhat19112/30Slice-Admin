@@ -5,7 +5,6 @@ import {
   updateNews,
 } from "../../app/services/admin/news.service";
 import SwitchIOS from "../../CustomMui/switch";
-import Modal from "./Modal";
 
 const News = () => {
   const _isMounted = useRef(false);
@@ -277,7 +276,6 @@ const News = () => {
             </div>
           )}
         </div>
-        <Modal loadNews={loadNews} />
       </div>
     </div>
   );
