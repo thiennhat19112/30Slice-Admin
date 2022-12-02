@@ -19,7 +19,7 @@ export const updateStyleList = async (data) => {
   } catch (err) {
     throw new Error(err);
   }
-}
+};
 export const addStyleList = async (data) => {
   try {
     const response = await api.post("admin/addUser", data);
@@ -29,4 +29,12 @@ export const addStyleList = async (data) => {
   } catch (err) {
     throw new Error(err);
   }
-}
+};
+export const deleteStyleList = async (id) => {
+  try {
+    const response = await api.delete(`stylelist/deleteStyleList/${id}`);
+    return response;
+  } catch (err) {
+    throw new Error(err);
+  }
+};

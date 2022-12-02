@@ -1,9 +1,14 @@
-import { Eye, Edit, XCircle } from 'react-feather';
-import { Link } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
-import Modal from './modal';
-import { getStyleList,updateStyleList } from '../../app/services/admin/stylelist.service';
-import SwitchIOS from '../../CustomMui/switch';
+import { Eye, Edit, XCircle } from "react-feather";
+import { Link } from "react-router-dom";
+import { useEffect, useState, useRef } from "react";
+import Modal from "./modal";
+import {
+  getStyleList,
+  updateStyleList,
+  deleteStyleList,
+} from "../../app/services/admin/stylelist.service";
+import SwitchIOS from "../../CustomMui/switch";
+import { toastError } from "../../components/sharedComponents/toast";
 
 const StyleList = () => {
   const _isMounted = useRef(false);
@@ -36,6 +41,15 @@ const StyleList = () => {
     const data = { Block_By_Admin: !Is_Block, _id: id };
     try {
       await updateStyleList(data);
+      _isMounted && loadStyleList();
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
+  const handleDeleteStyleList = async (id) => {
+    try {
+     const res = await deleteStyleList(id);
+      toastError(res.data.message);
       _isMounted && loadStyleList();
     } catch (err) {
       throw new Error(err);
@@ -82,9 +96,7 @@ const StyleList = () => {
                 Thêm thợ cắt tóc
               </a>
               {/* Modal */}
-              <Modal
-              loadStyleList={loadStyleList}
-              />
+              <Modal loadStyleList={loadStyleList} />
               {/* Modal */}
             </div>
           </div>
@@ -162,7 +174,7 @@ const StyleList = () => {
                         </td>
                         <td>
                           <div className="userDatatable-content">
-                            {moment(item?.createdAt).format('L')}
+                            {moment(item?.createdAt).format("L")}
                           </div>
                         </td>
                         <td>
@@ -171,7 +183,10 @@ const StyleList = () => {
                               defaultChecked={item?.Info.Status_Code}
                               name="Status"
                               onChange={() =>
-                                handleUpdateStatus(item?.Info._id, item?.Info.Status_Code)
+                                handleUpdateStatus(
+                                  item?.Info._id,
+                                  item?.Info.Status_Code
+                                )
                               }
                             />
                           </div>
@@ -182,7 +197,10 @@ const StyleList = () => {
                               defaultChecked={item?.Info.Block_By_Admin}
                               name="Block"
                               onChange={() =>
-                                handleUpdateBlock(item?.Info._id, item?.Info.Block_By_Admin)
+                                handleUpdateBlock(
+                                  item?.Info._id,
+                                  item?.Info.Block_By_Admin
+                                )
                               }
                             />
                           </div>
@@ -198,9 +216,61 @@ const StyleList = () => {
                               </Link>
                             </li>
                             <li>
-                              <a href="#" className="remove">
+                              <a href="#" className="remove"  data-toggle="modal"
+                          data-target={"#modal-info-delete" + item._id}>
                                 <XCircle />
                               </a>
+                              <div
+                                className="modal-info-delete modal fade show"
+                                id={"modal-info-delete" + item._id}
+                                tabIndex={-1}
+                                role="dialog"
+                                aria-hidden="true"
+                              >
+                                <div
+                                  className="modal-dialog modal-sm modal-info"
+                                  role="document"
+                                >
+                                  <div className="modal-content">
+                                    <div className="modal-body">
+                                      <div className="modal-info-body d-flex">
+                                        <div className="modal-info-icon warning">
+                                          <span data-feather="info" />
+                                        </div>
+                                        <div className="modal-info-text">
+                                          <h6>
+                                            Bạn có thực sự muốn xoá thợ cắt tóc{" "}
+                                            <b>{item?.Full_Name}</b>?
+                                          </h6>
+                                          <p>
+                                            Xoá sẽ không khôi phục lại đâu nha
+                                            cha nội
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="modal-footer">
+                                      <button
+                                        type="button"
+                                        className="btn btn-danger btn-outlined btn-sm"
+                                        data-dismiss="modal"
+                                      >
+                                        Không
+                                      </button>
+                                      <button
+                                        onClick={() =>
+                                          handleDeleteStyleList(item._id)
+                                        }
+                                        type="button"
+                                        className="btn btn-success btn-outlined btn-sm"
+                                        data-dismiss="modal"
+                                      >
+                                        Xoá
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                             </li>
                           </ul>
                         </td>
