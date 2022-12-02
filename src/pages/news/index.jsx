@@ -1,16 +1,22 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   deleteNews,
   getNews,
   updateNews,
 } from "../../app/services/admin/news.service";
+import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
+import { toastError, toastSuccess } from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
 
 const News = () => {
   const _isMounted = useRef(false);
+  const id = useRef();
+  const modalConfirmRef = useRef();
   const [arrNews, setArrNews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [keySearch, setKeySearch] = useState("");
+  const [isShowModal, setIsShowModal] = useState(false);
 
   const loadNews = async () => {
     _isMounted.current && setLoading(true);
@@ -52,9 +58,27 @@ const News = () => {
   };
 
   const handleDelete = async (id) => {
-    const data = { _id: id }
+    const data = { _id: id };
     await deleteNews(data);
     _isMounted && loadNews();
+  };
+
+  const onDelete = async (id) => {
+    const data = { _id: id };
+    const res = await deleteNews(data);
+    if (res.status === 200) {
+      toastSuccess("xoa thanh cong");
+      await loadNews();
+      _isMounted.current && setIsShowModal(false);
+      return;
+    }
+    toastError("loi");
+  };
+
+  const onConfirm = (_id) => {
+    id.current = _id;
+    setIsShowModal(true);
+    modalConfirmRef.current?.handleShow();
   };
 
   const handleSearch = (e) => {
@@ -91,14 +115,10 @@ const News = () => {
               </form>
             </div>
             <div className="action-btn">
-              <button
-                className="btn px-15 btn-primary"
-                data-toggle="modal"
-                data-target="#new-member"
-              >
+              <Link to={"/add-news"} className="btn px-15 btn-primary">
                 <i className="las la-plus fs-16" />
                 Thêm Tin tức
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -205,13 +225,13 @@ const News = () => {
                           </td>
                           <td>
                             <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
-                              <button className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
+                              <Link to={`/edit-news/${item?._id}`} className="btn btn-primary btn-default btn-squared text-capitalize px-10 mr-10 global-shadow">
                                 <i className="fa-solid fa-pen-to-square"></i>{" "}
                                 Sửa
-                              </button>
+                              </Link>
 
                               <button
-                                onClick={() => handleDelete(item?._id)}
+                                onClick={() => onConfirm(item?._id)}
                                 type="button"
                                 className="btn btn-outline-danger btn-default btn-squared text-capitalize px-10  global-shadow"
                               >
@@ -276,6 +296,13 @@ const News = () => {
             </div>
           )}
         </div>
+        {isShowModal && (
+          <ModalConfirm
+            id={id.current ?? null}
+            funcDelete={onDelete}
+            ref={modalConfirmRef}
+          />
+        )}
       </div>
     </div>
   );

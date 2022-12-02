@@ -52,10 +52,10 @@ const Combo = () => {
     toastError("loi");
   };
 
-  const onConfirm = (_id, name) => {
+  const onConfirm = (_id, name) => {debugger
     Name.current = name;
     id.current = _id;
-    setIsShowModal(true)
+    _isMounted.current && setIsShowModal(true)
     modalConfirmRef.current?.handleShow();
   };
 

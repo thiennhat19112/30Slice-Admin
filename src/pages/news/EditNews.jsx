@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addNews } from "../../app/services/admin/news.service";
+import { addNews, getOneNews, updateNews } from "../../app/services/admin/news.service";
 import { useRef } from "react";
 import { uploadLoadFIle } from "../../app/services/upload";
 import { useSelector } from "react-redux";
@@ -15,42 +15,86 @@ import {
   toastSuccess,
 } from "../../components/sharedComponents/toast";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const AddNews = () => {
-  const [selected, setSelected] = useState(true);
+const EditNews = () => {
+  const location = useLocation();
+  const idNew = location.pathname.split("/")[2];
+  const navigate = useNavigate()
+  const [news,setNews] = useState([])
   const file = useRef();
   const { id } = useSelector((state) => state.auth.user);
-  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      mode: "onChange",
+      news: {
+        Title: "",
+        Desc: "",
+      },
+    },
+  });
   const storage = getStorage();
 
   const editorRef = useRef(null);
 
-
   const onSubmit = async (obj) => {
-    const urlImg = await uploadLoadFIle(file.current.files[0]);
-    const data = {
-      ...obj,
-      Is_Show: selected,
-      image: urlImg,
-      Create_By: id,
-      Content: editorRef.current.getContent(),
-    };
-    const res = await addNews(data);
+    const {news} = obj
+    let data = [];
+    if(file.current.files[0]){
+        const urlImg = await uploadLoadFIle(file.current.files[0]);
+        data = {
+            ...news,
+            image: urlImg,
+            Create_By: id,
+            Content: editorRef.current.getContent(),
+            _id : idNew
+          };
+    }else{
+        data = {
+            ...news,
+            Create_By: id,
+            Content: editorRef.current.getContent(),
+            _id : idNew
+          };
+    }
+     
+    const res = await updateNews(data);
     if (res.status === 200) {
-      toastSuccess("Thêm tin tức thành công!");
-      reset();
+      toastSuccess("Sữa tin tức thành công!");
       navigate('/news')
       return;
     }
     toastError("Đã xuất hiện lỗi xin thử lại sau!");
   };
+
+  const fetchNew = async (id) => {
+    const data = await getOneNews(id);
+    return setNews(data);
+  };
+
+  useEffect(()=>{
+    fetchNew(idNew);
+  },[idNew])
+
+  useEffect(() => {
+    let _isMounted = true;
+    const { Title, Desc } = news;
+    _isMounted &&
+      setValue("news", {
+        Title: Title,
+        Desc: Desc,
+      });
+    return () => {
+      _isMounted = false;
+    };
+  }, [news]);
 
   return (
     <>
@@ -60,7 +104,7 @@ const AddNews = () => {
             <div className="shop-breadcrumb">
               <div className="breadcrumb-main">
                 <h4 className="text-capitalize breadcrumb-title">
-                  Thêm tin tức
+                  Sửa tin tức
                 </h4>
               </div>
             </div>
@@ -92,11 +136,14 @@ const AddNews = () => {
                                 Tiêu đề tin tức
                               </label>
                               <textarea
-                                className={!!errors?.Title ? "is-invalid form-control"  : "form-control"}
+                                className={
+                                  !!errors?.news?.Title
+                                    ? "is-invalid form-control"
+                                    : "form-control"
+                                }
                                 id="title-news"
                                 rows={2}
-                                defaultValue={""}
-                                {...register("Title", { required: true })}
+                                {...register("news.Title", { required: true })}
                               />
                             </div>
                             <div className="form-group mb-20">
@@ -107,11 +154,14 @@ const AddNews = () => {
                                 Mô tả
                               </label>
                               <textarea
-                               className={!!errors?.Desc ? "is-invalid form-control"  : "form-control"}
+                                className={
+                                  !!errors?.news?.Desc
+                                    ? "is-invalid form-control"
+                                    : "form-control"
+                                }
                                 id="desc-news"
                                 rows={3}
-                                defaultValue={""}
-                                {...register("Desc", { required: true })}
+                                {...register("news.Desc", { required: true })}
                               />
                             </div>
                             <div className="form-group mb-20">
@@ -138,6 +188,7 @@ const AddNews = () => {
                                 onInit={(evt, editor) =>
                                   (editorRef.current = editor)
                                 }
+                                initialValue={news?.Content}
                                 apiKey="xe96hx4boxd7pim8uqurpol71245lpwc1u17k20kly9szpy8"
                                 init={{
                                   height: 600,
@@ -146,8 +197,8 @@ const AddNews = () => {
 
                                   plugins: `advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount`,
                                   toolbar: `undo redo| link code image | formatselect | bold italic backcolor | \
-                              alignleft aligncenter alignright alignjustify | \
-                              bullist numlist outdent indent | removeformat | help`,
+                                alignleft aligncenter alignright alignjustify | \
+                                bullist numlist outdent indent | removeformat | help`,
                                   image_title: true,
                                   automatic_uploads: true,
                                   file_picker_types: "image",
@@ -223,42 +274,6 @@ const AddNews = () => {
                               />
                             </div>
 
-                            <div className="form-group mb-20 ">
-                              <label className="mb-15">Ẩn/Hiện</label>
-                              <div className="d-flex">
-                                <div className="radio-horizontal-list d-flex flex-wrap">
-                                  <div className="radio-theme-default custom-radio ">
-                                    <input
-                                      className="radio"
-                                      type="radio"
-                                      name="Is_Show"
-                                      value={true}
-                                      id="radio-hl1"
-                                      checked={selected === true}
-                                      onChange={() => setSelected(true)}
-                                    />
-                                    <label htmlFor="radio-hl1">
-                                      <span className="radio-text">Hiện</span>
-                                    </label>
-                                  </div>
-                                  <div className="radio-theme-default custom-radio ">
-                                    <input
-                                      className="radio"
-                                      type="radio"
-                                      name="Is_Show"
-                                      value={false}
-                                      id="radio-hl2"
-                                      checked={selected === false}
-                                      onChange={() => setSelected(false)}
-                                    />
-                                    <label htmlFor="radio-hl2">
-                                      <span className="radio-text">Ẩn</span>
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
                             {/* End: form */}
                           </div>
                           {/* End: card body */}
@@ -295,4 +310,4 @@ const AddNews = () => {
   );
 };
 
-export default AddNews;
+export default EditNews;

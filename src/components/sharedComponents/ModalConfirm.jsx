@@ -32,8 +32,9 @@ const ModalConfirm = (props, ref) => {
   useEffect(() => {
     if (confirm) {
       funcDelete(id);
+      _isMounted.current && setShow(false);
     }
-    _isMounted.current && setShow(false);
+    
   }, [confirm]);
   return (
     <Modal
