@@ -122,7 +122,6 @@ const Combo = () => {
               <button
                 className="btn px-15 btn-primary"
                 onClick={() => {
-                  setIsShowModal(true);
                   addRef.current?.handleShow();
                 }}
               >

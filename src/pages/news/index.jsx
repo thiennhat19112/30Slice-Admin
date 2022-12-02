@@ -188,7 +188,7 @@ const News = () => {
                           </td>
                           <td>
                             <div className="userDatatable-content">
-                              {item?.Create_By}
+                              {item?.Create_By?.Full_Name}
                             </div>
                           </td>
                           <td>
