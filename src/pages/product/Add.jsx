@@ -7,8 +7,6 @@ import {
 } from "react";
 import Modal from "react-bootstrap/Modal";
 import { X } from "react-feather";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../app/redux/slices/product";
 import AutocompleteCustom from "../../CustomMui/autocomplete";
 import { useForm } from "react-hook-form";
 import { addCombo } from "../../app/services/admin/combos.service";
@@ -17,9 +15,13 @@ import {
   toastSuccess,
   toastError,
 } from "../../components/sharedComponents/toast";
+import { fetchCategories } from "../../app/redux/slices/categories";
+import { useDispatch, useSelector } from "react-redux";
 
 const Add = (props, ref) => {
-  const { combos,loadCombo } = props;
+  const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categories);
+  const { loadProduct } = props;
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(true);
   const _isMounted = useRef(false);
@@ -31,9 +33,6 @@ const Add = (props, ref) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.product);
 
   const handleClose = () => {
     _isMounted.current && setShow(false);
@@ -47,14 +46,14 @@ const Add = (props, ref) => {
       ...obj,
       Is_Show: selected,
       Arr_Id_Products: Arr_Id_Products,
-      Image : urlImg
+      Image: urlImg,
     };
     const res = await addCombo(data);
     if (res.status === 200) {
       toastSuccess("Thêm thành công!");
       _isMounted.current && setShow(false);
       reset();
-      await loadCombo()
+      await loadCombo();
       return;
     }
     toastError("Lỗi!");
@@ -74,18 +73,15 @@ const Add = (props, ref) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchProduct());
+    dispatch(fetchCategories());
   }, []);
-
- 
-
 
   return (
     <Modal show={show} onHide={handleClose} animation={false}>
       <div className="modal-content  radius-xl">
         <div className="modal-header">
           <h6 className="modal-title fw-500" id="staticBackdropLabel">
-            Thêm combo sản phẩm
+            Thêm sản phẩm
           </h6>
           <button
             type="button"
@@ -106,11 +102,13 @@ const Add = (props, ref) => {
 
               {/* form group */}
               <div className="form-group">
-                <label htmlFor="name">Tên Combo</label>
+                <label htmlFor="name">Tên sản phẩm</label>
                 <input
                   type="text"
                   id={"name"}
-                  className={!!errors?.Name ? "is-invalid form-control"  : "form-control"}
+                  className={
+                    !!errors?.Name ? "is-invalid form-control" : "form-control"
+                  }
                   {...register("Name", { required: true })}
                 />
               </div>
@@ -130,43 +128,50 @@ const Add = (props, ref) => {
                 />
               </div>
               <div className="form-group">
-                <label>Tên Sản phẩm</label>
+                <label>Loại Sản phẩm</label>
                 <AutocompleteCustom
-                  options={products}
+                  options={categories}
                   multiple={true}
                   display="Name"
                   ref={idProducts}
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="Ordinal">Thứ tự</label>
-                <input
-                  type="number"
-                  className={!!errors?.Ordinal ? "is-invalid form-control"  : "form-control"}
-                  id="Ordinal"
-                  placeholder="Số thứ tự"
-                  {...register("Ordinal", { required: true, min : 1 })}
-                  defaultValue={combos[combos.length - 1]?.Ordinal + 1}
-                />
-              </div>
+             
+              {/* <div className="form-group">
+                  <label htmlFor="Ordinal">Thứ tự</label>
+                  <input
+                    type="number"
+                    className={!!errors?.Ordinal ? "is-invalid form-control"  : "form-control"}
+                    id="Ordinal"
+                    placeholder="Số thứ tự"
+                    {...register("Ordinal", { required: true, min : 1 })}
+                    defaultValue={combos[combos.length - 1]?.Ordinal + 1}
+                  />
+                </div> */}
               <div className="form-group">
                 <label htmlFor="Price">Giá</label>
                 <input
                   type="number"
-                  className={!!errors?.Price ? "is-invalid form-control"  : "form-control"}
+                  className={
+                    !!errors?.Price ? "is-invalid form-control" : "form-control"
+                  }
                   id="Price"
                   placeholder="Giá"
-                  {...register("Price", { required: true, min : 1 })}
+                  {...register("Price", { required: true, min: 1 })}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="Discount">Giảm giá (%)</label>
                 <input
                   type="number"
-                  className={!!errors?.Discount ? "is-invalid form-control"  : "form-control"}
+                  className={
+                    !!errors?.Discount
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
                   id="Discount"
                   placeholder="Giảm giá"
-                  {...register("Discount",{ required: true, min : 0 })}
+                  {...register("Discount", { required: true, min: 0 })}
                   defaultValue={0}
                 />
               </div>
@@ -174,10 +179,33 @@ const Add = (props, ref) => {
                 <label htmlFor="InStock">Số lượng</label>
                 <input
                   type="number"
-                  className={!!errors?.InStock ? "is-invalid form-control"  : "form-control"}
+                  className={
+                    !!errors?.InStock
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
                   id="InStock"
                   placeholder="Số lượng"
-                  {...register("InStock",{ required: true, min : 1 })}
+                  {...register("InStock", { required: true, min: 1 })}
+                />
+              </div>
+              <div className="form-group mb-20">
+                <label
+                  htmlFor="Details"
+                  className="fs-14 color-light strikethrough"
+                >
+                  Chi tiết
+                </label>
+                <textarea
+                  className={
+                    !!errors?.Details
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                  id="Details"
+                  rows={3}
+                  defaultValue={""}
+                  {...register("Details", { required: true })}
                 />
               </div>
               <div className="form-group mb-20">
@@ -188,11 +216,15 @@ const Add = (props, ref) => {
                   Mô tả
                 </label>
                 <textarea
-                   className={!!errors?.Details ? "is-invalid form-control"  : "form-control"}
-                  id="Details"
+                  className={
+                    !!errors?.Describe
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                  id="Describe"
                   rows={3}
                   defaultValue={""}
-                  {...register("Details", { required: true })}
+                  {...register("Describe", { required: true })}
                 />
               </div>
               <div className="form-group mb-20 ">

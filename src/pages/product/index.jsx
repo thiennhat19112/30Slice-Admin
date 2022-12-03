@@ -1,14 +1,25 @@
+import { Tooltip } from "@mui/material";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { Eye, Edit, XCircle } from "react-feather";
-import { getProducts, updateProduct } from "../../app/services/admin/product.service";
+import { Link } from "react-router-dom";
+import {
+  getProducts,
+  updateProduct,
+} from "../../app/services/admin/product.service";
 import SwitchIOS from "../../CustomMui/switch";
+import Add from "./Add";
+import Detail from "./Detail";
 
 const Product = () => {
   const _isMounted = useRef(false);
+  const detailRef = useRef();
+  const productsRef = useRef();
+  const addRef = useRef();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isShowDetail, setIsShowDetail] = useState(false);
 
   const fetchProduct = async () => {
     setIsLoading(true);
@@ -29,19 +40,26 @@ const Product = () => {
   };
 
   const handleUpdateHot = async (id, Is_Hot) => {
-    let data = []
-    if(Is_Hot){
+    let data = [];
+    if (Is_Hot) {
       data = { Is_Hot: !Is_Hot, _id: id };
-    }else{
+    } else {
       data = { Is_Hot: true, _id: id };
     }
 
     try {
       await updateProduct(data);
-      _isMounted && fetchProduct();
+      await fetchProduct();
     } catch (err) {
       throw new Error(err);
     }
+  };
+
+  const handleShowModalDetail = (arr) => {
+    productsRef.current = {...arr};
+    console.log(productsRef.current);
+    _isMounted.current && setIsShowDetail(true);
+    detailRef.current?.handleShow();
   };
 
   useEffect(() => {
@@ -84,10 +102,9 @@ const Product = () => {
             </div>
             <div className="action-btn">
               <a
-                href="#"
+                href="javascript:void(0)"
                 className="btn px-15 btn-primary"
-                data-toggle="modal"
-                data-target="#new-member"
+                onClick={()=>addRef.current?.handleShow()}
               >
                 <i className="las la-plus fs-16" />
                 Thêm sản phẩm
@@ -159,27 +176,57 @@ const Product = () => {
                               </div>
                             </td>
                             <td>
-                            <div className="userDatatable-content d-inline-block">
-                              <SwitchIOS
-                                onChange={() =>
-                                  handleUpdateStatus(item?._id, item?.Is_Show)
-                                }
-                                defaultChecked={item?.Is_Show}
-                                name="Is_Show"
-                              />
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content d-inline-block">
-                              <SwitchIOS
-                                defaultChecked={item?.Is_Hot}
-                                name="Is_Hot"
-                                onChange={() =>
-                                  handleUpdateHot(item?._id, item?.Is_Hot)
-                                }
-                              />
-                            </div>
-                          </td>
+                              <div className="userDatatable-content d-inline-block">
+                                <SwitchIOS
+                                  onChange={() =>
+                                    handleUpdateStatus(item?._id, item?.Is_Show)
+                                  }
+                                  defaultChecked={item?.Is_Show}
+                                  name="Is_Show"
+                                />
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content d-inline-block">
+                                <SwitchIOS
+                                  defaultChecked={item?.Is_Hot}
+                                  name="Is_Hot"
+                                  onChange={() =>
+                                    handleUpdateHot(item?._id, item?.Is_Hot)
+                                  }
+                                />
+                              </div>
+                            </td>
+                            <td>
+                              <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                <Tooltip title="Xem chi tiết">
+                                  <li
+                                    onClick={() => handleShowModalDetail(item)}
+                                  >
+                                    <a href="javascript:void(0)" class="view">
+                                      <Eye />
+                                    </a>
+                                  </li>
+                                </Tooltip>
+                                <Tooltip title="Sửa">
+                                  <li>
+                                    <Link className="edit">
+                                      <Edit />
+                                    </Link>
+                                  </li>
+                                </Tooltip>
+                                <Tooltip title="Xoá">
+                                  <li>
+                                    <a
+                                      href="javascript:void(0)"
+                                      className="remove"
+                                    >
+                                      <XCircle />
+                                    </a>
+                                  </li>
+                                </Tooltip>
+                              </ul>
+                            </td>
                           </tr>
                         ))
                       : "Không có sản phẩm"}
@@ -237,6 +284,12 @@ const Product = () => {
             </div>
           )}
         </div>
+        {/* modal */}
+        {isShowDetail && (
+          <Detail setIsShowDetail={setIsShowDetail} product={productsRef.current} ref={detailRef} />
+        )}
+        {<Add loadProduct={fetchProduct}  ref={addRef} />}
+
       </div>
     </div>
   );

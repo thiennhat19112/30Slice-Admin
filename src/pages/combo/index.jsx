@@ -52,7 +52,7 @@ const Combo = () => {
     toastError("loi");
   };
 
-  const onConfirm = (_id, name) => {debugger
+  const onConfirm = (_id, name) => {
     Name.current = name;
     id.current = _id;
     _isMounted.current && setIsShowModal(true)
