@@ -129,7 +129,7 @@ const EditProduct = (props, ref) => {
         Discount: Discount,
         InStock: InStock,
         Details: Details,
-        Id_Categories :  Id_Categories
+        Id_Categories :  Id_Categories._id
       });
   }, [_id]);
   return (
