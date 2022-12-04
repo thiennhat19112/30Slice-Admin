@@ -211,7 +211,7 @@ const Product = () => {
                             </td>
                             <td>
                               <div className="userDatatable-content">
-                                {item?.Id_Categories}
+                                {item?.Id_Categories && item?.Id_Categories.Name}
                               </div>
                             </td>
                             <td>
