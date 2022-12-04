@@ -7,59 +7,98 @@ import {
 } from "react";
 import Modal from "react-bootstrap/Modal";
 import { X } from "react-feather";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "../../app/redux/slices/product";
 import AutocompleteCustom from "../../CustomMui/autocomplete";
 import { useForm } from "react-hook-form";
-import { addCombo } from "../../app/services/admin/combos.service";
+import { updateCombo } from "../../app/services/admin/combos.service";
 import { uploadLoadFIle } from "../../app/services/upload";
-import makeAnimated from "react-select/animated";
 import {
   toastSuccess,
   toastError,
 } from "../../components/sharedComponents/toast";
+import { updateProduct } from "../../app/services/admin/product.service";
 
-import { useDispatch, useSelector } from "react-redux";
-import { addProduct } from "../../app/services/admin/product.service";
-
-
-const Add = (props, ref) => {
+const EditProduct = (props, ref) => {
   const { categories } = useSelector((state) => state.categories);
-  const { loadProduct } = props;
-  const [show, setShow] = useState(false);
+  const { product, loadProduct ,setIsShowModalEdit} = props;
+  const {
+    Name,
+    Ordinal,
+    Image,
+    Price,
+    Discount,
+    InStock,
+    Details,
+    _id,
+    Id_Categories,
+    Images,
+  } = product;
+  const [show, setShow] = useState(true);
   const [selected, setSelected] = useState(true);
   const _isMounted = useRef(false);
+  const idProducts = useRef();
   const file = useRef();
-  
   const {
     register,
     handleSubmit,
+    setValue,
+    watch,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      mode: "onChange",
+      product: {
+        Name: "",
+        Images: [],
+        Ordinal: null,
+        Image: "",
+        Price: null,
+        Discount: null,
+        InStock: null,
+        Details: "",
+      },
+    },
+  });
+
   const handleClose = () => {
     _isMounted.current && setShow(false);
+    _isMounted.current && setIsShowModalEdit(false)
   };
-
   const onSubmit = async (obj) => {
+    const { product } = obj;
+    let data = [];
+    const arrFile = [...file.current.files];
+    //upload hinh
+    if (arrFile.length > 0) {
+      let urlImg = [];
 
-    let urlImg = []
-    const arrFile = [...file.current.files]
-    for(let i = 0 ; i < arrFile.length ; i ++){
-      const upMultipleFile = async () =>{
-        const name = await uploadLoadFIle(arrFile[i]);
-        return name
+      for (let i = 0; i < arrFile.length; i++) {
+        const upMultipleFile = async () => {
+          const name = await uploadLoadFIle(arrFile[i]);
+          return name;
+        };
+        const name = await upMultipleFile();
+        urlImg.push(name);
       }
-     const name = await upMultipleFile();
-     urlImg.push(name)
+      data = {
+        ...product,
+        Is_Show: selected,
+        _id: _id,
+        Images: urlImg,
+      };
+    } else {
+      data = {
+        ...product,
+        Is_Show: selected,
+        _id: _id,
+      };
     }
-    
-    const data = {
-      ...obj,
-      Is_Show: selected,
-      Images: urlImg,
-    };
-    const res = await addProduct(data);
+
+    const res = await updateProduct(data);
     if (res.status === 200) {
-      toastSuccess("Thêm thành công!");
+      toastSuccess("Sửa thành công!");
       _isMounted.current && setShow(false);
       reset();
       await loadProduct();
@@ -81,19 +120,30 @@ const Add = (props, ref) => {
     };
   }, []);
 
-
+  useEffect(() => {
+    _isMounted.current &&
+      setValue("product", {
+        Name: Name,
+        Ordinal: Ordinal,
+        Price: Price,
+        Discount: Discount,
+        InStock: InStock,
+        Details: Details,
+        Id_Categories :  Id_Categories
+      });
+  }, [_id]);
   return (
     <Modal show={show} onHide={handleClose} animation={false}>
       <div className="modal-content  radius-xl">
         <div className="modal-header">
           <h6 className="modal-title fw-500" id="staticBackdropLabel">
-            Thêm sản phẩm
+            Sửa sản phẩm
           </h6>
           <button
             type="button"
             className="close"
             aria-label="Close"
-            onClick={() => setShow(false)}
+            onClick={handleClose}
           >
             <X />
           </button>
@@ -113,9 +163,11 @@ const Add = (props, ref) => {
                   type="text"
                   id={"name"}
                   className={
-                    !!errors?.Name ? "is-invalid form-control" : "form-control"
+                    !!errors?.product?.Name
+                      ? "is-invalid form-control"
+                      : "form-control"
                   }
-                  {...register("Name", { required: true })}
+                  {...register("product.Name", { required: true })}
                 />
               </div>
               <div className="form-group mb-20">
@@ -134,47 +186,58 @@ const Add = (props, ref) => {
                   multiple
                 />
               </div>
+
               <div className="form-group select-px-15">
                 <label>Loại Sản phẩm</label>
                 <select
-                  {...register("Id_Categories", { required: true })}
+                  {...register("product.Id_Categories", { required: true })}
                   className={
-                    !!errors?.Id_Categories
+                    !!errors?.product?.Id_Categories
                       ? "is-invalid form-control"
                       : "form-control"
                   }
-                 
                 >
-                  <option checked value="">Chọn loại sản phẩm</option>
+                  <option value="">Chọn loại sản phẩm</option>
                   {categories.length > 0
                     ? categories.map((item) => (
-                        <option value={item._id}>{item.Name}</option>
+                        <option
+                        //   checked={item._id === Id_Categories}
+                          value={item._id}
+                          key={item._id}
+                        >
+                          {item.Name}
+                        </option>
                       ))
                     : "Loading"}
                 </select>
               </div>
-
-              {/* <div className="form-group">
-                  <label htmlFor="Ordinal">Thứ tự</label>
-                  <input
-                    type="number"
-                    className={!!errors?.Ordinal ? "is-invalid form-control"  : "form-control"}
-                    id="Ordinal"
-                    placeholder="Số thứ tự"
-                    {...register("Ordinal", { required: true, min : 1 })}
-                    defaultValue={combos[combos.length - 1]?.Ordinal + 1}
-                  />
-                </div> */}
+{/* 
+              <div className="form-group">
+                <label htmlFor="Ordinal">Thứ tự</label>
+                <input
+                  type="number"
+                  className={
+                    !!errors?.product?.Ordinal
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                  id="Ordinal"
+                  placeholder="Số thứ tự"
+                  {...register("product.Ordinal", { required: true, min: 1 })}
+                />
+              </div> */}
               <div className="form-group">
                 <label htmlFor="Price">Giá</label>
                 <input
                   type="number"
                   className={
-                    !!errors?.Price ? "is-invalid form-control" : "form-control"
+                    !!errors?.product?.Price
+                      ? "is-invalid form-control"
+                      : "form-control"
                   }
                   id="Price"
                   placeholder="Giá"
-                  {...register("Price", { required: true, min: 1 })}
+                  {...register("product.Price", { required: true, min: 1 })}
                 />
               </div>
               <div className="form-group">
@@ -182,14 +245,13 @@ const Add = (props, ref) => {
                 <input
                   type="number"
                   className={
-                    !!errors?.Discount
+                    !!errors?.product?.Discount
                       ? "is-invalid form-control"
                       : "form-control"
                   }
                   id="Discount"
                   placeholder="Giảm giá"
-                  {...register("Discount", { required: true, min: 0 })}
-                  defaultValue={0}
+                  {...register("product.Discount", { required: true, min: 0 })}
                 />
               </div>
               <div className="form-group">
@@ -197,32 +259,13 @@ const Add = (props, ref) => {
                 <input
                   type="number"
                   className={
-                    !!errors?.InStock
+                    !!errors?.product?.InStock
                       ? "is-invalid form-control"
                       : "form-control"
                   }
                   id="InStock"
                   placeholder="Số lượng"
-                  {...register("InStock", { required: true, min: 1 })}
-                />
-              </div>
-              <div className="form-group mb-20">
-                <label
-                  htmlFor="Details"
-                  className="fs-14 color-light strikethrough"
-                >
-                  Chi tiết
-                </label>
-                <textarea
-                  className={
-                    !!errors?.Details
-                      ? "is-invalid form-control"
-                      : "form-control"
-                  }
-                  id="Details"
-                  rows={3}
-                  defaultValue={""}
-                  {...register("Details", { required: true })}
+                  {...register("product.InStock", { required: true, min: 1 })}
                 />
               </div>
               <div className="form-group mb-20">
@@ -234,50 +277,15 @@ const Add = (props, ref) => {
                 </label>
                 <textarea
                   className={
-                    !!errors?.Describe
+                    !!errors?.product?.Details
                       ? "is-invalid form-control"
                       : "form-control"
                   }
-                  id="Describe"
+                  id="Details"
                   rows={3}
                   defaultValue={""}
-                  {...register("Describe", { required: true })}
+                  {...register("product.Details", { required: true })}
                 />
-              </div>
-              <div className="form-group mb-20 ">
-                <label className="mb-15">Ẩn/Hiện</label>
-                <div className="d-flex">
-                  <div className="radio-horizontal-list d-flex flex-wrap">
-                    <div className="radio-theme-default custom-radio ">
-                      <input
-                        className="radio"
-                        type="radio"
-                        name="Is_Show"
-                        value={true}
-                        id="radio-hl1"
-                        checked={selected === true}
-                        onChange={() => setSelected(true)}
-                      />
-                      <label htmlFor="radio-hl1">
-                        <span className="radio-text">Hiện</span>
-                      </label>
-                    </div>
-                    <div className="radio-theme-default custom-radio ">
-                      <input
-                        className="radio"
-                        type="radio"
-                        name="Is_Show"
-                        value={false}
-                        id="radio-hl2"
-                        checked={selected === false}
-                        onChange={() => setSelected(false)}
-                      />
-                      <label htmlFor="radio-hl2">
-                        <span className="radio-text">Ẩn</span>
-                      </label>
-                    </div>
-                  </div>
-                </div>
               </div>
 
               {/* End: form */}
@@ -290,12 +298,12 @@ const Add = (props, ref) => {
                 type="submit"
                 className="btn btn-success btn-default btn-squared text-capitalize"
               >
-                Thêm
+                Sửa
               </button>
               <button
                 type="button"
                 className="btn btn-danger btn-default btn-squared fw-400 text-capitalize"
-                onClick={() => setShow(false)}
+                onClick={() => handleClose}
               >
                 Huỷ
               </button>
@@ -307,4 +315,4 @@ const Add = (props, ref) => {
   );
 };
 
-export default forwardRef(Add);
+export default forwardRef(EditProduct);

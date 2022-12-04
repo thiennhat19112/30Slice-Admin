@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { Eye, Edit, XCircle } from "react-feather";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   deleteProduct,
@@ -10,21 +11,31 @@ import {
   updateProduct,
 } from "../../app/services/admin/product.service";
 import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
+import {
+  toastError,
+  toastSuccess,
+} from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
 import Add from "./Add";
 import Detail from "./Detail";
-
+import { fetchCategories } from "../../app/redux/slices/categories";
+import EditProduct from "./Edit";
 const Product = () => {
   const _isMounted = useRef(false);
   const detailRef = useRef();
   const productsRef = useRef();
   const addRef = useRef();
   const id = useRef();
+  const editRef = useRef();
+
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowDetail, setIsShowDetail] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const modalConfirmRef = useRef();
+  const [isShowModalEdit, setIsShowModalEdit] = useState(false);
+
+  const dispatch = useDispatch();
   const fetchProduct = async () => {
     setIsLoading(true);
     const data = await getProducts();
@@ -60,7 +71,7 @@ const Product = () => {
   };
 
   const handleShowModalDetail = (arr) => {
-    productsRef.current = {...arr};
+    productsRef.current = { ...arr };
     _isMounted.current && setIsShowDetail(true);
     detailRef.current?.handleShow();
   };
@@ -75,6 +86,12 @@ const Product = () => {
       return;
     }
     toastError("loi");
+  };
+
+  const onShowModalEdit = (data) => {
+    productsRef.current = { ...data };
+    _isMounted.current && setIsShowModalEdit(true);
+    editRef.current?.handleShow()
   };
 
   const onConfirm = (_id) => {
@@ -92,6 +109,7 @@ const Product = () => {
 
   useEffect(() => {
     fetchProduct();
+    dispatch(fetchCategories());
   }, []);
 
   return (
@@ -125,7 +143,7 @@ const Product = () => {
               <a
                 href="javascript:void(0)"
                 className="btn px-15 btn-primary"
-                onClick={()=>addRef.current?.handleShow()}
+                onClick={() => addRef.current?.handleShow()}
               >
                 <i className="las la-plus fs-16" />
                 Thêm sản phẩm
@@ -230,7 +248,7 @@ const Product = () => {
                                   </li>
                                 </Tooltip>
                                 <Tooltip title="Sửa">
-                                  <li>
+                                  <li onClick={() => onShowModalEdit(item)}>
                                     <Link className="edit">
                                       <Edit />
                                     </Link>
@@ -307,14 +325,26 @@ const Product = () => {
         </div>
         {/* modal */}
         {isShowDetail && (
-          <Detail setIsShowDetail={setIsShowDetail} product={productsRef.current} ref={detailRef} />
+          <Detail
+            setIsShowDetail={setIsShowDetail}
+            product={productsRef.current}
+            ref={detailRef}
+          />
         )}
-        {<Add loadProduct={fetchProduct}  ref={addRef} />}
+        {<Add loadProduct={fetchProduct} ref={addRef} />}
         {isShowModal && (
           <ModalConfirm
             id={id.current ?? null}
             funcDelete={onDelete}
             ref={modalConfirmRef}
+          />
+        )}
+        {isShowModalEdit && (
+          <EditProduct
+            product={productsRef.current}
+            ref={editRef}
+            loadProduct={fetchProduct}
+            setIsShowModalEdit={setIsShowModalEdit}
           />
         )}
       </div>
