@@ -11,12 +11,15 @@ import AutocompleteCustom from "../../CustomMui/autocomplete";
 import { useForm } from "react-hook-form";
 import { addCombo } from "../../app/services/admin/combos.service";
 import { uploadLoadFIle } from "../../app/services/upload";
+import makeAnimated from "react-select/animated";
 import {
   toastSuccess,
   toastError,
 } from "../../components/sharedComponents/toast";
 import { fetchCategories } from "../../app/redux/slices/categories";
 import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../app/services/admin/product.service";
+
 
 const Add = (props, ref) => {
   const dispatch = useDispatch();
@@ -25,35 +28,47 @@ const Add = (props, ref) => {
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState(true);
   const _isMounted = useRef(false);
-  const idProducts = useRef();
   const file = useRef();
+  
+  
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
   const handleClose = () => {
     _isMounted.current && setShow(false);
   };
+
   const onSubmit = async (obj) => {
-    const urlImg = await uploadLoadFIle(file.current.files[0]);
-    const Arr_Id_Products = idProducts.current.InputValue.map(
-      (item) => item._id
-    );
+
+    let urlImg = []
+    // const urlImg =  [...file.current.files].map( async (item)=> {
+    //   const nameUrl = await uploadLoadFIle(item);debugger
+    //   return nameUrl;
+    // })
+    const arrFile = [...file.current.files]
+    for(let i = 0 ; i < arrFile.length ; i ++){
+      const upMultipleFile = async () =>{
+        const name = await uploadLoadFIle(arrFile[i]);
+        return name
+      }
+     const name = await upMultipleFile();
+     urlImg.push(name)
+    }
+    
     const data = {
       ...obj,
       Is_Show: selected,
-      Arr_Id_Products: Arr_Id_Products,
-      Image: urlImg,
+      Images: urlImg,
     };
-    const res = await addCombo(data);
+    const res = await addProduct(data);
     if (res.status === 200) {
       toastSuccess("Thêm thành công!");
       _isMounted.current && setShow(false);
       reset();
-      await loadCombo();
+      await loadProduct();
       return;
     }
     toastError("Lỗi!");
@@ -125,18 +140,29 @@ const Add = (props, ref) => {
                   className="form-control"
                   type="file"
                   id="formFile"
+                  multiple
                 />
               </div>
-              <div className="form-group">
+              <div className="form-group select-px-15">
                 <label>Loại Sản phẩm</label>
-                <AutocompleteCustom
-                  options={categories}
-                  multiple={true}
-                  display="Name"
-                  ref={idProducts}
-                />
+                <select
+                  {...register("Id_Categories", { required: true })}
+                  className={
+                    !!errors?.Id_Categories
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                 
+                >
+                  <option checked value="">Chọn loại sản phẩm</option>
+                  {categories.length > 0
+                    ? categories.map((item) => (
+                        <option value={item._id}>{item.Name}</option>
+                      ))
+                    : "Loading"}
+                </select>
               </div>
-             
+
               {/* <div className="form-group">
                   <label htmlFor="Ordinal">Thứ tự</label>
                   <input

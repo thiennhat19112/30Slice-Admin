@@ -5,9 +5,11 @@ import { useState } from "react";
 import { Eye, Edit, XCircle } from "react-feather";
 import { Link } from "react-router-dom";
 import {
+  deleteProduct,
   getProducts,
   updateProduct,
 } from "../../app/services/admin/product.service";
+import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
 import SwitchIOS from "../../CustomMui/switch";
 import Add from "./Add";
 import Detail from "./Detail";
@@ -17,10 +19,12 @@ const Product = () => {
   const detailRef = useRef();
   const productsRef = useRef();
   const addRef = useRef();
+  const id = useRef();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isShowDetail, setIsShowDetail] = useState(false);
-
+  const [isShowModal, setIsShowModal] = useState(false);
+  const modalConfirmRef = useRef();
   const fetchProduct = async () => {
     setIsLoading(true);
     const data = await getProducts();
@@ -57,9 +61,26 @@ const Product = () => {
 
   const handleShowModalDetail = (arr) => {
     productsRef.current = {...arr};
-    console.log(productsRef.current);
     _isMounted.current && setIsShowDetail(true);
     detailRef.current?.handleShow();
+  };
+
+  const onDelete = async (id) => {
+    const data = { _id: id };
+    const res = await deleteProduct(data);
+    if (res.status === 200) {
+      toastSuccess("xoa thanh cong");
+      await fetchProduct();
+      _isMounted.current && setIsShowModal(false);
+      return;
+    }
+    toastError("loi");
+  };
+
+  const onConfirm = (_id) => {
+    id.current = _id;
+    _isMounted.current && setIsShowModal(true);
+    modalConfirmRef.current?.handleShow();
   };
 
   useEffect(() => {
@@ -216,7 +237,7 @@ const Product = () => {
                                   </li>
                                 </Tooltip>
                                 <Tooltip title="Xoá">
-                                  <li>
+                                  <li onClick={() => onConfirm(item._id)}>
                                     <a
                                       href="javascript:void(0)"
                                       className="remove"
@@ -289,7 +310,13 @@ const Product = () => {
           <Detail setIsShowDetail={setIsShowDetail} product={productsRef.current} ref={detailRef} />
         )}
         {<Add loadProduct={fetchProduct}  ref={addRef} />}
-
+        {isShowModal && (
+          <ModalConfirm
+            id={id.current ?? null}
+            funcDelete={onDelete}
+            ref={modalConfirmRef}
+          />
+        )}
       </div>
     </div>
   );
