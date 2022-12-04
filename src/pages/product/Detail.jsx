@@ -68,7 +68,7 @@ const Detail = (props, ref) => {
               </tr>
               <tr>
                 <td>Thuộc loại sản phẩm</td>
-                <td>{product?.Id_Categories}</td>
+                <td>{product?.Id_Categories?.Name}</td>
               </tr>
               <tr>
                 <td>Chi tiết</td>
