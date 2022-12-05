@@ -1,36 +1,37 @@
-import { createBrowserRouter } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { createBrowserRouter } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 // import ProtectedRoute from './protectedRoute';
-const ProtectedRoute = lazy(() => import('./protectedRoute'));
-import PrivateRoute from './privateRoute';
+const ProtectedRoute = lazy(() => import("./protectedRoute"));
+import PrivateRoute from "./privateRoute";
 
-import App from '../App';
-import Order from '../pages/order';
-const Login = lazy(() => import('../pages/login'));
-const Error = lazy(() => import('../pages/error'));
-const Dashboard = lazy(() => import('../pages/dashboard'));
-const Profile = lazy(() => import('../pages/profile'));
-const ForgetPassword = lazy(() => import('../pages/forget-password'));
-const ResetPassword = lazy(() => import('../pages/reset-password'));
-const Category = lazy(() => import('../pages/category'));
-const Product = lazy(() => import('../pages/product'));
-const News = lazy(() => import('../pages/news'));
-const EditCategory = lazy(() => import('../pages/category/edit'));
-const Employee = lazy(() => import('../pages/employee'));
-const StyleList = lazy(() => import('../pages/stylelist'));
-const Combo = lazy(() => import('../pages/combo'));
-const TestCk = lazy(() => import('../pages/ckeditortest'));
-const AddNews = lazy(() => import('../pages/news/AddNews'));
-const EditNews = lazy(() => import('../pages/news/EditNews'));
+import App from "../App";
+import Order from "../pages/order";
+const Login = lazy(() => import("../pages/login"));
+const Error = lazy(() => import("../pages/error"));
+const Dashboard = lazy(() => import("../pages/dashboard"));
+const Profile = lazy(() => import("../pages/profile"));
+const ForgetPassword = lazy(() => import("../pages/forget-password"));
+const ResetPassword = lazy(() => import("../pages/reset-password"));
+const Category = lazy(() => import("../pages/category"));
+const Product = lazy(() => import("../pages/product"));
+const News = lazy(() => import("../pages/news"));
+const EditCategory = lazy(() => import("../pages/category/edit"));
+const Employee = lazy(() => import("../pages/employee"));
+const StyleList = lazy(() => import("../pages/stylelist"));
+const Combo = lazy(() => import("../pages/combo"));
+const TestCk = lazy(() => import("../pages/ckeditortest"));
+const AddNews = lazy(() => import("../pages/news/AddNews"));
+const EditNews = lazy(() => import("../pages/news/EditNews"));
+const Schedule = lazy(() => import("../pages/schedule"));
 
 const routes = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     exact: true,
     children: [
       {
-        path: '',
+        path: "",
         exact: true,
         element: (
           <PrivateRoute>
@@ -39,7 +40,7 @@ const routes = createBrowserRouter([
         ),
         children: [
           {
-            path: '',
+            path: "",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -48,7 +49,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'products',
+            path: "products",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -57,7 +58,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'profile',
+            path: "profile",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -66,7 +67,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'category',
+            path: "category",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -75,7 +76,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'combo',
+            path: "combo",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -84,7 +85,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'category/:id',
+            path: "category/:id",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -93,7 +94,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'news',
+            path: "news",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -102,7 +103,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'add-news',
+            path: "add-news",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -111,7 +112,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'edit-news/:id',
+            path: "edit-news/:id",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -120,7 +121,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'employee',
+            path: "employee",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -129,7 +130,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'stylelist',
+            path: "stylelist",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -138,7 +139,16 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'orders',
+            path: "schedule",
+            exact: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Schedule />
+              </Suspense>
+            ),
+          },
+          {
+            path: "orders",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -147,7 +157,7 @@ const routes = createBrowserRouter([
             ),
           },
           {
-            path: 'test',
+            path: "test",
             exact: true,
             element: (
               <Suspense fallback={<p>Loading...</p>}>
@@ -158,7 +168,7 @@ const routes = createBrowserRouter([
         ],
       },
       {
-        path: 'login',
+        path: "login",
         exact: true,
         element: (
           <Suspense fallback={<p>Loading...</p>}>
@@ -169,7 +179,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: 'forget-password',
+        path: "forget-password",
         exact: true,
         element: (
           <Suspense fallback={<p>Loading...</p>}>
@@ -180,7 +190,7 @@ const routes = createBrowserRouter([
         ),
       },
       {
-        path: 'reset-password',
+        path: "reset-password",
         exact: true,
         element: (
           <Suspense fallback={<p>Loading...</p>}>
