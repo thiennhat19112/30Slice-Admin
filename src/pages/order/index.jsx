@@ -188,7 +188,7 @@ const Order = () => {
                           <tr key={item?._id}>
                             <td>
                               <div className="userDatatable-content text-wrap text-start">
-                                {item?.Id_Customer}
+                                {item?.Id_Customer?.Full_Name}
                               </div>
                             </td>
                             <td>
@@ -247,7 +247,7 @@ const Order = () => {
                                   <li
                                     onClick={() => handleShowModalDetail(item)}
                                   >
-                                    <a href="javascript:void(0)" class="view">
+                                    <a href="javascript:void(0)" className="view">
                                       <Eye />
                                     </a>
                                   </li>
