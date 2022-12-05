@@ -103,7 +103,10 @@ export default function Schedule() {
                     </tr>
                   </thead>
                   <tbody>
-                    {data?.map((item) => {
+
+                    {
+                    data.length > 0 ?
+                    data?.map((item) => {
                       return (
                         <tr key={item?._id}>
                           <td>
@@ -170,7 +173,10 @@ export default function Schedule() {
                           </td>
                         </tr>
                       );
-                    })}
+                    }):
+                    <tr>
+                      <td colSpan="8" className="text-center">Không có dữ liệu</td>
+                      </tr>}
                   </tbody>
                 </table>
               </div>
