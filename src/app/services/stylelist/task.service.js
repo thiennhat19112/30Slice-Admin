@@ -10,3 +10,13 @@ export const getTask = async (date) => {
       throw new Error(err);
     }
   };
+export const completeTask = async (data) => {
+    try {
+      const response = await api.put("booking/updateBooking", data);
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }

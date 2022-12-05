@@ -1,12 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 import { Eye, Edit, XCircle } from "react-feather";
-import { getTask } from "../../app/services/stylelist/task.service";
+import {
+  getTask,
+  completeTask,
+} from "../../app/services/stylelist/task.service";
 import { create7Date } from "./func";
+import SwitchIOS from "../../CustomMui/switch";
+
 export default function Schedule() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [arrDate, setArrDate] = useState(create7Date());
-  const [date,setDate] = useState(arrDate[0].dateEn);
+  const [date, setDate] = useState(arrDate[0].dateEn);
 
   const fetchTask = async () => {
     setLoading(true);
@@ -15,7 +20,17 @@ export default function Schedule() {
     setData(response.data);
     setLoading(false);
   };
-  console.log(date)
+  const handleUpdateStatus = async (id, Status) => {
+    console.log(id, Status);
+    const data = {
+      id: id,
+      Status: "completed",
+    };
+    await completeTask(data);
+    fetchTask();
+  };
+
+  console.log(date);
   useEffect(() => {
     fetchTask();
   }, [date]);
@@ -30,23 +45,23 @@ export default function Schedule() {
                 <h4 className="text-capitalize fw-500 breadcrumb-title">
                   Quản lý lịch đặt
                 </h4>
-                <span className="sub-title ml-sm-25 pl-sm-25">{data.length} ca</span>
+                <span className="sub-title ml-sm-25 pl-sm-25">
+                  {data.length} ca
+                </span>
                 <select
-                className="form-control mx-5"
-                id="date"
-                aria-label="Chọn ngày"
-                onChange={(e) => setDate(e.target.value)}
-              >
-                {arrDate &&
-                  arrDate.map((item, index) => (
-                    <option key={index} value={item.dateEn}>
-                      {item.dateVn}
-                    </option>
-                  ))}
-              </select>
+                  className="form-control mx-5"
+                  id="date"
+                  aria-label="Chọn ngày"
+                  onChange={(e) => setDate(e.target.value)}
+                >
+                  {arrDate &&
+                    arrDate.map((item, index) => (
+                      <option key={index} value={item.dateEn}>
+                        {item.dateVn}
+                      </option>
+                    ))}
+                </select>
               </div>
-             
-             
             </div>
           </div>
         </div>
@@ -103,80 +118,79 @@ export default function Schedule() {
                     </tr>
                   </thead>
                   <tbody>
-
-                    {
-                    data.length > 0 ?
-                    data?.map((item) => {
-                      return (
-                        <tr key={item?._id}>
-                          <td>
-                            <div className="userDatatable-content">
-                              {item?.BookedTime}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content">
-                              {item?.BookedDate}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content">
-                              {item?.Id_Customer?.Full_Name}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content">
-                              {item?.Id_Customer?.Phone}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content d-inline-block">
-                              {item?.Status === "pending" ? (
-                                <span className="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">
-                                  Chưa hoàn thành
-                                </span>
-                              ) : (
-                                <span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
-                                  Đã hoàn thành
-                                </span>
-                              )}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content">
-                              {item?.Id_Service?.Name}
-                            </div>
-                          </td>
-                          <td>
-                            <div className="userDatatable-content">
-                              {item?.Note}
-                            </div>
-                          </td>
-                          <td>
-                            <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
-                              <li>
-                                <a href="#" className="view">
-                                  <Eye />
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" className="edit">
-                                  <Edit />
-                                </a>
-                              </li>
-                              <li>
-                                <a href="#" className="remove">
-                                  <XCircle />
-                                </a>
-                              </li>
-                            </ul>
-                          </td>
-                        </tr>
-                      );
-                    }):
-                    <tr>
-                      <td colSpan="8" className="text-center">Không có dữ liệu</td>
-                      </tr>}
+                    {data.length > 0 ? (
+                      data?.map((item) => {
+                        return (
+                          <tr key={item?._id}>
+                            <td>
+                              <div className="userDatatable-content">
+                                {item?.BookedTime}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content">
+                                {item?.BookedDate}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content">
+                                {item?.Id_Customer?.Full_Name}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content">
+                                {item?.Id_Customer?.Phone}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content d-inline-block">
+                                {item?.Status === "pending" ? (
+                                  <span className="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">
+                                    Chưa hoàn thành
+                                  </span>
+                                ) : (
+                                  <span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
+                                    Đã hoàn thành
+                                  </span>
+                                )}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content">
+                                {item?.Id_Service?.Name}
+                              </div>
+                            </td>
+                            <td>
+                              <div className="userDatatable-content">
+                                {item?.Note}
+                              </div>
+                            </td>
+                            <td>
+                              <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                <SwitchIOS
+                                  onChange={() =>
+                                    handleUpdateStatus(item?._id, item?.Status)
+                                  }
+                                  defaultChecked={
+                                    item?.Status === "pending" ? false : true
+                                  }
+                                  disabled={
+                                    item?.Status === "pending" ? false : true
+                                  }
+                                  name="Is_Show"
+                                />
+                              </ul>
+                            </td>
+                          </tr>
+                        );
+                      })
+                    ) : (
+                      <tr>
+                        <td colSpan="8" className="text-center">
+                          Không có dữ liệu
+                        </td>
+                      </tr>
+                    )}
                   </tbody>
                 </table>
               </div>

@@ -66,6 +66,7 @@ const SwitchIOS = (props) => {
       onChange={onChange}
       sx={{ size, margin: 2 }}
       defaultChecked={defaultChecked}
+      disabled={props.disabled}
     />
   );
 };
