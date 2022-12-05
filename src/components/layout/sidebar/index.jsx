@@ -15,7 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
   return (
     <aside className="sidebar-wrapper">
       <div className="sidebar sidebar-collapse" id="sidebar">
