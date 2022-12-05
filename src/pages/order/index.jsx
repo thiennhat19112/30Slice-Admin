@@ -36,6 +36,7 @@ const Order = () => {
     const filedData = data.filter((item) => !item.IsAdmin_Delete);
     setIsLoading(false);
     _isMounted.current && setOrders(filedData);
+    _isMounted.current && setIsShowModalNote(false);
     return;
   };
 
