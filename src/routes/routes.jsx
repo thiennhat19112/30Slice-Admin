@@ -6,6 +6,7 @@ const ProtectedRoute = lazy(() => import('./protectedRoute'));
 import PrivateRoute from './privateRoute';
 
 import App from '../App';
+import Order from '../pages/order';
 const Login = lazy(() => import('../pages/login'));
 const Error = lazy(() => import('../pages/error'));
 const Dashboard = lazy(() => import('../pages/dashboard'));
@@ -133,6 +134,15 @@ const routes = createBrowserRouter([
             element: (
               <Suspense fallback={<p>Loading...</p>}>
                 <StyleList />
+              </Suspense>
+            ),
+          },
+          {
+            path: 'orders',
+            exact: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Order />
               </Suspense>
             ),
           },
