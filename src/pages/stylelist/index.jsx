@@ -2,6 +2,7 @@ import { Eye, Edit, XCircle } from "react-feather";
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import Modal from "./modal";
+import Detail from "./Detail";
 import {
   getStyleList,
   updateStyleList,
@@ -48,7 +49,7 @@ const StyleList = () => {
   };
   const handleDeleteStyleList = async (id) => {
     try {
-     const res = await deleteStyleList(id);
+      const res = await deleteStyleList(id);
       toastError(res.data.message);
       _isMounted && loadStyleList();
     } catch (err) {
@@ -208,6 +209,13 @@ const StyleList = () => {
                         <td>
                           <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
                             <li>
+                              <a href="" className="view" data-toggle="modal"
+                                data-target={"#modal-info" + item._id}>
+                                <Eye />
+                              </a>
+                            </li>
+                            <Detail item={item} />
+                            <li>
                               <Link
                                 to={/stylelist/ + item?._id}
                                 className="edit"
@@ -216,8 +224,12 @@ const StyleList = () => {
                               </Link>
                             </li>
                             <li>
-                              <a href="#" className="remove"  data-toggle="modal"
-                          data-target={"#modal-info-delete" + item._id}>
+                              <a
+                                href="#"
+                                className="remove"
+                                data-toggle="modal"
+                                data-target={"#modal-info-delete" + item._id}
+                              >
                                 <XCircle />
                               </a>
                               <div
