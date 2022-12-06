@@ -24,6 +24,7 @@ const TestCk = lazy(() => import("../pages/ckeditortest"));
 const AddNews = lazy(() => import("../pages/news/AddNews"));
 const EditNews = lazy(() => import("../pages/news/EditNews"));
 const Schedule = lazy(() => import("../pages/schedule"));
+const Services = lazy(() => import("../pages/services"));
 
 const routes = createBrowserRouter([
   {
@@ -153,6 +154,15 @@ const routes = createBrowserRouter([
             element: (
               <Suspense fallback={<p>Loading...</p>}>
                 <Order />
+              </Suspense>
+            ),
+          },
+          {
+            path: "services",
+            exact: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Services />
               </Suspense>
             ),
           },
