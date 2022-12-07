@@ -10,7 +10,7 @@ import { toastError, toastSuccess } from "../../components/sharedComponents/toas
 
 import Add from "./Add";
 import Detail from "./Detail";
-// import EditService from "./Edit";
+import EditService from "./Edit";
 
 const Services = () => {
 
@@ -162,25 +162,27 @@ const Services = () => {
                         <table className="table mb-0 table-borderless">
                            <thead>
                               <tr className="userDatatable-header">
-                                 <th>
-                                    <span className="userDatatable-title ">
-                                       Tên dịch vụ
-                                    </span>
-                                 </th>
-                                 <th>
-                                    <span className="userDatatable-title">
-                                       Ảnh dịch vụ
-                                    </span>
-                                 </th>
-                                 <th>
-                                    <span className="userDatatable-title">Giá</span>
-                                 </th>
-                                 {/* <th>
+                                 <tbody>
+                                    <th>
+                                       <span className="userDatatable-title ">
+                                          Tên dịch vụ
+                                       </span>
+                                    </th>
+                                    <th>
+                                       <span className="userDatatable-title">
+                                          Ảnh dịch vụ
+                                       </span>
+                                    </th>
+                                    <th>
+                                       <span className="userDatatable-title">Giá</span>
+                                    </th>
+                                    {/* <th>
                                     <span className="userDatatable-title">Ẩn/hiện</span>
                                  </th> */}
-                                 <th>
-                                    <span className="userDatatable-title">Thao tác</span>
-                                 </th>
+                                    <th>
+                                       <span className="userDatatable-title">Thao tác</span>
+                                    </th>
+                                 </tbody>
                               </tr>
                            </thead>
                            <tbody>
@@ -319,14 +321,14 @@ const Services = () => {
                   ref={modalConfirmRef}
                />
             )}
-            {/* {isShowModalEdit && (
+            {isShowModalEdit && (
                <EditService
                   service={servicesRef.current}
                   ref={editRef}
                   loadService={fetchService}
                   setIsShowModalEdit={setIsShowModalEdit}
                />
-            )} */}
+            )}
          </div>
       </div>
    );
