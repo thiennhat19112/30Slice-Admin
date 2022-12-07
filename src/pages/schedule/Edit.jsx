@@ -1,10 +1,14 @@
-import { useRef } from "react";
-export default function Edit(props) {
-  const refService = useRef();
+import { useForm } from "react-hook-form";
 
-  const onSubmit = () => {
+export default function Edit(props) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (newService) => {
     const data = {
-      newService: refService.current.value,
+      ...newService,
       _id: props?.id,
     };
     props.callback(data);
@@ -31,40 +35,40 @@ export default function Edit(props) {
               <span data-feather="x" />
             </button>
           </div>
-          <div className="modal-body">
-            <label htmlFor="">Chọn dịch vụ</label>
-            <select
-              className="form-control"
-              id="date"
-              aria-label="Chọn dịch vụ"
-              defaultValue={props.defaultService}
-              ref={refService}
-            >
-              {props?.item?.map((service, index) => {
-                return (
-                  <option key={index} value={service._id}>
-                    {service.Name}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-          <div className="modal-footer">
-            <button
-              type="button"
-              onClick={onSubmit}
-              className="btn btn-info btn-sm"
-            >
-              Lưu
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              data-dismiss="modal"
-            >
-              Đóng
-            </button>
-          </div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="modal-body">
+              <label htmlFor="">Chọn dịch vụ</label>
+              <select
+                className="form-control"
+                id="date"
+                aria-label="Chọn dịch vụ"
+                defaultValue={props.defaultService}
+                {...register("newService", {
+                  required: "Trường này không được để trống",
+                })}
+              >
+                {props?.item?.map((service, index) => {
+                  return (
+                    <option key={index} value={service._id}>
+                      {service.Name}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+            <div className="modal-footer">
+              <button type="submit" className="btn btn-info btn-sm">
+                Lưu
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                data-dismiss="modal"
+              >
+                Đóng
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
