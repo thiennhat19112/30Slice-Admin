@@ -1,8 +1,9 @@
-import { Eye, Edit, XCircle } from "react-feather";
+import { Eye, Edit, XCircle, Key } from "react-feather";
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
 import Modal from "./modal";
 import Detail from "./Detail";
+import ChangePass from "./ChangePass";
 import {
   getStyleList,
   updateStyleList,
@@ -55,6 +56,9 @@ const StyleList = () => {
     } catch (err) {
       throw new Error(err);
     }
+  };
+  const handleUpdateStyleList = async (data) => {
+    console.log(data);
   };
   useEffect(() => {
     loadStyleList();
@@ -209,8 +213,27 @@ const StyleList = () => {
                         <td>
                           <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
                             <li>
-                              <a href="" className="view" data-toggle="modal"
-                                data-target={"#modal-info" + item._id}>
+                              <a
+                                href="#"
+                                className="view"
+                                data-toggle="modal"
+                                data-target={"#modal-changePass" + item._id}
+                              >
+                                <Key />
+                              </a>
+                            </li>
+                            <ChangePass
+                              item={item}
+                              callback={handleUpdateStyleList}
+                            />
+
+                            <li>
+                              <a
+                                href=""
+                                className="view"
+                                data-toggle="modal"
+                                data-target={"#modal-info" + item._id}
+                              >
                                 <Eye />
                               </a>
                             </li>
