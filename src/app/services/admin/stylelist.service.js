@@ -38,3 +38,11 @@ export const deleteStyleList = async (id) => {
     throw new Error(err);
   }
 };
+export const changePasswordByAdmin = async (data) => {
+  try {
+    const response = await api.put("stylelist/changePasswordByAdmin", data);
+    return response;
+  } catch (err) {
+    throw new Error(err);
+  }
+}

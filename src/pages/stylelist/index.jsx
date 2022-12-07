@@ -8,9 +8,13 @@ import {
   getStyleList,
   updateStyleList,
   deleteStyleList,
+  changePasswordByAdmin,
 } from "../../app/services/admin/stylelist.service";
 import SwitchIOS from "../../CustomMui/switch";
-import { toastError } from "../../components/sharedComponents/toast";
+import {
+  toastError,
+  toastSuccess,
+} from "../../components/sharedComponents/toast";
 
 const StyleList = () => {
   const _isMounted = useRef(false);
@@ -58,8 +62,15 @@ const StyleList = () => {
     }
   };
   const handleUpdateStyleList = async (data) => {
-    console.log(data);
+    try {
+      const res = await changePasswordByAdmin(data);
+      console.log(res);
+      toastSuccess("Đổi mật khẩu thành công!");
+    } catch (err) {
+      throw new Error(err);
+    }
   };
+
   useEffect(() => {
     loadStyleList();
   }, []);
@@ -161,20 +172,22 @@ const StyleList = () => {
                         <td>
                           <div className="d-flex">
                             <div className="userDatatable-inline-title">
-                              <h6>{item?.Username}</h6>
+                              <h7>{item?.Username}</h7>
                             </div>
                           </div>
                         </td>
                         <td>
                           <div className="d-flex">
                             <div className="userDatatable-inline-title">
-                              <h6>{item?.Full_Name}</h6>
+                              <h7>{item?.Full_Name}</h7>
                             </div>
                           </div>
                         </td>
                         <td>
-                          <div className="userDatatable-content">
-                            {item?.Email}
+                          <div className="d-flex">
+                            <div className="userDatatable-inline-title">
+                              <h7>{item?.Email}</h7>
+                            </div>
                           </div>
                         </td>
                         <td>
@@ -239,12 +252,9 @@ const StyleList = () => {
                             </li>
                             <Detail item={item} />
                             <li>
-                              <Link
-                                to={/stylelist/ + item?._id}
-                                className="edit"
-                              >
+                              <a className="edit">
                                 <Edit />
-                              </Link>
+                              </a>
                             </li>
                             <li>
                               <a
