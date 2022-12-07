@@ -33,7 +33,7 @@ export const updateService = async (data) => {
 
 export const deleteService = async (data) => {
   try {
-    const res = await api.delete("service/delateService", { data });
+    const res = await api.delete("service/deleteService", { data });
     return res;
   } catch (err) {
     throw new Error(err);

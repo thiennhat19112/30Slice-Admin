@@ -1,25 +1,16 @@
 import { Tooltip } from "@mui/material";
-import { useEffect } from "react";
-import { useRef } from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Eye, Edit, XCircle } from "react-feather";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-import {
-   deleteService,
-   getServices,
-   updateService,
-} from "../../app/services/admin/services.service";
+import { deleteService, getServices, updateService } from "../../app/services/admin/services.service";
 import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
-import {
-   toastError,
-   toastSuccess,
-} from "../../components/sharedComponents/toast";
-import SwitchIOS from "../../CustomMui/switch";
-// import Add from "./Add";
-// import Detail from "./Detail";
-// import EditProduct from "./Edit";
+import { toastError, toastSuccess } from "../../components/sharedComponents/toast";
+
+import Add from "./Add";
+import Detail from "./Detail";
+// import EditService from "./Edit";
 
 const Services = () => {
 
@@ -80,7 +71,7 @@ const Services = () => {
 
    const onDelete = async (id) => {
       const data = { _id: id };
-      const res = await delateService(data);
+      const res = await deleteService(data);
       if (res.status === 200) {
          toastSuccess("xoa thanh cong");
          await fetchService();
@@ -313,14 +304,14 @@ const Services = () => {
                )}
             </div>
             {/* modal */}
-            {/* {isShowDetail && (
+            {isShowDetail && (
                <Detail
                   setIsShowDetail={setIsShowDetail}
-                  product={servicesRef.current}
+                  service={servicesRef.current}
                   ref={detailRef}
                />
             )}
-            {<Add loadProduct={fetchService} ref={addRef} />}
+            {<Add loadService={fetchService} ref={addRef} />}
             {isShowModal && (
                <ModalConfirm
                   id={id.current ?? null}
@@ -328,11 +319,11 @@ const Services = () => {
                   ref={modalConfirmRef}
                />
             )}
-            {isShowModalEdit && (
-               <EditProduct
-                  product={servicesRef.current}
+            {/* {isShowModalEdit && (
+               <EditService
+                  service={servicesRef.current}
                   ref={editRef}
-                  loadProduct={fetchService}
+                  loadService={fetchService}
                   setIsShowModalEdit={setIsShowModalEdit}
                />
             )} */}
