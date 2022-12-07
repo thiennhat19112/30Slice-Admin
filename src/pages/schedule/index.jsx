@@ -1,16 +1,20 @@
 import { useEffect, useState, useRef } from "react";
-import { Eye, Edit, XCircle } from "react-feather";
+import { Eye, Edit, XCircle, Slash } from "react-feather";
 import {
   getTask,
   completeTask,
+  changeService,
 } from "../../app/services/stylelist/task.service";
 import { create7Date } from "./func";
 import SwitchIOS from "../../CustomMui/switch";
-
+import EditService from "./Edit";
+import { getServices } from "../../app/services/admin/services.service";
+import { toastSuccess } from "../../components/sharedComponents/toast";
 export default function Schedule() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [arrDate, setArrDate] = useState(create7Date());
+  const [services, setServices] = useState([]);
   const [date, setDate] = useState(arrDate[0].dateEn);
 
   const fetchTask = async () => {
@@ -20,6 +24,14 @@ export default function Schedule() {
     setData(response.data);
     setLoading(false);
   };
+  const fetchServices = async () => {
+    setLoading(true);
+    const response = await getServices();
+    // console.log(response.data);
+    setServices(response);
+    setLoading(false);
+  };
+
   const handleUpdateStatus = async (id, Status) => {
     console.log(id, Status);
     const data = {
@@ -29,10 +41,15 @@ export default function Schedule() {
     await completeTask(data);
     fetchTask();
   };
+  const handleUpdateService = async (data) => {
+    const res = await changeService(data);
+    toastSuccess("Đổi dịch vụ thành công");
+    // fetchTask();
+  };
 
-  console.log(date);
   useEffect(() => {
     fetchTask();
+    fetchServices();
   }, [date]);
 
   return (
@@ -115,6 +132,11 @@ export default function Schedule() {
                           Hoàn thành
                         </span>
                       </th>
+                      <th>
+                        <span className="userDatatable-title float-right">
+                          Hành động
+                        </span>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -179,6 +201,35 @@ export default function Schedule() {
                                   }
                                   name="Is_Show"
                                 />
+                              </ul>
+                            </td>
+                            <td>
+                              <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                {item?.Status === "completed" ? (
+                                  <li>
+                                    <a className="disabled">
+                                      <Slash />
+                                    </a>
+                                  </li>
+                                ) : (
+                                  <>
+                                    <li>
+                                      <a
+                                        className="edit"
+                                        data-toggle="modal"
+                                        data-target={"#modal-edit" + item._id}
+                                      >
+                                        <Edit />
+                                      </a>
+                                    </li>
+                                    <EditService
+                                      id={item?._id}
+                                      defaultService={item?.Id_Service?._id}
+                                      item={services}
+                                      callback={handleUpdateService}
+                                    />
+                                  </>
+                                )}
                               </ul>
                             </td>
                           </tr>

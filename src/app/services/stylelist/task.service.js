@@ -20,3 +20,13 @@ export const completeTask = async (data) => {
       throw new Error(err);
     }
   }
+export const changeService = async (data) => {
+    try {
+      const response = await api.put("booking/updateServiceBooking", data);
+      if (response.status === 200) {
+        return response;
+      }
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
