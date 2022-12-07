@@ -5,7 +5,7 @@ import { X } from "react-feather";
 import { useRef } from "react";
 import { passwordValidator } from "../../components/sharedComponents/validatorPatterns";
 import { useForm } from "react-hook-form";
-import Input from "../../components/sharedComponents/input";
+// import Input from "../../components/sharedComponents/input";
 
 export default function ChangePass(props) {
   const {
@@ -13,10 +13,13 @@ export default function ChangePass(props) {
     handleSubmit,
     formState: { errors },
   } = useForm();
-    const onSubmit = (data) => {
-        // data[id] = props?.item?._id;
-      props.callback(data);
-    };
+  const onSubmit = (newPass) => {
+    const data = {
+        ...newPass,
+        _id: props?.item?._id,
+    }
+    props.callback(data);
+  };
 
   return (
     <div
@@ -42,24 +45,42 @@ export default function ChangePass(props) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="modal-body">
               <div className="form-group mb-20">
-                <label htmlFor={"username"+ props?.item?._id}>Tên người dùng</label>
+                <label htmlFor={"username" + props?.item?._id}>
+                  Tên người dùng
+                </label>
                 <input
-                  id={"username"+ props?.item?._id}
+                  id={"username" + props?.item?._id}
                   type="text"
                   className="form-control"
                   defaultValue={props?.item?.Username}
                   disabled
                 />
               </div>
-              <Input
-                register={register}
-                type="password"
-                label="Mật khẩu"
-                id="newPassword"
-                required="Trường này không được để trống"
-                pattern={passwordValidator}
-                error={errors.password}
-              />
+              <div className="form-group mb-20">
+                <label htmlFor={"password" + props?.item?._id}>
+                  Mật khẩu mới
+                </label>
+                <input
+                  id={"password" + props?.item?._id}
+                  type="password"
+                  className={
+                    !!errors?.newPassword
+                      ? "is-invalid form-control"
+                      : "form-control"
+                  }
+                  {...register(
+                    "newPassword",
+                    { required: "Trường này không được để trống" ,
+                      pattern: passwordValidator
+                    }
+                  )}
+                />
+              </div>
+              {errors && (
+                <span className="invalid-validate">
+                  {errors?.newPassword?.message}
+                </span>
+              )}
             </div>
             <div className="modal-footer">
               <button type="submit" className="btn btn-info btn-sm">
