@@ -42,24 +42,26 @@ const Detail = (props, ref) => {
         <div className="modal-body">
           <div className=" global-shadow  bg-white radius-xl w-100 mb-30">
             <table className="table mb-0 table-bordered table-social ">
-              <tr>
-                <th>Tên dịch vụ</th>
-                <td className="text-wrap">{service?.Name}</td>
-              </tr>
-              <tr>
-                <th>Ảnh dịch vụ</th>
-                <td>
+              <tbody>
+                <tr>
+                  <th>Tên dịch vụ</th>
+                  <td className="text-wrap">{service?.Name}</td>
+                </tr>
+                <tr>
+                  <th>Ảnh dịch vụ</th>
+                  <td>
                     <img src={service?.Images} width="100" />
-                </td>
-              </tr>
-              <tr>
-                <th>Giá dịch vụ</th>
-                <td>{service?.Price}</td>
-              </tr>
-              <tr>
-                <th>Mô tả dịch vụ</th>
-                <td className="text-wrap">{service?.Describe}</td>
-              </tr>
+                  </td>
+                </tr>
+                <tr>
+                  <th>Giá dịch vụ</th>
+                  <td>{service?.Price}</td>
+                </tr>
+                <tr>
+                  <th>Mô tả dịch vụ</th>
+                  <td className="text-wrap">{service?.Describe}</td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
