@@ -75,7 +75,7 @@ const Sidebar = () => {
                     <Scissors className="nav-icon" />
                     <span className="menu-text">Quản lý thợ cắt tóc</span>
                   </NavLink>
-                  <NavLink to="/users" className="">
+                  <NavLink to="/customer" className="">
                     <User className="nav-icon" />
                     <span className="menu-text">Quản lý khách hàng</span>
                   </NavLink>

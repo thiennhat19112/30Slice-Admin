@@ -25,6 +25,7 @@ const AddNews = lazy(() => import("../pages/news/AddNews"));
 const EditNews = lazy(() => import("../pages/news/EditNews"));
 const Schedule = lazy(() => import("../pages/schedule"));
 const Services = lazy(() => import("../pages/services"));
+const Customer = lazy(() => import("../pages/customers"));
 
 const routes = createBrowserRouter([
   {
@@ -55,6 +56,15 @@ const routes = createBrowserRouter([
             element: (
               <Suspense fallback={<p>Loading...</p>}>
                 <Product />
+              </Suspense>
+            ),
+          },
+          {
+            path: "customer",
+            exact: true,
+            element: (
+              <Suspense fallback={<p>Loading...</p>}>
+                <Customer />
               </Suspense>
             ),
           },
