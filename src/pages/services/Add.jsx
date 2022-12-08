@@ -82,19 +82,10 @@ const Add = (props, ref) => {
             </div>
             <div className="modal-body">
                <form onSubmit={handleSubmit(onSubmit)}>
-                  {/* Start: card */}
-
-                  {/* Start: card body */}
                   <div className="add-product__body px-sm-40 px-20">
-                     {/* Start: form */}
-
-                     {/* form group */}
                      <div className="form-group">
                         <label htmlFor="name">Tên dịch vụ</label>
-                        <input
-                           type="text"
-                           id={"name"}
-                           className={
+                        <input type="text" id={"name"} className={
                               !!errors?.Name ? "is-invalid form-control" : "form-control"
                            }
                            {...register("Name", { required: true })}
@@ -142,27 +133,25 @@ const Add = (props, ref) => {
                                  : "form-control"
                            }
                            id="Describe"
-                           rows={3}
+                           rows={2}
                            defaultValue={""}
                            {...register("Describe", { required: true })}
                         />
                      </div>
-
-                     {/* End: form */}
                   </div>
                   {/* End: card body */}
 
                   {/* End: card */}
-                  <div className="button-group d-flex pt-25 justify-content-end">
+                  <div className="button-group d-flex justify-content-end">
                      <button
                         type="submit"
-                        className="btn btn-success btn-default btn-squared text-capitalize"
+                        className="btn btn-success text-capitalize"
                      >
                         Thêm
                      </button>
                      <button
                         type="button"
-                        className="btn btn-danger btn-default btn-squared fw-400 text-capitalize"
+                        className="btn btn-danger text-capitalize"
                         onClick={() => setShow(false)}
                      >
                         Huỷ

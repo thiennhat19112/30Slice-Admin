@@ -175,7 +175,7 @@ const Services = () => {
                                  <th>
                                     <span className="userDatatable-title">Giá</span>
                                  </th>
-                                 <th>
+                                 <th className="text-center">
                                     <span className="userDatatable-title">Thao tác</span>
                                  </th>
                               </tr>
@@ -200,7 +200,7 @@ const Services = () => {
                                           </div>
                                        </td>
                                        <td>
-                                          <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                          <ul className="orderDatatable_actions mb-0 d-flex flex-wrap justify-content-center">
                                              <Tooltip title="Xem chi tiết">
                                                 <li onClick={() => handleShowModalDetail(item)}>
                                                    <Link className="view">
