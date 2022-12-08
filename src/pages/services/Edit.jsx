@@ -48,12 +48,10 @@ const EditService = (props, ref) => {
     const { service } = obj;
     let data = [];
     const imgFile = file.current.files;
-    console.log(imgFile);
     //upload hinh
     if (imgFile.length > 0) {
       const res = await uploadLoadFIle(imgFile[0]);
       if (res) {
-        console.log(res);
         data = {
           ...service,
           _id: _id,
@@ -66,31 +64,7 @@ const EditService = (props, ref) => {
         _id: _id,
       };
     }
-    console.log(data);
-    // if (arrFile.length > 0) {
-    //   let urlImg = [];
-
-    //   for (let i = 0; i < arrFile.length; i++) {
-    //     const upMultipleFile = async () => {
-    //       const name = await uploadLoadFIle(arrFile[i]);
-    //       return name;
-    //     };
-    //     const name = await upMultipleFile();
-    //     urlImg.push(name);
-    //   }
-    //   data = {
-    //     ...service,
-    //     Is_Show: selected,
-    //     _id: _id,
-    //     Images: urlImg,
-    //   };
-    // } else {
-    //   data = {
-    //     ...service,
-    //     _id: _id,
-    //   };
-    // }
-
+    
     const res = await updateService(data);
     if (res.status === 200) {
       toastSuccess("Sửa thành công!");
