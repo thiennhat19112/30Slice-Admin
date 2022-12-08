@@ -82,16 +82,7 @@ const Customer = () => {
                                 <thead>
                                     <tr className="userDatatable-header">
                                         <th>
-                                            <div className="d-flex align-items-center">
-                                                <div className="custom-checkbox  check-all">
-
-                                                    <label htmlFor="check-3">
-                                                        <span className="checkbox-text userDatatable-title">
-                                                            Khách hàng
-                                                        </span>
-                                                    </label>
-                                                </div>
-                                            </div>
+                                            <span className="userDatatable-title">Khách hàng</span>
                                         </th>
                                         <th>
                                             <span className="userDatatable-title">Tên người dùng</span>
@@ -145,7 +136,7 @@ const Customer = () => {
                                                 </td>
                                                 <td>
                                                     <div className="userDatatable-content">
-                                                        {item?.createdAt}
+                                                        {moment(item?.createdAt).format("L")}
                                                     </div>
                                                 </td>
                                                 <td>
