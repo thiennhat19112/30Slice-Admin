@@ -8,7 +8,7 @@ import { uploadLoadFIle } from "../../app/services/upload";
 import { updateService } from "../../app/services/admin/services.service";
 
 const EditService = (props, ref) => {
-  const { service, loadService ,setIsShowModalEdit} = props;
+  const { service, loadService, setIsShowModalEdit } = props;
   const {
     Name,
     Images,
@@ -48,22 +48,25 @@ const EditService = (props, ref) => {
     const { service } = obj;
     let data = [];
     const imgFile = file.current.files;
+    console.log(imgFile);
     //upload hinh
-    if(imgFile.length > 0){
-      const res = await uploadLoadFIle(imgFile);
-      if (res.status === 200) {
+    if (imgFile.length > 0) {
+      const res = await uploadLoadFIle(imgFile[0]);
+      if (res) {
+        console.log(res);
         data = {
           ...service,
           _id: _id,
-          Images: res.data,
+          Images: res,
         };
       }
-    }else{
+    } else {
       data = {
         ...service,
         _id: _id,
       };
     }
+    console.log(data);
     // if (arrFile.length > 0) {
     //   let urlImg = [];
 
@@ -222,7 +225,7 @@ const EditService = (props, ref) => {
               <button
                 type="button"
                 className="btn btn-danger btn-default btn-squared fw-400 text-capitalize"
-                onClick={() => handleClose}
+                onClick={handleClose}
               >
                 Huỷ
               </button>
