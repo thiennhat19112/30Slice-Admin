@@ -162,27 +162,22 @@ const Services = () => {
                         <table className="table mb-0 table-borderless">
                            <thead>
                               <tr className="userDatatable-header">
-                                 <tbody>
-                                    <th>
-                                       <span className="userDatatable-title ">
-                                          Tên dịch vụ
-                                       </span>
-                                    </th>
-                                    <th>
-                                       <span className="userDatatable-title">
-                                          Ảnh dịch vụ
-                                       </span>
-                                    </th>
-                                    <th>
-                                       <span className="userDatatable-title">Giá</span>
-                                    </th>
-                                    {/* <th>
-                                    <span className="userDatatable-title">Ẩn/hiện</span>
-                                 </th> */}
-                                    <th>
-                                       <span className="userDatatable-title">Thao tác</span>
-                                    </th>
-                                 </tbody>
+                                 <th>
+                                    <span className="userDatatable-title ">
+                                       Tên dịch vụ
+                                    </span>
+                                 </th>
+                                 <th>
+                                    <span className="userDatatable-title">
+                                       Ảnh dịch vụ
+                                    </span>
+                                 </th>
+                                 <th>
+                                    <span className="userDatatable-title">Giá</span>
+                                 </th>
+                                 <th>
+                                    <span className="userDatatable-title">Thao tác</span>
+                                 </th>
                               </tr>
                            </thead>
                            <tbody>
@@ -201,32 +196,16 @@ const Services = () => {
                                        </td>
                                        <td>
                                           <div className="userDatatable-content">
-                                             {(item?.Price).toLocaleString('vi-VN', {
-                                                style: 'currency',
-                                                currency: 'VND',
-                                             })}
+                                             {(item?.Price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                                           </div>
                                        </td>
-                                       {/* <td>
-                                          <div className="userDatatable-content d-inline-block">
-                                             <SwitchIOS
-                                                onChange={() =>
-                                                   handleUpdateStatus(item?._id, item?.Is_Show)
-                                                }
-                                                defaultChecked={item?.Is_Show}
-                                                name="Is_Show"
-                                             />
-                                          </div>
-                                       </td> */}
                                        <td>
                                           <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
                                              <Tooltip title="Xem chi tiết">
-                                                <li
-                                                   onClick={() => handleShowModalDetail(item)}
-                                                >
-                                                   <a href="javascript:void(0)" className="view">
+                                                <li onClick={() => handleShowModalDetail(item)}>
+                                                   <Link className="view">
                                                       <Eye />
-                                                   </a>
+                                                   </Link>
                                                 </li>
                                              </Tooltip>
                                              <Tooltip title="Sửa">
@@ -238,12 +217,9 @@ const Services = () => {
                                              </Tooltip>
                                              <Tooltip title="Xoá">
                                                 <li onClick={() => onConfirm(item._id)}>
-                                                   <a
-                                                      href="javascript:void(0)"
-                                                      className="remove"
-                                                   >
+                                                   <Link className="remove">
                                                       <XCircle />
-                                                   </a>
+                                                   </Link>
                                                 </li>
                                              </Tooltip>
                                           </ul>

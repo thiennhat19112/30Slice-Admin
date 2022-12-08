@@ -44,21 +44,21 @@ const Detail = (props, ref) => {
             <table className="table mb-0 table-bordered table-social ">
               <tbody>
                 <tr>
-                  <th>Tên dịch vụ</th>
+                  <td>Tên dịch vụ</td>
                   <td className="text-wrap">{service?.Name}</td>
                 </tr>
                 <tr>
-                  <th>Ảnh dịch vụ</th>
+                  <td>Ảnh dịch vụ</td>
                   <td>
                     <img src={service?.Images} width="100" />
                   </td>
                 </tr>
                 <tr>
-                  <th>Giá dịch vụ</th>
+                  <td>Giá dịch vụ</td>
                   <td>{service?.Price}</td>
                 </tr>
                 <tr>
-                  <th>Mô tả dịch vụ</th>
+                  <td>Mô tả dịch vụ</td>
                   <td className="text-wrap">{service?.Describe}</td>
                 </tr>
               </tbody>
