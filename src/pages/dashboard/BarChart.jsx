@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 function getPercentageIncrease(a, b) {
+  if (b === 0) return 0;
   return ((a - b) / b) * 100;
 }
 
