@@ -1,33 +1,41 @@
 import { useState, useEffect } from 'react';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-import UserService from '../../app/services/auth/user.service';
-// import EventBus from '../../app/common/EventBus';
+import BarChart from './BarChart';
+import './dashboard.css';
+
+import { getTotalOrdersByMonth } from '../../app/services/admin/statistic.service';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function Dashboard() {
-  const [content, setContent] = useState('');
+  const [datas, setDatas] = useState({});
 
-  // useEffect(() => {
-  //   UserService.getAdminBoard().then(
-  //     (response) => {
-  //       setContent(response.data);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //       setContent(
-  //         (error.response &&
-  //           error.response.data &&
-  //           error.response.data.message) ||
-  //           error.message ||
-  //           error.toString()
-  //       );
-
-  //       if (error.response && error.response.status === 403) {
-  //         window.alert('Token đã hết hạn, bạn sẽ bị đăng xuất!');
-  //         EventBus.dispatch('logout');
-  //       }
-  //     }
-  //   );
-  // }, []);
+  useEffect(() => {
+    Promise.all([
+      getTotalOrdersByMonth(),
+      getTotalOrdersByMonth(),
+      getTotalOrdersByMonth(),
+    ]).then((responses) => {
+      const [orders, orders2, orders3] = responses;
+      setDatas({ orders, orders2, orders3 });
+    });
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -35,126 +43,13 @@ function Dashboard() {
         <div className="col-lg-12">
           <div className="breadcrumb-main">
             <h4 className="text-capitalize breadcrumb-title">
-              Ecommerce Dashboard
-              {content}
+              Thống kê dữ liệu
             </h4>
-            <div className="breadcrumb-action justify-content-center flex-wrap">
-              <div className="action-btn">
-                <div className="form-group mb-0">
-                  <div className="input-container icon-left position-relative">
-                    <span className="input-icon icon-left">
-                      <span data-feather="calendar" />
-                    </span>
-                    <input
-                      type="text"
-                      className="form-control form-control-default date-ranger"
-                      name="date-ranger"
-                      placeholder="Oct 30, 2019 - Nov 30, 2019"
-                    />
-                    <span className="input-icon icon-right">
-                      <span data-feather="chevron-down" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div className="dropdown action-btn">
-                <button
-                  className="btn btn-sm btn-default btn-white dropdown-toggle"
-                  type="button"
-                  id="dropdownMenu2"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i className="la la-download" /> Export
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <span className="dropdown-item">Export With</span>
-                  <div className="dropdown-divider" />
-                  <a href="" className="dropdown-item">
-                    <i className="la la-print" /> Printer
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-file-pdf" /> PDF
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-file-text" /> Google Sheets
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-file-excel" /> Excel (XLSX)
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-file-csv" /> CSV
-                  </a>
-                </div>
-              </div>
-              <div className="dropdown action-btn">
-                <button
-                  className="btn btn-sm btn-default btn-white dropdown-toggle"
-                  type="button"
-                  id="dropdownMenu3"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i className="la la-share" /> Share
-                </button>
-                <div className="dropdown-menu" aria-labelledby="dropdownMenu3">
-                  <span className="dropdown-item">Share Link</span>
-                  <div className="dropdown-divider" />
-                  <a href="" className="dropdown-item">
-                    <i className="la la-facebook" /> Facebook
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-twitter" /> Twitter
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-google" /> Google
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-feed" /> Feed
-                  </a>
-                  <a href="" className="dropdown-item">
-                    <i className="la la-instagram" /> Instagram
-                  </a>
-                </div>
-              </div>
-              <div className="action-btn">
-                <a href="" className="btn btn-sm btn-primary btn-add">
-                  <i className="la la-plus" /> Add New
-                </a>
-              </div>
-            </div>
           </div>
         </div>
-        <div className="col-xxl-3 col-md-6 col-ssm-12 mb-30">
-          {/* Card 1 */}
-          <div className="ap-po-details p-25 radius-xl bg-white d-flex justify-content-between">
-            <div>
-              <div className="overview-content">
-                <h1>7,461</h1>
-                <p>Orders</p>
-                <div className="ap-po-details-time">
-                  <span className="color-success">
-                    <i className="las la-arrow-up" />
-                    <strong>25%</strong>
-                  </span>
-                  <small>Since last week</small>
-                </div>
-              </div>
-            </div>
-            <div className="ap-po-timeChart">
-              <div className="overview-single__chart d-md-flex align-items-end">
-                <div className="parentContainer">
-                  <div>
-                    <canvas id="mychart8" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* Card 1 End */}
-        </div>
+        {/* Card 1 */}
+        <BarChart dataOrders={datas.orders} />
+        {/* Card 1 End */}
         <div className="col-xxl-3 col-md-6 col-ssm-12 mb-30">
           {/* Card 2 End  */}
           <div className="ap-po-details p-25 radius-xl bg-white d-flex justify-content-between">
