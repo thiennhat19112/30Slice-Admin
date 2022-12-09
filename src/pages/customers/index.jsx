@@ -8,6 +8,8 @@ import {
 import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
 import { toastError, toastSuccess } from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
+import Detail from "./Detail";
+
 
 const Customer = () => {
     const _isMounted = useRef(false);
@@ -36,12 +38,6 @@ const Customer = () => {
     useEffect(() => {
         loadCus();
     }, []);
-    // let urlCus = 'https://30slice.online/api/user/getAllCustomer';
-    // useEffect(() => {
-    //     fetch(urlCus)
-    //         .then((res) => res.json())
-    //         .then((data) => setUsers(data));
-    // }, [urlCus]);
 
     return (
         <div className="container-fluid">
@@ -97,11 +93,11 @@ const Customer = () => {
                                             <span className="userDatatable-title">Ngày gia nhập</span>
                                         </th>
                                         <th>
-                                            <span className="userDatatable-title">status</span>
+                                            <span className="userDatatable-title">Vai trò</span>
                                         </th>
                                         <th>
                                             <span className="userDatatable-title float-right">
-                                                action
+                                                Thao tác
                                             </span>
                                         </th>
                                     </tr>
@@ -146,7 +142,23 @@ const Customer = () => {
                                                         </span>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
 
+                                                        <li>
+                                                            <a
+                                                                href=""
+                                                                className="view"
+                                                                data-toggle="modal"
+                                                                data-target={"#modal-info" + item.Id_User}
+                                                            >
+                                                                <Eye />
+                                                            </a>
+                                                        </li>
+                                                        <Detail item={item} />
+                                                    </ul>
+
+                                                </td>
                                             </tr>
                                         ))
                                     }
@@ -205,7 +217,7 @@ const Customer = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 // }
