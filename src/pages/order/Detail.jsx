@@ -69,11 +69,14 @@ const Detail = (props, ref) => {
                       </td>
 
                       <td>
-                      <img src={item?.Images[0]} width="100" />
+                        <img src={item?.Images[0]} width="100" />
                       </td>
                       <td>
                         <div className="userDatatable-content text-wrap ">
-                          {item?.Price}
+                          {(item?.Price).toLocaleString("vi-VN", {
+                            style: "currency",
+                            currency: "VND",
+                          })}
                         </div>
                       </td>
                       <td>
@@ -83,7 +86,13 @@ const Detail = (props, ref) => {
                       </td>
                       <td>
                         <div className="userDatatable-content text-wrap text-start">
-                          {item?.Price * item?.Quantity}
+                          {(item?.Price * item?.Quantity).toLocaleString(
+                            "vi-VN",
+                            {
+                              style: "currency",
+                              currency: "VND",
+                            }
+                          )}
                         </div>
                       </td>
                     </tr>

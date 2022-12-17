@@ -135,13 +135,13 @@ const Customer = () => {
                                                         {moment(item?.createdAt).format("L")}
                                                     </div>
                                                 </td>
-                                                <td>
+                                                {/* <td>
                                                     <div className="userDatatable-content d-inline-block">
                                                         <span className="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
                                                             {item?.user?.Role}
                                                         </span>
                                                     </div>
-                                                </td>
+                                                </td> */}
                                                 <td>
                                                     <ul className="orderDatatable_actions mb-0 d-flex flex-wrap">
 

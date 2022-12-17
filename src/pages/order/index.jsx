@@ -4,10 +4,11 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { Eye, Edit, XCircle } from "react-feather";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   deleteOrder,
   getAllOrders,
+  updateOrder,
 } from "../../app/services/admin/order.service";
 import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
 import {
@@ -30,12 +31,17 @@ const Order = () => {
   const [isShowModalNote, setIsShowModalNote] = useState(false);
   const modalConfirmRef = useRef();
 
-  const loadOrders = async () => {
+  const [param] = useSearchParams();
+  const navigate = useNavigate();
+  const pageNumber = new URLSearchParams(location.search).get("page") || 1;
+  const search = param.get("search") || "";
+
+  const loadOrders = async (pageNumber, search) => {
     setIsLoading(true);
-    const data = await getAllOrders();
-    const filedData = data.filter((item) => !item.IsAdmin_Delete);
+    const data = await getAllOrders(pageNumber, search);
+    // const filedData = data.filter((item) => !item.IsAdmin_Delete);
     setIsLoading(false);
-    _isMounted.current && setOrders(filedData);
+    _isMounted.current && setOrders(data);
     _isMounted.current && setIsShowModalNote(false);
     return;
   };
@@ -50,7 +56,7 @@ const Order = () => {
     const data = { _id: id };
     const res = await deleteOrder(data);
     if (res.status === 200) {
-      toastSuccess("xoa thanh cong");
+      toastSuccess("Xoá thành công");
       await loadOrders();
       _isMounted.current && setIsShowModal(false);
       return;
@@ -70,6 +76,45 @@ const Order = () => {
     noteRef.current?.handleShow();
   };
 
+  const handleUpdateStatusOrder = async (status,_id) => {
+    const data = {
+      Status : status,
+      _id : _id
+    }
+    const res = await updateOrder(data);
+    if(res.status === 200) {
+      toastSuccess("Cập nhật thành công!");
+      loadOrders(pageNumber,search);
+      return
+    }else{
+      toastError("Đã có lỗi xảy ra!")
+    }
+
+    
+  }
+
+  const handleSearch = (e) => {
+    setTimeout(() => {
+      navigate(`?search=${e.target.value}`);
+    }, [700]);
+  };
+
+  const renderPaging = () => {
+    let listPage = [];
+    for (let i = 1; i <= orders.totalPage; i++) {
+      listPage.push(
+        <Link
+          to={"?page=" + i + "&search=" + search}
+          key={"toPage" + i}
+          className={`atbd-pagination__link ${pageNumber == i ? "active" : ""}`}
+        >
+          <span className="page-number">{i}</span>
+        </Link>
+      );
+    }
+    return listPage;
+  };
+
   useEffect(() => {
     _isMounted.current = true;
     return () => {
@@ -78,8 +123,8 @@ const Order = () => {
   });
 
   useEffect(() => {
-    loadOrders();
-  }, []);
+    loadOrders(pageNumber, search);
+  }, [pageNumber, search]);
 
   return (
     <div className="container-fluid">
@@ -92,21 +137,17 @@ const Order = () => {
                   Quản lí đơn hàng
                 </h4>
                 <span className="sub-title ml-sm-25 pl-sm-25">
-                  {orders?.length} đơn hàng
+                  {orders?.totalItem} đơn hàng
                 </span>
               </div>
-              {/* <form
-                action="/"
-                className="d-flex align-items-center user-member__form my-sm-0 my-2"
-              >
-                <span data-feather="search" />
+              <form className="d-flex align-items-center user-member__form my-sm-0 my-2">
                 <input
                   className="form-control mr-sm-2 border-0 box-shadow-none"
-                  type="search"
-                  placeholder="Search by Name"
-                  aria-label="Search"
+                  type="text"
+                  placeholder="Nhập tên để tìm kiếm"
+                  onChange={handleSearch}
                 />
-              </form> */}
+              </form>
             </div>
           </div>
         </div>
@@ -186,8 +227,8 @@ const Order = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.length > 0
-                      ? orders.map((item) => (
+                    {orders?.orders?.length > 0
+                      ? orders?.orders?.map((item) => (
                           <tr key={item?._id}>
                             <td>
                               <div className="userDatatable-content text-wrap text-start">
@@ -216,7 +257,10 @@ const Order = () => {
                             </td>
                             <td>
                               <div className="userDatatable-content ">
-                                {(item?.Amount).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
+                                {(item?.Amount).toLocaleString("vi-VN", {
+                                  style: "currency",
+                                  currency: "VND",
+                                })}
                               </div>
                             </td>
                             <td>
@@ -225,9 +269,27 @@ const Order = () => {
                               </div>
                             </td>
                             <td>
-                              <div className="userDatatable-content">
-                                {item?.Payment_Status}
-                              </div>
+                              {item?.Status === "completed" && (
+                                <div class="userDatatable-content d-inline-block">
+                                  <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">
+                                    Hoàn tất
+                                  </span>
+                                </div>
+                              )}
+                              {item?.Status === "Pending" && (
+                                <div class="userDatatable-content d-inline-block">
+                                  <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">
+                                    Đang vận chuyển
+                                  </span>
+                                </div>
+                              )}
+                              {item?.Status === "failed" && (
+                                <div class="userDatatable-content d-inline-block">
+                                  <span class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">
+                                   Đã huỷ
+                                  </span>
+                                </div>
+                              )}
                             </td>
                             <td>
                               <div className="userDatatable-content">
@@ -250,13 +312,20 @@ const Order = () => {
                                   <li
                                     onClick={() => handleShowModalDetail(item)}
                                   >
-                                    <a href="javascript:void(0)" className="view">
+                                    <a
+                                      href="javascript:void(0)"
+                                      className="view"
+                                    >
                                       <Eye />
                                     </a>
                                   </li>
                                 </Tooltip>
                                 <Tooltip title="Sửa">
-                                  <li onClick={() => handleShowModalNote(item._id)}>
+                                  <li
+                                    onClick={() =>
+                                      handleShowModalNote(item._id)
+                                    }
+                                  >
                                     <Link className="edit">
                                       <Edit />
                                     </Link>
@@ -275,7 +344,23 @@ const Order = () => {
                               </ul>
                             </td>
                             <td>
-                              
+                            <div className="orderDatatable_actions mb-0 d-flex justify-content-between align-items-center">
+                              <button
+                                onClick={() => handleUpdateStatusOrder("completed",item?._id)}
+                                type="button"
+                                className="btn btn-outline-success btn-default btn-squared text-capitalize mx-1  global-shadow"
+                              >
+                                <i className="fa-solid fa-trash"></i> Hoàn tất
+                              </button>
+
+                              <button
+                               onClick={() => handleUpdateStatusOrder("failed",item?._id)}
+                                type="button"
+                                className="btn btn-outline-danger btn-default btn-squared text-capitalize mx-1  global-shadow"
+                              >
+                                <i className="fa-solid fa-trash"></i> Huỷ
+                              </button>
+                            </div>
                             </td>
                           </tr>
                         ))
@@ -283,43 +368,26 @@ const Order = () => {
                   </tbody>
                 </table>
               </div>
-              {/* <div className="d-flex justify-content-end pt-30">
+              <div className="d-flex justify-content-end pt-30">
                 <nav className="atbd-page ">
                   <ul className="atbd-pagination d-flex">
                     <li className="atbd-pagination__item">
-                      <a
+                      {/* <a
                         href="#"
                         className="atbd-pagination__link pagination-control"
                       >
                         <span className="la la-angle-left" />
-                      </a>
-                      <a href="#" className="atbd-pagination__link">
-                        <span className="page-number">1</span>
-                      </a>
-                      <a href="#" className="atbd-pagination__link active">
-                        <span className="page-number">2</span>
-                      </a>
-                      <a href="#" className="atbd-pagination__link">
-                        <span className="page-number">3</span>
-                      </a>
-                      <a
-                        href="#"
-                        className="atbd-pagination__link pagination-control"
-                      >
-                        <span className="page-number">...</span>
-                      </a>
-                      <a href="#" className="atbd-pagination__link">
-                        <span className="page-number">12</span>
-                      </a>
-                      <a
+                      </a> */}
+                      {renderPaging()}
+                      {/* <a
                         href="#"
                         className="atbd-pagination__link pagination-control"
                       >
                         <span className="la la-angle-right" />
                       </a>
-                      <a href="#" className="atbd-pagination__option"></a>
+                      <a href="#" className="atbd-pagination__option"></a> */}
                     </li>
-                    <li className="atbd-pagination__item">
+                    {/* <li className="atbd-pagination__item">
                       <div className="paging-option">
                         <select name="page-number" className="page-selection">
                           <option value={20}>20/page</option>
@@ -327,10 +395,10 @@ const Order = () => {
                           <option value={60}>60/page</option>
                         </select>
                       </div>
-                    </li>
+                    </li> */}
                   </ul>
                 </nav>
-              </div> */}
+              </div>
             </div>
           )}
         </div>
@@ -350,7 +418,12 @@ const Order = () => {
           />
         )}
         {isShowModalNote && (
-          <Note ref={noteRef} id={id.current ?? null} setIsShowModalNote={setIsShowModalNote} loadOrders={loadOrders} />
+          <Note
+            ref={noteRef}
+            id={id.current ?? null}
+            setIsShowModalNote={setIsShowModalNote}
+            loadOrders={loadOrders}
+          />
         )}
       </div>
     </div>
