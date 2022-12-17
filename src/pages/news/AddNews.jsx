@@ -34,7 +34,11 @@ const AddNews = () => {
 
 
   const onSubmit = async (obj) => {
+    if(editorRef.current.getContent() === "") {
+      return toastError("Chưa nhập nội dung!");
+    }
     const urlImg = await uploadLoadFIle(file.current.files[0]);
+    
     const data = {
       ...obj,
       Is_Show: selected,

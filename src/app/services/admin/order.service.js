@@ -43,3 +43,12 @@ export const getOneOrder = async (id) => {
     }
   };
 
+export const updateOrder = async (data) => {
+  try{  
+    const res = await api.put('order/', data);
+    return res;
+  }catch(err){
+    throw new Error(err);
+  }
+}
+

@@ -180,6 +180,9 @@ const Order = () => {
                       <th>
                         <span className="userDatatable-title">Thao tác</span>
                       </th>
+                      <th>
+                        <span className="userDatatable-title">Cập nhât</span>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -270,6 +273,9 @@ const Order = () => {
                                   </li>
                                 </Tooltip>
                               </ul>
+                            </td>
+                            <td>
+                              
                             </td>
                           </tr>
                         ))
