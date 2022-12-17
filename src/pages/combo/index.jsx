@@ -103,7 +103,7 @@ const Combo = () => {
                   {combos.length} Combo
                 </span>
               </div>
-              <form
+              {/* <form
                 action="/"
                 className="d-flex align-items-center user-member__form my-sm-0 my-2"
               >
@@ -116,7 +116,7 @@ const Combo = () => {
                   value={keySearch}
                   onChange={handleSearch}
                 />
-              </form>
+              </form> */}
             </div>
             <div className="action-btn">
               <button
@@ -216,7 +216,7 @@ const Combo = () => {
                           </td>
                           <td>
                             <div className="userDatatable-content">
-                              {item?.Price}
+                              {(item?.Price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                             </div>
                           </td>
                           <td>

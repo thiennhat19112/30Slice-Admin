@@ -60,7 +60,7 @@ const Detail = (props, ref) => {
               </tr>
               <tr>
                 <td>Giá sản phẩm</td>
-                <td>{product?.Price}</td>
+                <td>{(product?.Price).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
               </tr>
               <tr>
                 <td>Số lượng đã bán</td>

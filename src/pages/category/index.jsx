@@ -77,7 +77,7 @@ const Category = () => {
                   {arrCategories.length} Loại Sản Phẩm
                 </span>
               </div>
-              <form
+              {/* <form
                 action="/"
                 className="d-flex align-items-center user-member__form my-sm-0 my-2"
               >
@@ -88,7 +88,7 @@ const Category = () => {
                   placeholder="Search by Name"
                   aria-label="Search"
                 />
-              </form>
+              </form> */}
             </div>
             <div className="action-btn">
               <a

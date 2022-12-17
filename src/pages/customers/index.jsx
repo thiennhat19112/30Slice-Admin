@@ -53,7 +53,7 @@ const Customer = () => {
                                     {arrcus.length} Khách hàng
                                 </span>
                             </div>
-                            <form
+                            {/* <form
                                 action="/"
                                 className="d-flex align-items-center user-member__form my-sm-0 my-2"
                             >
@@ -64,7 +64,7 @@ const Customer = () => {
                                     placeholder="Search by Name"
                                     aria-label="Search"
                                 />
-                            </form>
+                            </form> */}
                         </div>
 
                     </div>
@@ -166,7 +166,7 @@ const Customer = () => {
                                 </tbody>
                             </table>
                         </div>
-                        <div className="d-flex justify-content-end pt-30">
+                        {/* <div className="d-flex justify-content-end pt-30">
                             <nav className="atbd-page ">
                                 <ul className="atbd-pagination d-flex">
                                     <li className="atbd-pagination__item">
@@ -213,7 +213,7 @@ const Customer = () => {
                                     </li>
                                 </ul>
                             </nav>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

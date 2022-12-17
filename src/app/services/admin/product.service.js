@@ -1,8 +1,9 @@
 import api from '../../axios/api';
 
-export const getProducts = async () => {
+export const getProducts = async (pageNumber = 1,search = "",limit = 7) => {
+
     try{
-        const response = await api.get('product/getAllProducts');
+        const response = await api.get(`product/getProducts?page=${pageNumber}&limit=${limit}&search=${search}`);
         if(response.status === 200){
             return response.data;
         }

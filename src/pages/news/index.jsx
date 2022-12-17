@@ -99,7 +99,7 @@ const News = () => {
                   {arrNews.length} Tin
                 </span>
               </div>
-              <form
+              {/* <form
                 action="/"
                 className="d-flex align-items-center user-member__form my-sm-0 my-2"
               >
@@ -112,7 +112,7 @@ const News = () => {
                   value={keySearch}
                   onChange={handleSearch}
                 />
-              </form>
+              </form> */}
             </div>
             <div className="action-btn">
               <Link to={"/add-news"} className="btn px-15 btn-primary">

@@ -95,7 +95,7 @@ const Order = () => {
                   {orders?.length} đơn hàng
                 </span>
               </div>
-              <form
+              {/* <form
                 action="/"
                 className="d-flex align-items-center user-member__form my-sm-0 my-2"
               >
@@ -106,7 +106,7 @@ const Order = () => {
                   placeholder="Search by Name"
                   aria-label="Search"
                 />
-              </form>
+              </form> */}
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ const Order = () => {
           ) : (
             <div className="userDatatable global-shadow border p-30 bg-white radius-xl w-100 mb-30">
               <div className="table-responsive">
-                <table className="table mb-0 table-borderless">
+                <table className="table mb-0 table-borderless w-100">
                   <thead>
                     <tr className="userDatatable-header">
                       <th>
@@ -200,7 +200,7 @@ const Order = () => {
                               </div>
                             </td>
                             <td>
-                              <div className="userDatatable-content text-wrap">
+                              <div className="userDatatable-content">
                                 {item?.Address}
                               </div>
                             </td>
@@ -216,7 +216,7 @@ const Order = () => {
                             </td>
                             <td>
                               <div className="userDatatable-content ">
-                                {item?.Amount}
+                                {(item?.Amount).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}
                               </div>
                             </td>
                             <td>
@@ -283,7 +283,7 @@ const Order = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="d-flex justify-content-end pt-30">
+              {/* <div className="d-flex justify-content-end pt-30">
                 <nav className="atbd-page ">
                   <ul className="atbd-pagination d-flex">
                     <li className="atbd-pagination__item">
@@ -330,7 +330,7 @@ const Order = () => {
                     </li>
                   </ul>
                 </nav>
-              </div>
+              </div> */}
             </div>
           )}
         </div>
