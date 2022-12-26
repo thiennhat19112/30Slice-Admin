@@ -2,21 +2,26 @@ import { Eye, Edit, XCircle } from "react-feather";
 import React, { useState, useRef, useEffect } from 'react';
 import {
 
-    getCus
-
+    getCus,
+    deleteCus
 } from "../../app/services/admin/customer.service";
 import ModalConfirm from "../../components/sharedComponents/ModalConfirm";
 import { toastError, toastSuccess } from "../../components/sharedComponents/toast";
 import SwitchIOS from "../../CustomMui/switch";
 import Detail from "./Detail";
+import Delete from "./delete";
+
+
 
 
 const Customer = () => {
     const _isMounted = useRef(false);
     const [arrcus, setArrcus] = useState([]);
+    const modalConfirmRef = useRef();
+
     const [users, setUsers] = useState([])
     const [loading, setLoading] = useState(false);
-
+    const [isShowModal, setIsShowModal] = useState(false);
     const [Usersname, setUsername] = useState(null)
     const [Fullname, setFullname] = useState("")
     const [Phone, setPhone] = useState("")
@@ -38,7 +43,29 @@ const Customer = () => {
     useEffect(() => {
         loadCus();
     }, []);
+    const handleDelete = async (id) => {
+        const data = { Id_User: id };
+        await deleteNews(data);
+        _isMounted && loadNews();
+    };
 
+    const onDelete = async (id) => {
+        const data = { Id_User: id };
+        const res = await deleteNews(data);
+        if (res.status === 200) {
+            toastSuccess("xoa thanh cong");
+            await loadNews();
+            _isMounted.current && setIsShowModal(false);
+            return;
+        }
+        toastError("loi");
+    };
+
+    const onConfirm = (Id_User) => {
+        id.current = Id_User;
+        setIsShowModal(true);
+        modalConfirmRef.current?.handleShow();
+    };
     return (
         <div className="container-fluid">
             <div className="row">
@@ -92,9 +119,7 @@ const Customer = () => {
                                         <th>
                                             <span className="userDatatable-title">Ngày gia nhập</span>
                                         </th>
-                                        <th>
-                                            <span className="userDatatable-title">Vai trò</span>
-                                        </th>
+
                                         <th>
                                             <span className="userDatatable-title float-right">
                                                 Thao tác
@@ -156,9 +181,24 @@ const Customer = () => {
                                                             </a>
                                                         </li>
                                                         <Detail item={item} />
+
+                                                        <li>
+                                                            <a
+                                                                href=""
+                                                                className="view"
+                                                                data-toggle="modal"
+                                                                data-target={"#modal-info-delete" + item.Id_User}
+                                                            >
+                                                                <XCircle item={item} />
+                                                            </a>
+                                                        </li>
+                                                        <Delete item={item} />
+
                                                     </ul>
 
+
                                                 </td>
+
                                             </tr>
                                         ))
                                     }

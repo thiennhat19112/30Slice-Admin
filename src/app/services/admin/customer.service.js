@@ -20,3 +20,11 @@ export const getOneCus = async (id) => {
         throw new Error(err);
     }
 };
+export const deleteCus = async (data) => {
+    try {
+        const res = await api.delete("user/", { data });
+        return res;
+    } catch (err) {
+        throw new Error(err);
+    }
+};
