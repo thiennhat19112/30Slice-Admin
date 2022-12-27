@@ -251,11 +251,11 @@ const StyleList = () => {
                               </a>
                             </li>
                             <Detail item={item} />
-                            <li>
+                            {/* <li>
                               <a className="edit">
                                 <Edit />
                               </a>
-                            </li>
+                            </li> */}
                             <li>
                               <a
                                 href="#"
@@ -324,54 +324,7 @@ const StyleList = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="d-flex justify-content-end pt-30">
-                <nav className="atbd-page ">
-                  <ul className="atbd-pagination d-flex">
-                    <li className="atbd-pagination__item">
-                      <a
-                        href="#"
-                        className="atbd-pagination__link pagination-control"
-                      >
-                        <span className="la la-angle-left" />
-                      </a>
-                      <a href="#" className="atbd-pagination__link">
-                        <span className="page-number">1</span>
-                      </a>
-                      <a href="#" className="atbd-pagination__link active">
-                        <span className="page-number">2</span>
-                      </a>
-                      <a href="#" className="atbd-pagination__link">
-                        <span className="page-number">3</span>
-                      </a>
-                      <a
-                        href="#"
-                        className="atbd-pagination__link pagination-control"
-                      >
-                        <span className="page-number">...</span>
-                      </a>
-                      <a href="#" className="atbd-pagination__link">
-                        <span className="page-number">12</span>
-                      </a>
-                      <a
-                        href="#"
-                        className="atbd-pagination__link pagination-control"
-                      >
-                        <span className="la la-angle-right" />
-                      </a>
-                      <a href="#" className="atbd-pagination__option"></a>
-                    </li>
-                    <li className="atbd-pagination__item">
-                      <div className="paging-option">
-                        <select name="page-number" className="page-selection">
-                          <option value={20}>20/page</option>
-                          <option value={40}>40/page</option>
-                          <option value={60}>60/page</option>
-                        </select>
-                      </div>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
+             
             </div>
           </div>
         </div>

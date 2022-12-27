@@ -119,26 +119,7 @@ const Header = () => {
                             <User /> Thông tin tài khoản
                           </Link>
                         </li>
-                        <li>
-                          <a href="">
-                            <Settings /> Settings
-                          </a>
-                        </li>
-                        <li>
-                          <a href="">
-                            <Key /> Billing
-                          </a>
-                        </li>
-                        <li>
-                          <a href="">
-                            <Users /> Activity
-                          </a>
-                        </li>
-                        <li>
-                          <a href="">
-                            <Bell /> Help
-                          </a>
-                        </li>
+                       
                       </ul>
                       <a onClick={logOut} className="nav-author__signout">
                         <LogOut /> Đăng xuất
