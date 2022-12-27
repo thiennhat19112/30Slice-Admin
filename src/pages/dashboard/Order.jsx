@@ -2,46 +2,28 @@ import { useState, useEffect } from 'react';
 import { Bar } from 'react-chartjs-2';
 
 function getPercentageIncrease(a, b) {
-  if (b === 0) return 0;
+  if (b === 0) return a * 100;
   return ((a - b) / b) * 100;
 }
 
-const BarChart = ({ dataOrders }) => {
+const Order = ({ data }) => {
   const date = new Date();
 
   const [totalOrdersThisMonth, setTotalOrdersThisMonth] = useState();
   const [compareToLastMonth, setCompareToLastMonth] = useState();
 
-  const data = {
-    labels: dataOrders && dataOrders.map((item) => item.month),
+  const dataChart = {
+    labels: data && data.map((item) => item.month),
     datasets: [
       {
         label: 'Tổng đơn hàng',
-        data: dataOrders && dataOrders.map((item) => item.totalOrders),
+        data: data && data.map((item) => item.totalOrders),
         backgroundColor: 'rgba(53, 162, 235, 0.5)',
       },
     ],
   };
 
-  useEffect(() => {
-    if (dataOrders) {
-      dataOrders.forEach((item, index) => {
-        if (Number(item.month.slice(0, 2)) === date.getMonth() + 1) {
-          const thisMonth = item.totalOrders;
-          const lastMonth = dataOrders[index - 1].totalOrders;
-          setTotalOrdersThisMonth(thisMonth);
-          const compareTM = getPercentageIncrease(
-            Number(thisMonth),
-            Number(lastMonth)
-          );
-          setCompareToLastMonth(compareTM);
-          return;
-        }
-      });
-    }
-  });
-
-  const options = {
+  const optionsChart = {
     responsive: true,
     plugins: {
       legend: {
@@ -55,9 +37,27 @@ const BarChart = ({ dataOrders }) => {
     },
   };
 
+  useEffect(() => {
+    if (data) {
+      data.forEach((item, index) => {
+        if (Number(item.month.slice(0, 2)) === date.getMonth() + 1) {
+          const thisMonth = item.totalOrders;
+          const lastMonth = data[index - 1].totalOrders;
+          setTotalOrdersThisMonth(thisMonth);
+          const compare = getPercentageIncrease(
+            Number(thisMonth),
+            Number(lastMonth)
+          );
+          setCompareToLastMonth(compare);
+          return;
+        }
+      });
+    }
+  });
+
   return (
     <>
-      <div className="col-xxl-3 col-md-6 col-ssm-12 mb-30">
+      <div className="col-xxl-6 col-md-6 col-ssm-12 mb-30">
         <div className="ap-po-details p-25 radius-xl bg-white">
           <div className="overview-content">
             <div className="dashboard-card-container d-grid justify-content-between align-items-center mb-1">
@@ -79,14 +79,14 @@ const BarChart = ({ dataOrders }) => {
                     }
                   />
                   <strong>
-                    {dataOrders && Math.trunc(Math.abs(compareToLastMonth))}%
+                    {data && Math.trunc(Math.abs(compareToLastMonth))}%
                   </strong>
                 </span>
                 <small> so với tháng trước</small>
               </div>
             </div>
             <div className="ap-po-details-time align-self-center">
-              <Bar options={options} data={data} />
+              <Bar options={optionsChart} data={dataChart} />
             </div>
           </div>
         </div>
@@ -95,4 +95,4 @@ const BarChart = ({ dataOrders }) => {
   );
 };
 
-export default BarChart;
+export default Order;

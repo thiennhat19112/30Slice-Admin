@@ -64,12 +64,12 @@ const Sidebar = () => {
                 <li className="menu-title">
                   <span>Người dùng</span>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink to="/employee" className="">
                     <Users className="nav-icon" />
                     <span className="menu-text">Quản lý nhân viên</span>
                   </NavLink>
-                </li>
+                </li> */}
                 <li>
                   <NavLink to="/stylelist" className="">
                     <Scissors className="nav-icon" />

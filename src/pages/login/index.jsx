@@ -137,7 +137,7 @@ const Login = () => {
                                   />
                                 </div>
                                 <div className="signUp-condition signIn-condition">
-                                  <div className="checkbox-theme-default custom-checkbox ">
+                                  {/* <div className="checkbox-theme-default custom-checkbox ">
                                     <input
                                       className="checkbox"
                                       type="checkbox"
@@ -149,7 +149,7 @@ const Login = () => {
                                       </span>
                                     </label>
                                     
-                                  </div>
+                                  </div> */}
                                   <NavLink to="/forget-password">Quên mật khẩu</NavLink>
                                 </div>
                                 {message && (
@@ -173,13 +173,13 @@ const Login = () => {
                                     Đăng nhập
                                   </button>
                                 </div>
-                                <p className="social-connector text-center mb-sm-25 mb-15  mt-sm-30 mt-20">
+                                {/* <p className="social-connector text-center mb-sm-25 mb-15  mt-sm-30 mt-20">
                                   <span>Hoặc</span>
-                                </p>
+                                </p> */}
                               </form>
                               <div className="button-group d-flex align-items-center justify-content-md-start justify-content-center ">
                                 <ul className="signUp-socialBtn">
-                                  <li>
+                                  {/* <li>
                                     <button className="btn text-dark px-30">
                                       <img
                                         className="svg"
@@ -195,7 +195,7 @@ const Login = () => {
                                         Đăng nhập bằng Google
                                       </span>
                                     </button>
-                                  </li>
+                                  </li> */}
                                   {/* <li>
                                     <button className=" radius-md wh-48 content-center">
                                       <img
