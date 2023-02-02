@@ -7,8 +7,8 @@ import {
 } from "react";
 import Modal from "react-bootstrap/Modal";
 import { X } from "react-feather";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../app/redux/slices/product";
+// import { useDispatch, useSelector } from "react-redux";
+// import { fetchProduct } from "../../app/redux/slices/product";
 import AutocompleteCustom from "../../CustomMui/autocomplete";
 import { useForm } from "react-hook-form";
 import { addCombo } from "../../app/services/admin/combos.service";
@@ -17,6 +17,7 @@ import {
   toastSuccess,
   toastError,
 } from "../../components/sharedComponents/toast";
+import { getAllProducts } from "../../app/services/admin/product.service";
 
 const Add = (props, ref) => {
   const { combos,loadCombo } = props;
@@ -24,6 +25,7 @@ const Add = (props, ref) => {
   const [selected, setSelected] = useState(true);
   const _isMounted = useRef(false);
   const idProducts = useRef();
+  const [products,setProducts] = useState([])
   const file = useRef();
   const {
     register,
@@ -32,8 +34,13 @@ const Add = (props, ref) => {
     formState: { errors },
   } = useForm();
 
-  const dispatch = useDispatch();
-  const { products } = useSelector((state) => state.product);
+  // const dispatch = useDispatch();
+  // const { products } = useSelector((state) => state.product);
+
+  const fetchProduct = async () =>{
+    const data = await getAllProducts();
+    setProducts(data)
+  }
 
   const handleClose = () => {
     _isMounted.current && setShow(false);
@@ -76,7 +83,7 @@ const Add = (props, ref) => {
   }, []);
 
   useEffect(() => {
-    dispatch(fetchProduct());
+    fetchProduct()
   }, []);
 
  
